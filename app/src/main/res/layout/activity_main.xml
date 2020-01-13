@@ -8,20 +8,20 @@
     android:orientation="vertical"
     android:layout_gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/result_text"
+    <Button
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/login_button"
         android:layout_gravity="center_horizontal"
-        android:textSize="20sp"/>
+        android:onClick="login"/>
 
     <Button
-        android:id="@+id/bills_button"
+        android:id="@+id/signup_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bills_button"
+        android:text="@string/signup_button"
         android:layout_gravity="center_horizontal"
-        android:onClick="onClick"/>
+        android:onClick="signUp"/>
 
 </LinearLayout>

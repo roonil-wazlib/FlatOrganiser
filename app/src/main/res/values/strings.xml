@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FlatOrganiser</string>
-    <string name="bills_button">Bills</string>
+    <string name="login_button">Log In</string>
+    <string name="signup_button">Sign Up</string>
 </resources>
