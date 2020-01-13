@@ -9,19 +9,20 @@
     android:layout_gravity="center_vertical">
 
     <TextView
-        android:id="@+id/result_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Test working!"
         android:layout_gravity="center_horizontal"
         android:textSize="20sp"/>
 
-    <Button
-        android:id="@+id/bills_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bills_button"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onClick"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="hint" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>
