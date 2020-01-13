@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "266122986601-d9imqns7mp3e8iee2geimelap8e8it93.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emmahogan.flatorganiser",
+            "certificate_hash": "b5badcc84dea6df01aa2b095b8bfa992a3235426"
+          }
+        },
+        {
           "client_id": "266122986601-o2m1okmvt82g1prm7bugb5sj509p05jm.apps.googleusercontent.com",
           "client_type": 3
         }
