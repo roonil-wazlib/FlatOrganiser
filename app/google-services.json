@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "266122986601",
+    "firebase_url": "https://flat-organiser-43f55.firebaseio.com",
+    "project_id": "flat-organiser-43f55",
+    "storage_bucket": "flat-organiser-43f55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266122986601:android:d65c3d6772e32df03bcef8",
+        "android_client_info": {
+          "package_name": "com.emmahogan.flatorganiser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266122986601-o2m1okmvt82g1prm7bugb5sj509p05jm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPiDmcBf0LtjiJXwkWO0qZgFCceK48g-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266122986601-o2m1okmvt82g1prm7bugb5sj509p05jm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
