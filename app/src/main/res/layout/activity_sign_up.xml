@@ -13,21 +13,21 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="name">
+        android:hint="@string/name">
     </EditText>
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="email">
+        android:hint="@string/email">
     </EditText>
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
+        android:hint="@string/password"
         android:inputType="textPassword">
     </EditText>
 
@@ -35,7 +35,7 @@
         android:id="@+id/password_check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="repeat password"
+        android:hint="@string/password_repeat"
         android:inputType="textPassword">
     </EditText>
 
@@ -43,7 +43,7 @@
         android:id="@+id/submit_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Sign Up"
+        android:text="@string/signup_button"
         android:onClick="createAccount"/>
 
 </LinearLayout>
