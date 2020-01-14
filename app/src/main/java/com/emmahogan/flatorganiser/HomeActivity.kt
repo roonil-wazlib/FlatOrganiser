@@ -8,6 +8,7 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.widget.Button
 import android.widget.TextView
 
 
@@ -27,5 +28,20 @@ class HomeActivity : AppCompatActivity() {
         val testTV : TextView = findViewById(R.id.test)
         testTV.setText("$email")
 
+        //set up logout button
+        val logoutButton : Button = findViewById(R.id.logout_button)
+        logoutButton.setOnClickListener{ logOut() }
+
+        //hopefully this should end the activity when user is logged out
+        mAuth.addAuthStateListener {
+            if(mAuth.currentUser == null){
+                this.finish()
+            }
+        }
+
+    }
+
+    fun logOut(){
+        mAuth.signOut()
     }
 }
