@@ -3,17 +3,8 @@ package com.emmahogan.flatorganiser
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.Toast
-import androidx.annotation.NonNull
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseUser
 
-
-/*once sign in is working, follow instructions
-in tools - firebase - authentication 3 to check if user is logged in*/
 
 class MainActivity : AppCompatActivity() {
 
