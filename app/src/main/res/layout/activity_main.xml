@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login_button"
         android:layout_gravity="center_horizontal"
-        android:onClick="login"/>
+        android:onClick="logIn"/>
 
     <Button
         android:id="@+id/signup_button"

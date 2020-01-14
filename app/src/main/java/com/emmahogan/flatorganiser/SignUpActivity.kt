@@ -51,15 +51,15 @@ class SignUpActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         //Registration OK
                         val firebaseUser = mAuth!!.currentUser //throw exception if null
-                        Toast.makeText(this@SignUpActivity, "Appears to be working!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignUpActivity, "Ah fuck, what have you done wrong this time.", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this@SignUpActivity, "Some kind of registration error?", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignUpActivity, "It looks like you already have an account. Please try signing in.", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
         else {
             //passwords don't match
-            Toast.makeText(this@SignUpActivity, "Please check passwords match", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@SignUpActivity, "Error: Passwords must match.", Toast.LENGTH_SHORT).show()
         }
     }
 
