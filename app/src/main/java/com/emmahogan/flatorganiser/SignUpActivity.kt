@@ -10,6 +10,9 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.IgnoreExtraProperties
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -17,6 +20,8 @@ class SignUpActivity : AppCompatActivity() {
     //Initialize Firebase Auth
     var mAuth = FirebaseAuth.getInstance()
 
+    //late init for getting database instance
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +42,17 @@ class SignUpActivity : AppCompatActivity() {
         val passwordET: EditText = findViewById(R.id.password)
         val passwordCheckET: EditText = findViewById(R.id.password_check)
 
+        val name = nameET.getText().toString()
         val email = emailET.getText().toString()
         val password = passwordET.getText().toString()
         val passwordCheck = passwordCheckET.getText().toString()
 
+
+        //get database instance
+        database = FirebaseDatabase.getInstance().reference
+
+
+        //if passwords match, create new user
         if (checkPasswords(password, passwordCheck)) {
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task: Task<AuthResult> ->
@@ -48,9 +60,7 @@ class SignUpActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         //Registration OK
                         val firebaseUser = mAuth.currentUser
-
-                        //at some point here use user to add name info to profile.
-
+                        writeNewUser(firebaseUser!!.getUid(), name, email) //user should not be null if task is successful
                         Toast.makeText(this@SignUpActivity, "Success!", Toast.LENGTH_SHORT).show()
 
                     } else {
@@ -76,4 +86,15 @@ class SignUpActivity : AppCompatActivity() {
         startActivity(intent)
         this.finish()
     }
+
+    private fun writeNewUser(userId: String, name: String?, email: String?) {
+        val user = User(name, email)
+        database.child("users").child(userId).setValue(user)
+    }
 }
+
+@IgnoreExtraProperties
+data class User(
+    var name: String?,
+    var email: String?
+)
