@@ -4,17 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.View
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.AuthResult
 
 
@@ -28,6 +22,9 @@ class LogInActivity : AppCompatActivity() {
 
         val loginButton: Button = findViewById(R.id.login_button)
         loginButton.setOnClickListener { logIn() }
+
+        val signUpButton : TextView = findViewById(R.id.signUp_button)
+        signUpButton.setOnClickListener { signUp() }
     }
 
     fun logIn() {
@@ -51,5 +48,12 @@ class LogInActivity : AppCompatActivity() {
                 }
             }
             )
+    }
+
+    fun signUp(){
+        //switch to SignUpActivity and close this one
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
+        this.finish()
     }
 }

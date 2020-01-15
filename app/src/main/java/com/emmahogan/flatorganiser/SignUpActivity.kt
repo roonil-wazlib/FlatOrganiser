@@ -1,8 +1,10 @@
 package com.emmahogan.flatorganiser
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
@@ -22,6 +24,9 @@ class SignUpActivity : AppCompatActivity() {
 
         val submitButton: Button = findViewById(R.id.submit_signup)
         submitButton.setOnClickListener { createAccount() }
+
+        val loginButton: TextView = findViewById(R.id.login_button)
+        loginButton.setOnClickListener { logIn() }
     }
 
 
@@ -63,5 +68,12 @@ class SignUpActivity : AppCompatActivity() {
         //check correct password entered
         return password == passwordCheck
 
+    }
+
+    fun logIn(){
+        //open login activity and finish this one
+        val intent = Intent(this, LogInActivity::class.java)
+        startActivity(intent)
+        this.finish()
     }
 }

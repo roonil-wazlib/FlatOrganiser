@@ -28,4 +28,17 @@
         android:text="@string/login_button"
         android:onClick="logIn"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_account"/>
+
+    <TextView
+        android:id="@+id/signUp_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_button"
+        android:textStyle="bold"
+        android:onClick="signUp"/>
+
 </LinearLayout>

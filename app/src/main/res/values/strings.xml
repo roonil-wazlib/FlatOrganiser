@@ -7,4 +7,6 @@
     <string name="password_repeat">Repeat Password</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
+    <string name="already_account">Already have an account?</string>
+    <string name="no_account">Don\'t have an account?</string>
 </resources>
