@@ -44,6 +44,7 @@ class LogInActivity : AppCompatActivity() {
                     val intent = Intent(this, HomeActivity::class.java)
                     intent.putExtra("email", mAuth.currentUser?.email) //pass email to home activity
                     startActivity(intent)
+                    this.finish() //close log in page so user goes back to MainActivity on Logout.
 
                 } else {
                     Toast.makeText(this@LogInActivity, "Email or password incorrect.", Toast.LENGTH_SHORT).show()
