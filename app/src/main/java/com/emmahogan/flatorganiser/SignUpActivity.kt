@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.IgnoreExtraProperties
 
@@ -20,8 +19,13 @@ class SignUpActivity : AppCompatActivity() {
     //Initialize Firebase Auth
     var mAuth = FirebaseAuth.getInstance()
 
-    //late init for getting database instance
-    private lateinit var database: DatabaseReference
+    //Initialise Firebase db
+    var mDatabase = FirebaseDatabase.getInstance()
+
+    //Get reference to users child
+    var mDatabaseReference = mDatabase!!.reference!!.child("users")
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,7 @@ class SignUpActivity : AppCompatActivity() {
         val loginButton: TextView = findViewById(R.id.login_button)
         loginButton.setOnClickListener { logIn() }
     }
+
 
 
     fun createAccount(){
@@ -48,10 +53,6 @@ class SignUpActivity : AppCompatActivity() {
         val passwordCheck = passwordCheckET.getText().toString()
 
 
-        //get database instance
-        database = FirebaseDatabase.getInstance().reference
-
-
         //if passwords match, create new user
         if (checkPasswords(password, passwordCheck)) {
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -64,6 +65,7 @@ class SignUpActivity : AppCompatActivity() {
                         Toast.makeText(this@SignUpActivity, "Success!", Toast.LENGTH_SHORT).show()
 
                     } else {
+                        //check if they already have an account. If not, display different error message.
                         Toast.makeText(this@SignUpActivity, "It looks like you already have an account. Please try signing in.", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -74,11 +76,13 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
+
     fun checkPasswords(password: String, passwordCheck: String) : Boolean {
         //check correct password entered
         return password == passwordCheck
 
     }
+
 
     fun logIn(){
         //open login activity and finish this one
@@ -87,12 +91,17 @@ class SignUpActivity : AppCompatActivity() {
         this.finish()
     }
 
+
+    //add new user to realtime database
     private fun writeNewUser(userId: String, name: String?, email: String?) {
         val user = User(name, email)
-        database.child("users").child(userId).setValue(user)
+        mDatabaseReference.child(userId).setValue(user)
     }
 }
 
+
+
+//define properties of user child
 @IgnoreExtraProperties
 data class User(
     var name: String?,
