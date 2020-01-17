@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.IgnoreExtraProperties
 
 
+
 class SignUpActivity : AppCompatActivity() {
 
     //Initialize Firebase Auth
@@ -93,17 +94,23 @@ class SignUpActivity : AppCompatActivity() {
 
 
     //add new user to realtime database
-    private fun writeNewUser(userId: String, name: String?, email: String?) {
+    fun writeNewUser(userId: String, name: String?, email: String?) {
         val user = User(name, email)
         mDatabaseReference.child(userId).setValue(user)
+    }
+
+
+    fun checkIfUserExists(email: String?){
+
     }
 }
 
 
 
 //define properties of user child
+//(properties must be initialised to keep javabeans happy)
 @IgnoreExtraProperties
 data class User(
-    var name: String?,
-    var email: String?
+    var name: String? = "",
+    var email: String? = ""
 )
