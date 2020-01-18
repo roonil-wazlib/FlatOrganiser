@@ -63,7 +63,13 @@ class SignUpActivity : AppCompatActivity() {
                         //Registration OK
                         val firebaseUser = mAuth.currentUser
                         writeNewUser(firebaseUser!!.getUid(), name, email) //user should not be null if task is successful
+
                         Toast.makeText(this@SignUpActivity, "Success!", Toast.LENGTH_SHORT).show()
+
+                        //go to home
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
+                        this.finish()
 
                     } else {
                         //check if they already have an account. If not, display different error message.

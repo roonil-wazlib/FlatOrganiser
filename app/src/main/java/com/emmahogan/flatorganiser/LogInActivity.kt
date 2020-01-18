@@ -39,7 +39,6 @@ class LogInActivity : AppCompatActivity() {
             .addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
                 if (task.isSuccessful) {
                     val intent = Intent(this, HomeActivity::class.java)
-                    intent.putExtra("email", mAuth.currentUser?.email) //pass email to home activity
                     startActivity(intent)
                     this.finish() //close log in page so user goes back to MainActivity on Logout.
 

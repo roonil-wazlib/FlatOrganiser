@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -31,15 +32,11 @@ class HomeActivity : AppCompatActivity() {
                 val u = user.getValue(User::class.java!!)
                 updateName(u!!.name)
             }
-
-            //val contactSnapshot = dataSnapshot.child("users")
-            //val contactChildren = contactSnapshot.children
-
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            //Getting Post failed, log a message
-            //Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            //Getting user name failed, show error message
+            Toast.makeText(this@HomeActivity, "Something went wrong.", Toast.LENGTH_SHORT).show()
             // ...
         }
     }
@@ -52,12 +49,10 @@ class HomeActivity : AppCompatActivity() {
 
         val user = mAuth!!.currentUser
         val uid = user!!.uid
+        val email = user.email
 
         //tell database to listen for name
         mDatabaseReference.addValueEventListener(nameListener)
-
-        //get email of user
-        val email : String = intent.getStringExtra("email")
 
         //check email received correctly
         val testTV : TextView = findViewById(R.id.test)
@@ -67,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
         val logoutButton : Button = findViewById(R.id.logout_button)
         logoutButton.setOnClickListener{ logOut() }
 
-        //hopefully this should end the activity when user is logged out
+        //end activity when user logs out
         mAuth.addAuthStateListener {
             if(mAuth.currentUser == null){
                 this.finish()
@@ -76,6 +71,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    //update name textview
     fun updateName(name : String?){
         val nameTV : TextView = findViewById(R.id.nameTv)
         nameTV.setText("hi" + name)
