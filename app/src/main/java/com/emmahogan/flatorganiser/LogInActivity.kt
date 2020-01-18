@@ -16,6 +16,7 @@ class LogInActivity : AppCompatActivity() {
 
     var mAuth = FirebaseAuth.getInstance()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
@@ -25,6 +26,11 @@ class LogInActivity : AppCompatActivity() {
 
         val signUpButton : TextView = findViewById(R.id.signUp_button)
         signUpButton.setOnClickListener { signUp() }
+
+        //check if user is logged in
+        if (isUserLoggedIn()){
+            startHomeActivity()
+        }
     }
 
     fun logIn() {
@@ -38,15 +44,16 @@ class LogInActivity : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    this.finish() //close log in page so user goes back to MainActivity on Logout.
-
+                    startHomeActivity()
                 } else {
                     Toast.makeText(this@LogInActivity, "Email or password incorrect.", Toast.LENGTH_SHORT).show()
                 }
             }
             )
+    }
+    fun isUserLoggedIn() : Boolean {
+        val user = mAuth.currentUser
+        return user != null
     }
 
     fun signUp(){
@@ -54,5 +61,11 @@ class LogInActivity : AppCompatActivity() {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
         this.finish()
+    }
+
+    fun startHomeActivity(){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        this.finish() //close log in page so user goes back to MainActivity on Logout.
     }
 }

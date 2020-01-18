@@ -37,6 +37,11 @@ class SignUpActivity : AppCompatActivity() {
 
         val loginButton: TextView = findViewById(R.id.login_button)
         loginButton.setOnClickListener { logIn() }
+
+        //skip sign in process and log in directly if current user already exists
+        if (isUserLoggedIn()){
+            startHomeActivity()
+        }
     }
 
 
@@ -108,6 +113,16 @@ class SignUpActivity : AppCompatActivity() {
 
     fun checkIfUserExists(email: String?){
 
+    }
+
+    fun isUserLoggedIn() : Boolean {
+        return mAuth.currentUser != null
+    }
+
+    fun startHomeActivity(){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        this.finish()
     }
 }
 

@@ -25,12 +25,15 @@ class HomeActivity : AppCompatActivity() {
 
     val nameListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot : DataSnapshot) {
-            // Get User object
+            // Get User objects as iterable
             val users = dataSnapshot.children
 
+            //find current user and update name
             for (user in users) {
-                val u = user.getValue(User::class.java!!)
-                updateName(u!!.name)
+                if (user.key == mAuth.currentUser!!.uid) {
+                    val name = user.getValue(User::class.java!!)!!.name
+                    updateName(name)
+                }
             }
         }
 
