@@ -14,16 +14,16 @@ import com.google.firebase.database.ValueEventListener
 
 class HomeActivity : AppCompatActivity() {
 
-    var mAuth = FirebaseAuth.getInstance()
+    private var mAuth = FirebaseAuth.getInstance()
 
     //Initialise Firebase db
-    var mDatabase = FirebaseDatabase.getInstance()
+    private var mDatabase = FirebaseDatabase.getInstance()
 
     //Get reference to users child
-    var mDatabaseReference = mDatabase!!.reference!!.child("users")
+    private var mDatabaseReference = mDatabase!!.reference!!.child("users")
 
 
-    val nameListener = object : ValueEventListener {
+    private val nameListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot : DataSnapshot) {
             // Get User objects as iterable
             val users = dataSnapshot.children
@@ -51,8 +51,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         val user = mAuth!!.currentUser
-        val uid = user!!.uid
-        val email = user.email
+        val email = user!!.email
 
         //tell database to listen for name
         mDatabaseReference.addValueEventListener(nameListener)
@@ -80,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
         nameTV.setText("hi" + name)
     }
 
-    fun logOut(){
+    private fun logOut(){
         mAuth.signOut()
     }
 }

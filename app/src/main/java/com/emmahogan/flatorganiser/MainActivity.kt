@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
-    var mAuth = FirebaseAuth.getInstance()
+    private var mAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +37,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun isUserLoggedIn() : Boolean {
+    private fun isUserLoggedIn() : Boolean {
         return mAuth.currentUser != null
     }
 
-    fun startHomeActivity(){
+    private fun startHomeActivity(){
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }

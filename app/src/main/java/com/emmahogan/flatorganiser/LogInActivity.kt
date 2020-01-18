@@ -14,7 +14,7 @@ import com.google.firebase.auth.AuthResult
 
 class LogInActivity : AppCompatActivity() {
 
-    var mAuth = FirebaseAuth.getInstance()
+    private var mAuth = FirebaseAuth.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +51,7 @@ class LogInActivity : AppCompatActivity() {
             }
             )
     }
-    fun isUserLoggedIn() : Boolean {
+    private fun isUserLoggedIn() : Boolean {
         val user = mAuth.currentUser
         return user != null
     }
@@ -63,7 +63,7 @@ class LogInActivity : AppCompatActivity() {
         this.finish()
     }
 
-    fun startHomeActivity(){
+    private fun startHomeActivity(){
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         this.finish() //close log in page so user goes back to MainActivity on Logout.

@@ -10,21 +10,19 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.IgnoreExtraProperties
-
+import com.google.firebase.database.*
 
 
 class SignUpActivity : AppCompatActivity() {
 
     //Initialize Firebase Auth
-    var mAuth = FirebaseAuth.getInstance()
+    private var mAuth = FirebaseAuth.getInstance()
 
     //Initialise Firebase db
-    var mDatabase = FirebaseDatabase.getInstance()
+    private var mDatabase = FirebaseDatabase.getInstance()
 
     //Get reference to users child
-    var mDatabaseReference = mDatabase!!.reference!!.child("users")
+    private var mDatabaseReference = mDatabase.reference.child("users")
 
 
 
@@ -46,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
 
-    fun createAccount(){
+    private fun createAccount(){
         //make a new user
         val emailET: EditText = findViewById(R.id.email)
         val nameET: EditText = findViewById(R.id.name)
@@ -67,9 +65,7 @@ class SignUpActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         //Registration OK
                         val firebaseUser = mAuth.currentUser
-                        writeNewUser(firebaseUser!!.getUid(), name, email) //user should not be null if task is successful
-
-                        Toast.makeText(this@SignUpActivity, "Success!", Toast.LENGTH_SHORT).show()
+                        writeNewUser(firebaseUser!!.uid, name, email) //user should not be null if task is successful
 
                         //go to home
                         val intent = Intent(this, HomeActivity::class.java)
@@ -78,18 +74,17 @@ class SignUpActivity : AppCompatActivity() {
 
                     } else {
                         //check if they already have an account. If not, display different error message.
-                        Toast.makeText(this@SignUpActivity, "It looks like you already have an account. Please try signing in.", Toast.LENGTH_SHORT).show()
+                        mDatabaseReference.addValueEventListener(checkIfUserExists)
                     }
                 }
         } else {
             //passwords don't match
-            Toast.makeText(this@SignUpActivity, "Error: Passwords must match.", Toast.LENGTH_SHORT).show()
+            displayMessage("Error: Passwords must match.")
         }
     }
 
 
-
-    fun checkPasswords(password: String, passwordCheck: String) : Boolean {
+    private fun checkPasswords(password: String, passwordCheck: String) : Boolean {
         //check correct password entered
         return password == passwordCheck
 
@@ -105,21 +100,55 @@ class SignUpActivity : AppCompatActivity() {
 
 
     //add new user to realtime database
-    fun writeNewUser(userId: String, name: String?, email: String?) {
+    private fun writeNewUser(userId: String, name: String?, email: String?) {
         val user = User(name, email)
         mDatabaseReference.child(userId).setValue(user)
     }
 
+    private val checkIfUserExists = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot : DataSnapshot) {
+            // Get User objects as iterable
+            val users = dataSnapshot.children
 
-    fun checkIfUserExists(email: String?){
+            //get entered email
+            val emailET: EditText = findViewById(R.id.email)
+            val email : String = emailET.getText().toString()
 
+            var userExists = false
+            val errorMessage : String
+
+            //find current user and update name
+            for (user in users) {
+                if (user.getValue(User::class.java)!!.email == email) {
+                    userExists = true
+                }
+            }
+
+            errorMessage = when(userExists){
+                true -> "You already have an account. Please login."
+                else -> "Something went wrong. Please check your internet connection and try again."
+            }
+
+            displayMessage(errorMessage)
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            //Getting user name failed, show error message
+            displayMessage("Something went wrong")
+            // ...
+        }
     }
 
-    fun isUserLoggedIn() : Boolean {
+
+    private fun displayMessage(error : String){
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isUserLoggedIn() : Boolean {
         return mAuth.currentUser != null
     }
 
-    fun startHomeActivity(){
+    private fun startHomeActivity(){
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         this.finish()
