@@ -10,4 +10,6 @@
     <string name="already_account">Already have an account?</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="settings">Settings</string>
+    <string name="delete">Delete Account</string>
+    <string name="edit_account">Edit Account</string>
 </resources>
