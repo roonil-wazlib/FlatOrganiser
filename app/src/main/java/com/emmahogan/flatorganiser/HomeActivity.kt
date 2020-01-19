@@ -1,6 +1,8 @@
 package com.emmahogan.flatorganiser
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Button
@@ -64,6 +66,10 @@ class HomeActivity : AppCompatActivity() {
         val logoutButton : Button = findViewById(R.id.logout_button)
         logoutButton.setOnClickListener{ logOut() }
 
+        //set up settings button
+        val settingsButton : Button = findViewById(R.id.settings)
+        settingsButton.setOnClickListener{openSettings()}
+
         //end activity when user logs out
         mAuth.addAuthStateListener {
             if(mAuth.currentUser == null){
@@ -81,5 +87,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun logOut(){
         mAuth.signOut()
+    }
+
+    private fun openSettings(){
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
     }
 }
