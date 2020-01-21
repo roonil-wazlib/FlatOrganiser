@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 import android.widget.Toast
 
 
+
 class CreateFlatActivity : AppCompatActivity() {
 
     //get reference to Firebase Auth
@@ -35,8 +36,7 @@ class CreateFlatActivity : AppCompatActivity() {
             "members" to listOf("User name")
         )
 
-        db.collection("flats").document("LA")
-            .set(flat)
+        db.collection("flats").add(flat)
             .addOnSuccessListener { Toast.makeText(this, "Flat created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
     }
