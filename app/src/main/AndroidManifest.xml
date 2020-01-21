@@ -22,6 +22,7 @@
         <activity android:name=".LogInActivity"/>
         <activity android:name=".HomeActivity"/>
         <activity android:name=".SettingsActivity"/>
+        <activity android:name=".CreateFlatActivity"/>
 
     </application>
 

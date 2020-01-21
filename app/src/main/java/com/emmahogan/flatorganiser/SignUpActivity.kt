@@ -162,5 +162,6 @@ class SignUpActivity : AppCompatActivity() {
 @IgnoreExtraProperties
 data class User(
     var name: String? = "",
-    var email: String? = ""
+    var email: String? = "",
+    var flat: String? = ""
 )

@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
     private var mDatabase = FirebaseDatabase.getInstance()
 
     //Get reference to users child
-    private var mDatabaseReference = mDatabase!!.reference!!.child("users")
+    private var mDatabaseReference = mDatabase.reference.child("users")
 
 
     private val nameListener = object : ValueEventListener {
@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
             //find current user and update name
             for (user in users) {
                 if (user.key == mAuth.currentUser!!.uid) {
-                    val name = user.getValue(User::class.java!!)!!.name
+                    val name = user.getValue(User::class.java)!!.name
                     updateName(name)
                 }
             }
@@ -70,6 +70,12 @@ class HomeActivity : AppCompatActivity() {
         val settingsButton : Button = findViewById(R.id.settings)
         settingsButton.setOnClickListener{openSettings()}
 
+        //set up create and join flat buttons
+        val createFlatButton : Button = findViewById(R.id.create_flat)
+        val joinFlatButton : Button = findViewById(R.id.join_flat)
+        createFlatButton.setOnClickListener{ createFlat() }
+        joinFlatButton.setOnClickListener{ joinFlat() }
+
         //end activity when user logs out
         mAuth.addAuthStateListener {
             if(mAuth.currentUser == null){
@@ -92,5 +98,15 @@ class HomeActivity : AppCompatActivity() {
     private fun openSettings(){
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun createFlat(){
+        val intent = Intent(this, CreateFlatActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun joinFlat(){
+        //val intent = Intent(this, JoinFlatActivity::class.java)
+        //startActivity(intent)
     }
 }

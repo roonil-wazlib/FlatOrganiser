@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity() {
     private var mDatabase = FirebaseDatabase.getInstance()
 
     //Get reference to users child
-    private var mDatabaseReference = mDatabase!!.reference!!.child("users")
+    private var mDatabaseReference = mDatabase.reference.child("users")
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)

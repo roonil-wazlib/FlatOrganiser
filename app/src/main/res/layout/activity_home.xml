@@ -31,4 +31,18 @@
         android:layout_height="wrap_content"
         android:text="Hello world!"/>
 
+    <Button
+        android:id="@+id/create_flat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Flat"
+        android:onClick="createFlat"/>
+
+    <Button
+        android:id="@+id/join_flat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Join Flat"
+        android:onClick="joinFlat"/>
+
 </LinearLayout>
