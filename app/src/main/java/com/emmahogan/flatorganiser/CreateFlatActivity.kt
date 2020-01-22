@@ -6,7 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.widget.Toast
-
+import kotlinx.android.synthetic.main.activity_create_flat.*
 
 
 class CreateFlatActivity : AppCompatActivity() {
@@ -31,13 +31,23 @@ class CreateFlatActivity : AppCompatActivity() {
 
     private fun addFlatToDatabase(){
         // Create a new flat
+
         val flat = hashMapOf(
             "name" to "Test",
             "members" to listOf("User name")
         )
 
-        db.collection("flats").add(flat)
+        db.collection("flats").document("flat1").set(flat)
             .addOnSuccessListener { Toast.makeText(this, "Flat created", Toast.LENGTH_SHORT).show() }
+            .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
+
+
+        val member = HashMap<String, Any>()
+        member.put("name", "testname")
+        member.put("email", "testemail")
+
+        db.document("flats/flat1").collection("members").document("Member1").set(member)
+            .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
     }
 }
