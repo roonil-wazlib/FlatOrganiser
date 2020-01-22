@@ -32,21 +32,21 @@ class CreateFlatActivity : AppCompatActivity() {
     private fun addFlatToDatabase(){
         // Create a new flat
 
-        val flat = hashMapOf(
-            "name" to "Test",
-            "members" to listOf("User name")
-        )
+        val flat = HashMap<String, Any>()
 
-        db.collection("flats").document("flat1").set(flat)
+        val flatReference = db.collection("flats").document()
+
+        flatReference.set(flat)
             .addOnSuccessListener { Toast.makeText(this, "Flat created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
-
 
         val member = HashMap<String, Any>()
         member.put("name", "testname")
         member.put("email", "testemail")
 
-        db.document("flats/flat1").collection("members").document("Member1").set(member)
+        val flat_id = flatReference.id
+
+        flatReference.collection("members").document("Member1").set(member)
             .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
     }
