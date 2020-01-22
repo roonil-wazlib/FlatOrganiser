@@ -25,6 +25,9 @@ class HomeActivity : AppCompatActivity() {
     private var mDatabaseReference = mDatabase.reference.child("users")
 
 
+    lateinit var currentUser : User
+
+
     private val nameListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot : DataSnapshot) {
             // Get User objects as iterable
@@ -35,6 +38,9 @@ class HomeActivity : AppCompatActivity() {
                 if (user.key == mAuth.currentUser!!.uid) {
                     val name = user.getValue(User::class.java)!!.name
                     updateName(name)
+                    val email = user.getValue(User::class.java)!!.email
+                    val flatId = user.getValue(User::class.java)!!.flat
+                    instantiateUser(name, email, flatId)
                 }
             }
         }
@@ -108,5 +114,10 @@ class HomeActivity : AppCompatActivity() {
     private fun joinFlat(){
         //val intent = Intent(this, JoinFlatActivity::class.java)
         //startActivity(intent)
+    }
+
+    private fun instantiateUser(name : String?, email : String?, flatId : String?){
+        currentUser = User(name, email, flatId)
+        Toast.makeText(this@HomeActivity, "Initialise just happened.", Toast.LENGTH_SHORT).show()
     }
 }

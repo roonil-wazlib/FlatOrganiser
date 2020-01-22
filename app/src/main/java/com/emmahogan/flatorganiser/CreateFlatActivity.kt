@@ -55,7 +55,10 @@ class CreateFlatActivity : AppCompatActivity() {
     private fun updateUserAccount(flatId : String?){
         val userId = mAuth.currentUser!!.uid
 
-        val user = User(flat=flatId)
+        val name = HomeActivity().currentUser.name
+        val email = HomeActivity().currentUser.email
+
+        val user = User(name, email, flatId)
         mDatabaseReference.child(userId).setValue(user)
     }
 }
