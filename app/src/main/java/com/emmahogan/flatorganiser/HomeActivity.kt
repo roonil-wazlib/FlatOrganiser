@@ -2,7 +2,6 @@ package com.emmahogan.flatorganiser
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Button
@@ -12,6 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+
 
 
 class HomeActivity : AppCompatActivity() {
@@ -108,6 +108,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun createFlat(){
         val intent = Intent(this, CreateFlatActivity::class.java)
+        intent.putExtra("currentUser", currentUser)
         startActivity(intent)
     }
 
@@ -116,8 +117,7 @@ class HomeActivity : AppCompatActivity() {
         //startActivity(intent)
     }
 
-    private fun instantiateUser(name : String?, email : String?, flatId : String?){
+    private fun instantiateUser(name : String?, email : String?, flatId : String?) {
         currentUser = User(name, email, flatId)
-        Toast.makeText(this@HomeActivity, "Initialise just happened.", Toast.LENGTH_SHORT).show()
     }
 }

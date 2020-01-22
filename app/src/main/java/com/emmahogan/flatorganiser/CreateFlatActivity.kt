@@ -6,7 +6,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.widget.Toast
-import com.google.firebase.database.IgnoreExtraProperties
 
 
 class CreateFlatActivity : AppCompatActivity() {
@@ -22,9 +21,16 @@ class CreateFlatActivity : AppCompatActivity() {
     //get reference to Firestore Cloud instance
     private var db = FirebaseFirestore.getInstance()
 
+    lateinit var currentUser : User
+
+
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_flat)
+
+        //get intent bundles
+        currentUser = intent.getParcelableExtra("currentUser")
+
 
         addFlatToDatabase()
     }
@@ -55,8 +61,9 @@ class CreateFlatActivity : AppCompatActivity() {
     private fun updateUserAccount(flatId : String?){
         val userId = mAuth.currentUser!!.uid
 
-        val name = HomeActivity().currentUser.name
-        val email = HomeActivity().currentUser.email
+        //TODO: add change flat id method to User class to avoid this
+        val name = currentUser.name
+        val email = currentUser.email
 
         val user = User(name, email, flatId)
         mDatabaseReference.child(userId).setValue(user)

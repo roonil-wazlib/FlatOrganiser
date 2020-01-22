@@ -2,6 +2,7 @@ package com.emmahogan.flatorganiser
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -11,6 +12,7 @@ import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.database.*
+import kotlinx.android.parcel.Parcelize
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -158,9 +160,10 @@ class SignUpActivity : AppCompatActivity() {
 
 //define properties of user child
 //(properties must be initialised to keep javabeans happy)
+@Parcelize
 @IgnoreExtraProperties
 data class User(
     var name: String? = "",
     var email: String? = "",
     var flat: String? = ""
-)
+) : Parcelable
