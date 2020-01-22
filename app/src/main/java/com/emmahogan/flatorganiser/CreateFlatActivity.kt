@@ -6,7 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_create_flat.*
+import com.google.firebase.database.IgnoreExtraProperties
 
 
 class CreateFlatActivity : AppCompatActivity() {
@@ -44,10 +44,18 @@ class CreateFlatActivity : AppCompatActivity() {
         member.put("name", "testname")
         member.put("email", "testemail")
 
-        val flat_id = flatReference.id
+        val flatId = flatReference.id
+        updateUserAccount(flatId)
 
         flatReference.collection("members").document("Member1").set(member)
             .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
+    }
+
+    private fun updateUserAccount(flatId : String?){
+        val userId = mAuth.currentUser!!.uid
+
+        val user = User(flat=flatId)
+        mDatabaseReference.child(userId).setValue(user)
     }
 }
