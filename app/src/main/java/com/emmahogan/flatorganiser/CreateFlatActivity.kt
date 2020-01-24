@@ -1,11 +1,14 @@
 package com.emmahogan.flatorganiser;
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.widget.Toast
+
 
 
 class CreateFlatActivity : AppCompatActivity() {
@@ -31,9 +34,18 @@ class CreateFlatActivity : AppCompatActivity() {
         //get intent bundles
         currentUser = intent.getParcelableExtra("currentUser")
 
-
+        //create flat in flats collection
         addFlatToDatabase()
+
+        //set up widgets
+        val flatIdTV : TextView = findViewById(R.id.flat_id)
+        val shareBtn : Button = findViewById(R.id.share_flat)
+        shareBtn.setOnClickListener{ shareFlat() }
+
+        val flatId = currentUser.flat
+        updateTV(flatId, flatIdTV)
     }
+
 
     private fun addFlatToDatabase(){
         // Create a new flat
@@ -51,12 +63,15 @@ class CreateFlatActivity : AppCompatActivity() {
         member.put("email", currentUser.email.toString())
 
         val flatId = flatReference.id
+
+        //update user account in realtime database
         updateUserAccount(flatId)
 
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
             .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
     }
+
 
     private fun updateUserAccount(flatId : String?){
         val userId = mAuth.currentUser!!.uid
@@ -67,5 +82,17 @@ class CreateFlatActivity : AppCompatActivity() {
 
         val user = User(name, email, flatId)
         mDatabaseReference.child(userId).setValue(user)
+
+
+    }
+
+
+    private fun shareFlat(){
+        //open email
+    }
+
+
+    private fun updateTV(newText : String?, textView : TextView){
+        textView.setText(newText)
     }
 }
