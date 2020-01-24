@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.widget.Toast
+import android.content.Intent
 
 
 
@@ -25,6 +26,7 @@ class CreateFlatActivity : AppCompatActivity() {
     private var db = FirebaseFirestore.getInstance()
 
     lateinit var currentUser : User
+    lateinit var flatIdTV : TextView
 
 
     override fun onCreate(savedInstanceState : Bundle?){
@@ -38,12 +40,9 @@ class CreateFlatActivity : AppCompatActivity() {
         addFlatToDatabase()
 
         //set up widgets
-        val flatIdTV : TextView = findViewById(R.id.flat_id)
+        flatIdTV = findViewById(R.id.flat_id)
         val shareBtn : Button = findViewById(R.id.share_flat)
         shareBtn.setOnClickListener{ shareFlat() }
-
-        val flatId = currentUser.flat
-        updateTV(flatId, flatIdTV)
     }
 
 
@@ -66,6 +65,7 @@ class CreateFlatActivity : AppCompatActivity() {
 
         //update user account in realtime database
         updateUserAccount(flatId)
+        updateFlatIdTextView(flatId)
 
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
             .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
@@ -87,12 +87,27 @@ class CreateFlatActivity : AppCompatActivity() {
     }
 
 
-    private fun shareFlat(){
-        //open email
+    private fun updateFlatIdTextView(flatId : String?){
+        flatIdTV.setText(flatId)
     }
 
 
-    private fun updateTV(newText : String?, textView : TextView){
-        textView.setText(newText)
+    private fun shareFlat(){
+        //open email
+        val name = currentUser.name
+        val i = Intent(Intent.ACTION_SEND)
+        i.type = "message/rfc822"
+        i.putExtra(Intent.EXTRA_SUBJECT, "$name invited you to join their flat!")
+        i.putExtra(Intent.EXTRA_TEXT, "body of email")
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."))
+        } catch (ex: android.content.ActivityNotFoundException) {
+            Toast.makeText(
+                this,
+                "There are no email clients installed.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
     }
 }
