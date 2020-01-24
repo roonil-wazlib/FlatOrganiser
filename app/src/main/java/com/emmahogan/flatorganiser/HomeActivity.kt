@@ -30,6 +30,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var currentUser : User
 
 
+    //TODO: figure out how to make this run faster so lateinit doesn't break on other TODO
     private val nameListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot : DataSnapshot) {
             // Get User objects as iterable
@@ -91,6 +92,7 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        //TODO: figure out how to make this work
         //if (userInFlat()){
             //user is already in a flat
             //createFlatButton.setVisibility(View.GONE)
