@@ -3,33 +3,30 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add flatmates:" />
-
-    <TextView
-        android:id="@+id/added_flatmates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Flat ID"
+            android:layout_weight="0.4"/>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:hint="Flatmate's email"
-            android:layout_weight=".8"/>
+        <TextView
+            android:id="@+id/flat_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PlaceholderText"
+            android:layout_weight="0.6"/>
 
-        <Button
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="+"
-            android:layout_weight=".2"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/share_flat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Invite Flatmates" />
+
 </LinearLayout>

@@ -47,13 +47,13 @@ class CreateFlatActivity : AppCompatActivity() {
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
 
         val member = HashMap<String, Any>()
-        member.put("name", "testname")
-        member.put("email", "testemail")
+        member.put("name", currentUser.name.toString())
+        member.put("email", currentUser.email.toString())
 
         val flatId = flatReference.id
         updateUserAccount(flatId)
 
-        flatReference.collection("members").document("Member1").set(member)
+        flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
             .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
     }
