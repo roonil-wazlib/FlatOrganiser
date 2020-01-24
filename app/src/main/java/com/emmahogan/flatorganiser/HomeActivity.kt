@@ -2,11 +2,13 @@ package com.emmahogan.flatorganiser
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -89,6 +91,12 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        //if (userInFlat()){
+            //user is already in a flat
+            //createFlatButton.setVisibility(View.GONE)
+            //joinFlatButton.setVisibility(View.GONE)
+        //}
+
     }
 
     //update name textview
@@ -107,9 +115,16 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun createFlat(){
-        val intent = Intent(this, CreateFlatActivity::class.java)
-        intent.putExtra("currentUser", currentUser)
-        startActivity(intent)
+
+        if(userInFlat()){
+            Toast.makeText(this@HomeActivity, "You're already in a flat!", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            val intent = Intent(this, CreateFlatActivity::class.java)
+            intent.putExtra("currentUser", currentUser)
+            startActivity(intent)
+        }
+
     }
 
     private fun joinFlat(){
@@ -119,5 +134,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun instantiateUser(name : String?, email : String?, flatId : String?) {
         currentUser = User(name, email, flatId)
+    }
+
+    private fun userInFlat() : Boolean{
+        return currentUser.flat != ""
     }
 }
