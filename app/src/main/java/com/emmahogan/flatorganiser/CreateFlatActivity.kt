@@ -81,8 +81,8 @@ class CreateFlatActivity : AppCompatActivity() {
         val email = currentUser.email
 
         val user = User(name, email, flatId)
+        currentUser = user
         mDatabaseReference.child(userId).setValue(user)
-
 
     }
 
@@ -95,10 +95,12 @@ class CreateFlatActivity : AppCompatActivity() {
     private fun shareFlat(){
         //open email
         val name = currentUser.name
+        val flat = currentUser.flat.toString()
+
         val i = Intent(Intent.ACTION_SEND)
         i.type = "message/rfc822"
         i.putExtra(Intent.EXTRA_SUBJECT, "$name invited you to join their flat!")
-        i.putExtra(Intent.EXTRA_TEXT, "body of email")
+        i.putExtra(Intent.EXTRA_TEXT, "Please join my flat! The ID is $flat")
         try {
             startActivity(Intent.createChooser(i, "Send mail..."))
         } catch (ex: android.content.ActivityNotFoundException) {

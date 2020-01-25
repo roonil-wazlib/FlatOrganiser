@@ -123,8 +123,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun joinFlat(){
-        //val intent = Intent(this, JoinFlatActivity::class.java)
-        //startActivity(intent)
+        val intent = Intent(this, JoinFlatActivity::class.java)
+        intent.putExtra("currentUser", currentUser)
+        startActivity(intent)
     }
 
     private fun instantiateUser(name : String?, email : String?, flatId : String?) {
