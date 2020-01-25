@@ -36,13 +36,13 @@ class CreateFlatActivity : AppCompatActivity() {
         //get intent bundles
         currentUser = intent.getParcelableExtra("currentUser")
 
-        //create flat in flats collection
-        addFlatToDatabase()
-
         //set up widgets
         flatIdTV = findViewById(R.id.flat_id)
         val shareBtn : Button = findViewById(R.id.share_flat)
         shareBtn.setOnClickListener{ shareFlat() }
+
+        //create flat in flats collection
+        addFlatToDatabase()
     }
 
 

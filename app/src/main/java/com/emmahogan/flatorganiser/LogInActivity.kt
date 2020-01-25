@@ -18,17 +18,18 @@ class LogInActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
 
         val loginButton: Button = findViewById(R.id.login_button)
         loginButton.setOnClickListener { logIn() }
 
-        val signUpButton : TextView = findViewById(R.id.signUp_button)
+        val signUpButton: TextView = findViewById(R.id.signUp_button)
         signUpButton.setOnClickListener { signUp() }
 
         //check if user is logged in
-        if (isUserLoggedIn()){
+        if (isUserLoggedIn()) {
             startHomeActivity()
         }
     }
@@ -44,28 +45,36 @@ class LogInActivity : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
                 if (task.isSuccessful) {
+                    //tell database to listen for user info
                     startHomeActivity()
                 } else {
-                    Toast.makeText(this@LogInActivity, "Email or password incorrect.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@LogInActivity,
+                        "Email or password incorrect.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
             )
     }
-    private fun isUserLoggedIn() : Boolean {
+
+    private fun isUserLoggedIn(): Boolean {
         val user = mAuth.currentUser
         return user != null
     }
 
-    fun signUp(){
+    fun signUp() {
         //switch to SignUpActivity and close this one
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
         this.finish()
     }
 
-    private fun startHomeActivity(){
+
+    private fun startHomeActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         this.finish() //close log in page so user goes back to MainActivity on Logout.
     }
+
 }

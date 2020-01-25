@@ -28,9 +28,10 @@ class HomeActivity : AppCompatActivity() {
 
 
     lateinit var currentUser : User
+    lateinit var createFlatButton : Button
+    lateinit var joinFlatButton : Button
 
 
-    //TODO: figure out how to make this run faster so lateinit doesn't break on other TODO
     private val nameListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot : DataSnapshot) {
             // Get User objects as iterable
@@ -44,6 +45,7 @@ class HomeActivity : AppCompatActivity() {
                     val email = user.getValue(User::class.java)!!.email
                     val flatId = user.getValue(User::class.java)!!.flat
                     instantiateUser(name, email, flatId)
+                    updateDisplay()
                 }
             }
         }
@@ -59,7 +61,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
 
         val user = mAuth!!.currentUser
         val email = user!!.email
@@ -80,8 +81,8 @@ class HomeActivity : AppCompatActivity() {
         settingsButton.setOnClickListener{openSettings()}
 
         //set up create and join flat buttons
-        val createFlatButton : Button = findViewById(R.id.create_flat)
-        val joinFlatButton : Button = findViewById(R.id.join_flat)
+        createFlatButton = findViewById(R.id.create_flat)
+        joinFlatButton = findViewById(R.id.join_flat)
         createFlatButton.setOnClickListener{ createFlat() }
         joinFlatButton.setOnClickListener{ joinFlat() }
 
@@ -91,14 +92,6 @@ class HomeActivity : AppCompatActivity() {
                 this.finish()
             }
         }
-
-        //TODO: figure out how to make this work
-        //if (userInFlat()){
-            //user is already in a flat
-            //createFlatButton.setVisibility(View.GONE)
-            //joinFlatButton.setVisibility(View.GONE)
-        //}
-
     }
 
     //update name textview
@@ -140,5 +133,14 @@ class HomeActivity : AppCompatActivity() {
 
     private fun userInFlat() : Boolean{
         return currentUser.flat != ""
+    }
+
+    private fun updateDisplay(){
+        //remove add/join flat buttons if user already in flat
+        if (userInFlat()){
+            //user is already in a flat
+            createFlatButton.setVisibility(View.GONE)
+            joinFlatButton.setVisibility(View.GONE)
+        }
     }
 }
