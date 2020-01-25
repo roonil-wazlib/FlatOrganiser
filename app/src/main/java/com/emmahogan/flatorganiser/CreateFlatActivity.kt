@@ -64,28 +64,14 @@ class CreateFlatActivity : AppCompatActivity() {
         val flatId = flatReference.id
 
         //update user account in realtime database
-        updateUserAccount(flatId)
+        currentUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatId, currentUser)
         updateFlatIdTextView(flatId)
 
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
             .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
     }
-
-
-    private fun updateUserAccount(flatId : String?){
-        val userId = mAuth.currentUser!!.uid
-
-        //TODO: add change flat id method to User class to avoid this
-        val name = currentUser.name
-        val email = currentUser.email
-
-        val user = User(name, email, flatId)
-        currentUser = user
-        mDatabaseReference.child(userId).setValue(user)
-
-    }
-
+    
 
     private fun updateFlatIdTextView(flatId : String?){
         flatIdTV.setText(flatId)

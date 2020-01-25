@@ -44,7 +44,7 @@ class JoinFlatActivity : AppCompatActivity() {
         val flatId = flatIdET.getText().toString()
 
         //update user account in realtime database
-        updateUserAccount(flatId)
+        currentUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatId, currentUser)
 
         val flatReference = db.collection("flats").document(flatId)
 
@@ -55,18 +55,5 @@ class JoinFlatActivity : AppCompatActivity() {
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
             .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
             .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
-    }
-
-
-    //TODO: add kotlin class containing firebase methods to remove repeats
-    private fun updateUserAccount(flatId : String?){
-        val userId = mAuth.currentUser!!.uid
-
-        //TODO: add change flat id method to User class to avoid this
-        val name = currentUser.name
-        val email = currentUser.email
-
-        val user = User(name, email, flatId)
-        mDatabaseReference.child(userId).setValue(user)
     }
 }
