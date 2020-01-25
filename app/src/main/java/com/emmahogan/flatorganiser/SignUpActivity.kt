@@ -44,7 +44,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
-
     private fun createAccount(){
         //make a new user
         val emailET: EditText = findViewById(R.id.email)
@@ -58,6 +57,7 @@ class SignUpActivity : AppCompatActivity() {
         val passwordCheck = passwordCheckET.getText().toString()
 
 
+        //TODO add important section of this to database file
         //if passwords match, create new user
         if (checkPasswords(password, passwordCheck)) {
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -100,11 +100,13 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
+    //TODO add to database file
     //add new user to realtime database
     private fun writeNewUser(userId: String, name: String?, email: String?) {
         val user = User(name, email)
         mDatabaseReference.child(userId).setValue(user)
     }
+
 
     private val checkIfUserExists = object : ValueEventListener {
         override fun onDataChange(dataSnapshot : DataSnapshot) {
@@ -127,11 +129,12 @@ class SignUpActivity : AppCompatActivity() {
 
             errorMessage = when(userExists){
                 true -> "You already have an account. Please login."
-                else -> "Something went wrong. Please check your internet connection and try again."
+                else -> "Something went wrong. Please check your internet connection and try again." //TODO debug why this message sometimes appears for no immediately obvious reason
             }
 
             displayMessage(errorMessage)
         }
+
 
         override fun onCancelled(databaseError: DatabaseError) {
             //Getting user name failed, show error message
@@ -141,13 +144,16 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
+
     private fun displayMessage(error : String){
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 
+
     private fun isUserLoggedIn() : Boolean {
         return mAuth.currentUser != null
     }
+
 
     private fun startHomeActivity(){
         val intent = Intent(this, HomeActivity::class.java)
@@ -157,7 +163,7 @@ class SignUpActivity : AppCompatActivity() {
 }
 
 
-
+//TODO add to database file
 //define properties of user child
 //(properties must be initialised to keep javabeans happy)
 @Parcelize

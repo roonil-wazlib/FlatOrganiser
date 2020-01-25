@@ -34,6 +34,7 @@ class LogInActivity : AppCompatActivity() {
         }
     }
 
+
     fun logIn() {
 
         val emailET: EditText = findViewById(R.id.email)
@@ -58,12 +59,14 @@ class LogInActivity : AppCompatActivity() {
             )
     }
 
+
     private fun isUserLoggedIn(): Boolean {
         val user = mAuth.currentUser
         return user != null
     }
 
-    fun signUp() {
+
+    private fun signUp() {
         //switch to SignUpActivity and close this one
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)

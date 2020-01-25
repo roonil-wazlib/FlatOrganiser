@@ -8,7 +8,6 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -94,20 +93,24 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+
     //update name textview
     fun updateName(name : String?){
         val nameTV : TextView = findViewById(R.id.nameTv)
         nameTV.setText("hi" + name)
     }
 
+
     private fun logOut(){
         mAuth.signOut()
     }
+
 
     private fun openSettings(){
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
+
 
     private fun createFlat(){
 
@@ -119,8 +122,8 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("currentUser", currentUser)
             startActivity(intent)
         }
-
     }
+
 
     private fun joinFlat(){
         val intent = Intent(this, JoinFlatActivity::class.java)
@@ -128,13 +131,16 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+
     private fun instantiateUser(name : String?, email : String?, flatId : String?) {
         currentUser = User(name, email, flatId)
     }
 
+
     private fun userInFlat() : Boolean{
         return currentUser.flat != ""
     }
+
 
     private fun updateDisplay(){
         //remove add/join flat buttons if user already in flat

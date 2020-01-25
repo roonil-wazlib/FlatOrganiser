@@ -9,6 +9,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
+
+
+
 class JoinFlatActivity : AppCompatActivity() {
 
     private var mAuth = FirebaseAuth.getInstance()
@@ -40,6 +43,8 @@ class JoinFlatActivity : AppCompatActivity() {
 
     }
 
+
+    //TODO add to database file
     private fun joinFlat(){
         val flatId = flatIdET.getText().toString()
 

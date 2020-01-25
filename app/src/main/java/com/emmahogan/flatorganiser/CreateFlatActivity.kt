@@ -14,17 +14,6 @@ import android.content.Intent
 
 class CreateFlatActivity : AppCompatActivity() {
 
-    //get reference to Firebase Auth
-    private var mAuth = FirebaseAuth.getInstance()
-
-    //Initialise Firebase db
-    private var mDatabase = FirebaseDatabase.getInstance()
-    //Get reference to users child
-    private var mDatabaseReference = mDatabase.reference.child("users")
-
-    //get reference to Firestore Cloud instance
-    private var db = FirebaseFirestore.getInstance()
-
     lateinit var currentUser : User
     lateinit var flatIdTV : TextView
 
@@ -42,36 +31,9 @@ class CreateFlatActivity : AppCompatActivity() {
         shareBtn.setOnClickListener{ shareFlat() }
 
         //create flat in flats collection
-        addFlatToDatabase()
+        currentUser = (CloudFirestore::addFlatToDatabase)(CloudFirestore(),currentUser)
+        updateFlatIdTextView(currentUser.flat)
     }
-
-
-    private fun addFlatToDatabase(){
-        // Create a new flat
-
-        val flat = HashMap<String, Any>()
-
-        val flatReference = db.collection("flats").document()
-
-        flatReference.set(flat)
-            .addOnSuccessListener { Toast.makeText(this, "Flat created", Toast.LENGTH_SHORT).show() }
-            .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
-
-        val member = HashMap<String, Any>()
-        member.put("name", currentUser.name.toString())
-        member.put("email", currentUser.email.toString())
-
-        val flatId = flatReference.id
-
-        //update user account in realtime database
-        currentUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatId, currentUser)
-        updateFlatIdTextView(flatId)
-
-        flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
-            .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
-            .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
-    }
-    
 
     private fun updateFlatIdTextView(flatId : String?){
         flatIdTV.setText(flatId)
