@@ -109,6 +109,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun openSettings(){
         val intent = Intent(this, SettingsActivity::class.java)
+        intent.putExtra("currentUser", currentUser)
         startActivity(intent)
     }
 

@@ -52,6 +52,8 @@ class CloudFirestore{
         // Create a new flat
 
         val flat = HashMap<String, Any>()
+        flat.put("flatmates", mutableListOf(mAuth.currentUser!!.uid))
+
         val flatReference = db.collection("flats").document()
 
         flatReference.set(flat)
@@ -81,6 +83,9 @@ class CloudFirestore{
         val updatedUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatID, currentUser)
 
         val flatReference = db.collection("flats").document(flatID)
+        flatReference.get()
+        //TODO get flatmates array and add current user to it
+
 
         val member = HashMap<String, Any>()
         member.put("name", updatedUser.name.toString())
