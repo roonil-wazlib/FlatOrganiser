@@ -25,6 +25,12 @@ class RealtimeDatabase{
 
         return currentUser
     }
+
+    //add new user to realtime database
+    fun writeNewUser(userId: String, name: String?, email: String?) {
+        val user = User(name, email)
+        mDatabaseReference.child(userId).setValue(user)
+    }
 }
 
 

@@ -57,7 +57,6 @@ class SignUpActivity : AppCompatActivity() {
         val passwordCheck = passwordCheckET.getText().toString()
 
 
-        //TODO add important section of this to database file
         //if passwords match, create new user
         if (checkPasswords(password, passwordCheck)) {
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -66,7 +65,7 @@ class SignUpActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         //Registration OK
                         val firebaseUser = mAuth.currentUser
-                        writeNewUser(firebaseUser!!.uid, name, email) //user should not be null if task is successful
+                        (RealtimeDatabase::writeNewUser)(RealtimeDatabase(), firebaseUser!!.uid, name, email)
 
                         //go to home
                         val intent = Intent(this, HomeActivity::class.java)
@@ -100,14 +99,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
-    //TODO add to database file
-    //add new user to realtime database
-    private fun writeNewUser(userId: String, name: String?, email: String?) {
-        val user = User(name, email)
-        mDatabaseReference.child(userId).setValue(user)
-    }
-
-
     private val checkIfUserExists = object : ValueEventListener {
         override fun onDataChange(dataSnapshot : DataSnapshot) {
             // Get User objects as iterable
@@ -129,7 +120,7 @@ class SignUpActivity : AppCompatActivity() {
 
             errorMessage = when(userExists){
                 true -> "You already have an account. Please login."
-                else -> "Something went wrong. Please check your internet connection and try again." //TODO debug why this message sometimes appears for no immediately obvious reason
+                else -> "Something went wrong. Please check your internet connection and try again."
             }
 
             displayMessage(errorMessage)
