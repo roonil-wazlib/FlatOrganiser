@@ -163,7 +163,6 @@ class SignUpActivity : AppCompatActivity() {
 }
 
 
-//TODO add to database file
 //define properties of user child
 //(properties must be initialised to keep javabeans happy)
 @Parcelize
@@ -172,4 +171,14 @@ data class User(
     var name: String? = "",
     var email: String? = "",
     var flat: String? = ""
-) : Parcelable
+) : Parcelable {
+    fun changeFlat(newFlat : String?){
+        this.flat = newFlat
+    }
+    fun changeName(newName : String?){
+        this.name = newName
+    }
+    fun changeEmail(newEmail : String?){
+        this.email = newEmail
+    }
+}

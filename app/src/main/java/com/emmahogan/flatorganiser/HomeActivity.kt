@@ -45,6 +45,7 @@ class HomeActivity : AppCompatActivity() {
                     val flatId = user.getValue(User::class.java)!!.flat
                     instantiateUser(name, email, flatId)
                     updateDisplay()
+                    break
                 }
             }
         }
@@ -126,9 +127,14 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun joinFlat(){
-        val intent = Intent(this, JoinFlatActivity::class.java)
-        intent.putExtra("currentUser", currentUser)
-        startActivity(intent)
+        if(userInFlat()) {
+            Toast.makeText(this@HomeActivity, "You're already in a flat!", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            val intent = Intent(this, JoinFlatActivity::class.java)
+            intent.putExtra("currentUser", currentUser)
+            startActivity(intent)
+        }
     }
 
 

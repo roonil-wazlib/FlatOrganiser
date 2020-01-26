@@ -39,26 +39,7 @@ class JoinFlatActivity : AppCompatActivity() {
         //set up widgets
         flatIdET = findViewById(R.id.flat_id)
         val joinBtn : Button = findViewById(R.id.join_flat)
-        joinBtn.setOnClickListener{ joinFlat() }
+        joinBtn.setOnClickListener{(CloudFirestore::joinFlat)(CloudFirestore(), flatIdET.getText().toString(), currentUser) }
 
-    }
-
-
-    //TODO add to database file
-    private fun joinFlat(){
-        val flatId = flatIdET.getText().toString()
-
-        //update user account in realtime database
-        currentUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatId, currentUser)
-
-        val flatReference = db.collection("flats").document(flatId)
-
-        val member = HashMap<String, Any>()
-        member.put("name", currentUser.name.toString())
-        member.put("email", currentUser.email.toString())
-
-        flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
-            .addOnSuccessListener { Toast.makeText(this, "Member created", Toast.LENGTH_SHORT).show() }
-            .addOnFailureListener { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show() }
     }
 }
