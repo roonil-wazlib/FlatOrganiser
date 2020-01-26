@@ -50,6 +50,7 @@ class SettingsActivity : AppCompatActivity() {
 
 
         builder.setPositiveButton("Continue"){dialog, which ->
+            //TODO debug this - probably need to change the order
             deleteAuthAccount()
             deleteFromDatabase()
             deleteFromFlat()
@@ -104,7 +105,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun returnToMain(){
         //go back to main activity, clear stack
         val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP //TODO check if this is also an issue for users who were auto logged in
         startActivity(intent)
     }
 

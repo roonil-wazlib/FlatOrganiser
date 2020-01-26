@@ -3,8 +3,8 @@ package com.emmahogan.flatorganiser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-
-
+import android.util.Log
+import com.google.common.primitives.UnsignedBytes.toInt
 
 
 class RealtimeDatabase{
@@ -53,6 +53,7 @@ class CloudFirestore{
 
         val flat = HashMap<String, Any>()
         flat.put("flatmates", mutableListOf(mAuth.currentUser!!.uid))
+        flat.put("number", 1)
 
         val flatReference = db.collection("flats").document()
 
@@ -83,9 +84,10 @@ class CloudFirestore{
         val updatedUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatID, currentUser)
 
         val flatReference = db.collection("flats").document(flatID)
-        flatReference.get()
         //TODO get flatmates array and add current user to it
-
+        //TODO learn how to update data
+        var number = getNumberOfFlatmates(flatID)
+        number ++
 
         val member = HashMap<String, Any>()
         member.put("name", updatedUser.name.toString())
@@ -96,6 +98,24 @@ class CloudFirestore{
             .addOnFailureListener {}
 
         return updatedUser
+    }
+
+    fun getNumberOfFlatmates(flatID: String) : Int{
+        var number = 0
+        val flatReference = db.collection("flats").document(flatID)
+        flatReference.get().addOnSuccessListener { document ->
+            if (document != null) {
+                //flatmates = listOf(document.data!!["flatmates"])
+                //Log.d("TAG", flatmates.toString())
+                number = document.data!!["number"].toString().toInt()
+            } else {
+                //document doesn't exist
+            }
+        }
+            .addOnFailureListener { exception ->
+                //didn't work
+            }
+        return number
     }
 
 }
