@@ -30,6 +30,7 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var currentUser : User
     lateinit var createJoinDisplay : LinearLayout
+    lateinit var homeTableDisplay : LinearLayout
 
 
     private val nameListener = object : ValueEventListener {
@@ -62,8 +63,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val user = mAuth!!.currentUser
-
         //tell database to listen for name
         mDatabaseReference.addValueEventListener(nameListener)
 
@@ -81,8 +80,9 @@ class HomeActivity : AppCompatActivity() {
         createFlatButton.setOnClickListener{ createFlat() }
         joinFlatButton.setOnClickListener{ joinFlat() }
 
-        //initalise layout containing create and join buttons
+        //initalise layouts
         createJoinDisplay = findViewById(R.id.create_join_layout)
+        homeTableDisplay = findViewById(R.id.home_table_layout)
 
         //initialise shopping list button
         val shoppingBtn : Button = findViewById(R.id.shopping_list)
@@ -149,6 +149,10 @@ class HomeActivity : AppCompatActivity() {
         if (userInFlat()){
             //user is already in a flat
             createJoinDisplay.setVisibility(View.GONE)
+            homeTableDisplay.setVisibility(View.VISIBLE)
+        }else{
+            homeTableDisplay.setVisibility(View.GONE)
+            createJoinDisplay.setVisibility(View.VISIBLE)
         }
     }
 

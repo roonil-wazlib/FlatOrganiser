@@ -29,6 +29,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/home_table_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -113,7 +114,7 @@
         <LinearLayout
             android:id="@+id/create_join_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
 
