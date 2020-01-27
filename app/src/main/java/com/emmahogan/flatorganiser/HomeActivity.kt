@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -83,6 +84,10 @@ class HomeActivity : AppCompatActivity() {
         //initalise layout containing create and join buttons
         createJoinDisplay = findViewById(R.id.create_join_layout)
 
+        //initialise shopping list button
+        val shoppingBtn : Button = findViewById(R.id.shopping_list)
+        shoppingBtn.setOnClickListener{ openShopping() }
+
         //end activity when user logs out
         mAuth.addAuthStateListener {
             if(mAuth.currentUser == null){
@@ -145,5 +150,10 @@ class HomeActivity : AppCompatActivity() {
             //user is already in a flat
             createJoinDisplay.setVisibility(View.GONE)
         }
+    }
+
+    private fun openShopping(){
+        val intent = Intent(this, ShoppingListActivity::class.java)
+        startActivity(intent)
     }
 }
