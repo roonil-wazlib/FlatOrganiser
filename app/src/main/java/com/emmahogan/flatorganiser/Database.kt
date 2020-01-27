@@ -5,6 +5,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import android.util.Log
 import com.google.common.primitives.UnsignedBytes.toInt
+import com.google.firebase.firestore.FieldValue
 
 
 class RealtimeDatabase{
@@ -36,7 +37,7 @@ class RealtimeDatabase{
 
 
 
-class CloudFirestore{
+class CloudFirestore {
     //get reference to Firebase Auth
     private var mAuth = FirebaseAuth.getInstance()
     //Initialise Firebase db
@@ -47,13 +48,12 @@ class CloudFirestore{
     private var db = FirebaseFirestore.getInstance()
 
 
-
-    fun addFlatToDatabase(currentUser : User) : User{
+    fun addFlatToDatabase(currentUser: User): User {
         // Create a new flat
 
         val flat = HashMap<String, Any>()
         flat.put("flatmates", mutableListOf(mAuth.currentUser!!.uid))
-        flat.put("number", 1)
+        flat.put("flat_size", 1)
 
         val flatReference = db.collection("flats").document()
 
@@ -68,7 +68,8 @@ class CloudFirestore{
         val flatId = flatReference.id
 
         //update user account in realtime database
-        val updatedUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatId, currentUser)
+        val updatedUser =
+            (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatId, currentUser)
 
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
             .addOnSuccessListener {}
@@ -78,16 +79,17 @@ class CloudFirestore{
     }
 
 
-    fun joinFlat(flatID: String, currentUser: User) : User{
+    fun joinFlat(flatID: String, currentUser: User): User {
 
         //update user account in realtime database
-        val updatedUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatID, currentUser)
+        val updatedUser =
+            (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatID, currentUser)
 
         val flatReference = db.collection("flats").document(flatID)
         //TODO get flatmates array and add current user to it
-        //TODO learn how to update data
-        var number = getNumberOfFlatmates(flatID)
-        number ++
+
+        flatReference.update("flatmates", FieldValue.arrayUnion(mAuth.currentUser!!.uid))
+        //flatReference.update("flat_size", FieldValue.increment(1))
 
         val member = HashMap<String, Any>()
         member.put("name", updatedUser.name.toString())
@@ -99,23 +101,4 @@ class CloudFirestore{
 
         return updatedUser
     }
-
-    fun getNumberOfFlatmates(flatID: String) : Int{
-        var number = 0
-        val flatReference = db.collection("flats").document(flatID)
-        flatReference.get().addOnSuccessListener { document ->
-            if (document != null) {
-                //flatmates = listOf(document.data!!["flatmates"])
-                //Log.d("TAG", flatmates.toString())
-                number = document.data!!["number"].toString().toInt()
-            } else {
-                //document doesn't exist
-            }
-        }
-            .addOnFailureListener { exception ->
-                //didn't work
-            }
-        return number
-    }
-
 }
