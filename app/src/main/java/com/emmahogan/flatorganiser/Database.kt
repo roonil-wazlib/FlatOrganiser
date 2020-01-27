@@ -86,9 +86,10 @@ class CloudFirestore {
             (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatID, currentUser)
 
         val flatReference = db.collection("flats").document(flatID)
-        //TODO get flatmates array and add current user to it
 
         flatReference.update("flatmates", FieldValue.arrayUnion(mAuth.currentUser!!.uid))
+
+        //TODO figure out why this is broken
         //flatReference.update("flat_size", FieldValue.increment(1))
 
         val member = HashMap<String, Any>()

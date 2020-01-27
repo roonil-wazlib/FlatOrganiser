@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -97,6 +98,9 @@ class SettingsActivity : AppCompatActivity() {
         if (currentUser.flat != "") {
             val userReference = db.collection("flats").document(currentUser.flat.toString()).collection("members").document(mAuth.currentUser!!.uid)
             userReference.delete()
+
+            val flatReference = db.collection("flats").document(currentUser.flat.toString())
+            flatReference.update("flatmates", FieldValue.arrayRemove(mAuth.currentUser!!.uid))
         }
         //TODO research whether empty collection should be deleted - seen weird things saying never to delete collections, not sure why
     }
@@ -107,13 +111,6 @@ class SettingsActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP //TODO check if this is also an issue for users who were auto logged in
         startActivity(intent)
-    }
-
-
-    private fun flatIsEmpty() : Boolean{
-        val flatReference = db.collection("flats").document(currentUser.flat.toString())
-        //check if flatReference exists (if empty it does not exist)
-        return true
     }
 
 
