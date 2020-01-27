@@ -55,7 +55,7 @@ class SettingsActivity : AppCompatActivity() {
             //TODO debug this - probably need to change the order.
             //TODO figure out how to reproduce the error
             deleteAuthAccount()
-            deleteFromDatabase()
+            deleteFromDatabase() //maybe put this in onSuccess of deleteAuthAccount to insure order correct?
             deleteFromFlat()
             //Toast.makeText(this, "Deleting account...", Toast.LENGTH_SHORT).show()
             returnToMain()

@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
@@ -27,8 +28,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     lateinit var currentUser : User
-    lateinit var createFlatButton : Button
-    lateinit var joinFlatButton : Button
+    lateinit var createJoinDisplay : LinearLayout
 
 
     private val nameListener = object : ValueEventListener {
@@ -40,7 +40,6 @@ class HomeActivity : AppCompatActivity() {
             for (user in users) {
                 if (user.key == mAuth.currentUser!!.uid) {
                     val name = user.getValue(User::class.java)!!.name
-                    updateName(name)
                     val email = user.getValue(User::class.java)!!.email
                     val flatId = user.getValue(User::class.java)!!.flat
                     instantiateUser(name, email, flatId)
@@ -63,14 +62,9 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         val user = mAuth!!.currentUser
-        val email = user!!.email
 
         //tell database to listen for name
         mDatabaseReference.addValueEventListener(nameListener)
-
-        //check email received correctly
-        val testTV : TextView = findViewById(R.id.test)
-        testTV.setText("$email")
 
         //set up logout button
         val logoutButton : Button = findViewById(R.id.logout_button)
@@ -81,10 +75,13 @@ class HomeActivity : AppCompatActivity() {
         settingsButton.setOnClickListener{openSettings()}
 
         //set up create and join flat buttons
-        createFlatButton = findViewById(R.id.create_flat)
-        joinFlatButton = findViewById(R.id.join_flat)
+        val createFlatButton : Button = findViewById(R.id.create_flat)
+        val joinFlatButton : Button = findViewById(R.id.join_flat)
         createFlatButton.setOnClickListener{ createFlat() }
         joinFlatButton.setOnClickListener{ joinFlat() }
+
+        //initalise layout containing create and join buttons
+        createJoinDisplay = findViewById(R.id.create_join_layout)
 
         //end activity when user logs out
         mAuth.addAuthStateListener {
@@ -93,14 +90,6 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
-
-
-    //update name textview
-    fun updateName(name : String?){
-        val nameTV : TextView = findViewById(R.id.nameTv)
-        nameTV.setText("hi" + name)
-    }
-
 
     private fun logOut(){
         mAuth.signOut()
@@ -154,8 +143,7 @@ class HomeActivity : AppCompatActivity() {
         //remove add/join flat buttons if user already in flat
         if (userInFlat()){
             //user is already in a flat
-            createFlatButton.setVisibility(View.GONE)
-            joinFlatButton.setVisibility(View.GONE)
+            createJoinDisplay.setVisibility(View.GONE)
         }
     }
 }
