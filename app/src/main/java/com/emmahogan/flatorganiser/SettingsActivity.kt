@@ -2,6 +2,7 @@ package com.emmahogan.flatorganiser
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -51,11 +52,12 @@ class SettingsActivity : AppCompatActivity() {
 
 
         builder.setPositiveButton("Continue"){dialog, which ->
-            //TODO debug this - probably need to change the order
+            //TODO debug this - probably need to change the order.
+            //TODO figure out how to reproduce the error
             deleteAuthAccount()
             deleteFromDatabase()
             deleteFromFlat()
-            Toast.makeText(this, "Deleting account...", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Deleting account...", Toast.LENGTH_SHORT).show()
             returnToMain()
         }
 
@@ -82,6 +84,8 @@ class SettingsActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
                 }
+                else
+                    Toast.makeText(this, "FAIL", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -101,8 +105,9 @@ class SettingsActivity : AppCompatActivity() {
 
             val flatReference = db.collection("flats").document(currentUser.flat.toString())
             flatReference.update("flatmates", FieldValue.arrayRemove(mAuth.currentUser!!.uid))
+
+            checkDeleteFlat() //delete flat collection if last flatmate just removed
         }
-        //TODO research whether empty collection should be deleted - seen weird things saying never to delete collections, not sure why
     }
 
 
@@ -114,7 +119,24 @@ class SettingsActivity : AppCompatActivity() {
     }
 
 
-    private fun deleteFlat(){
+    private fun checkDeleteFlat() {
+        val flatReference = db.collection("flats").document(currentUser.flat.toString())
+        flatReference.get().addOnSuccessListener { document ->
+            if (document != null) {
+                if (document.data!!["flatmates"].toString() == "[]") {
+                    deleteFlat()
+                }
+            } else {
+                Log.d("TAG", "No such document")
+            }
+        }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+    }
+
+
+    fun deleteFlat(){
         val flatReference = db.collection("flats").document(currentUser.flat.toString())
         flatReference.delete()
     }

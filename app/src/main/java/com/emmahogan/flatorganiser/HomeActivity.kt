@@ -141,6 +141,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun instantiateUser(name : String?, email : String?, flatId : String?) {
         currentUser = User(name, email, flatId)
+        Toast.makeText(this, "DONE", Toast.LENGTH_SHORT).show()
     }
 
 
