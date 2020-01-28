@@ -2,17 +2,17 @@ package com.emmahogan.flatorganiser
 
 
 //TODO comment this file so you don't get confused by your bullshit 1am code again
-class ReModel {
+class ListItem {
 
-    var isSelected: Boolean = false
-    var grocery: String? = null
+    var isSelected : Boolean = false
+    var name : String? = null
 
-    fun getGroceries(): String {
-        return grocery.toString()
+    fun getItemName(): String {
+        return name.toString()
     }
 
-    fun setGroceries(grocery: String) {
-        this.grocery = grocery
+    fun setItemName(grocery: String) {
+        this.name = grocery
     }
 
     fun getSelected(): Boolean {

@@ -13,7 +13,7 @@ import java.util.ArrayList
 class ShoppingListActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
-    private var modelArrayList: ArrayList<ReModel>? = null
+    private var modelArrayList: ArrayList<ListItem>? = null
     private var customAdapter: ReAdapter? = null
     private var groceriesList = mutableListOf("Milk", "Eggs", "Cheese", "Fruit", "Flour", "Beans", "Carrots", "Bread")
 
@@ -24,7 +24,7 @@ class ShoppingListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_shopping_list)
 
         recyclerView = findViewById(R.id.recycler)
-        updateList()
+        createList()
 
 
         //get reference to new item edit text and add button
@@ -33,26 +33,31 @@ class ShoppingListActivity : AppCompatActivity() {
         addBtn.setOnClickListener{ addItem() }
     }
 
-    private fun getModel(isSelect: Boolean): ArrayList<ReModel> {
-        val list = ArrayList<ReModel>()
+    private fun getModel(isSelect: Boolean): ArrayList<ListItem> {
+        val list = ArrayList<ListItem>()
         for (item in groceriesList) {
 
-            val model = ReModel()
+            //get class instance for each item in list
+            val model = ListItem()
+            //set selected checkbuttons
             model.setSelecteds(isSelect)
-            model.setGroceries(item)
+            //set grocery name
+            model.setItemName(item)
+            //add class instance to list of grocery class instances
             list.add(model)
         }
         return list
     }
 
     private fun addItem(){
-        val newItem = newItemET.getText().toString()
-        groceriesList.add(newItem)
-        Log.d("TAG", groceriesList.toString())
-        updateList()
+        val name = newItemET.getText().toString()
+        val model = ListItem()
+        model.setItemName(name)
+        customAdapter!!.addItem(model)
+        newItemET.setText("")
     }
 
-    private fun updateList(){
+    private fun createList(){
         modelArrayList = getModel(false)
         customAdapter = ReAdapter(this, modelArrayList!!)
         recyclerView!!.adapter = customAdapter
