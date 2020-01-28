@@ -2,6 +2,7 @@ package com.emmahogan.flatorganiser
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -83,6 +84,7 @@ class HomeActivity : AppCompatActivity() {
         //initalise layouts
         createJoinDisplay = findViewById(R.id.create_join_layout)
         homeTableDisplay = findViewById(R.id.home_table_layout)
+        homeTableDisplay.setVisibility(View.GONE) //changes when user data retrieved and user found to be in flat
 
         //initialise shopping list button
         val shoppingBtn : Button = findViewById(R.id.shopping_list)
