@@ -31,14 +31,14 @@ class ShoppingListActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recycler)
         createList()
-        
+
         //get reference to new item edit text and add button
         newItemET = findViewById(R.id.new_grocery)
         val addBtn : Button = findViewById(R.id.add)
         addBtn.setOnClickListener{ addItem() }
     }
 
-
+    //update this to populate from hashmap in db, including correct isSelect value
     private fun getModel(isSelect: Boolean): ArrayList<ListItem> {
         val list = ArrayList<ListItem>()
         for (item in groceriesList) {
