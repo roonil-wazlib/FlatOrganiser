@@ -1,6 +1,7 @@
 package com.emmahogan.flatorganiser
 
 import android.content.Context
+import android.nfc.Tag
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.ArrayList
 
 
-//TODO comment this file so you don't get confused by your bullshit 1am code again
+//this class takes data from dataset and uses it to communicate with the layoutmanager
 class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayList<ListItem>) :
     RecyclerView.Adapter<ReAdapter.MyViewHolder>() {
 
@@ -21,6 +22,7 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
     }
 
     private val inflater : LayoutInflater
+    var holderList = mutableListOf<MyViewHolder>()
 
     init {
         inflater = LayoutInflater.from(context)
@@ -31,23 +33,26 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyViewHolder {
         //set layout for each item in recyclerview
         val view = inflater.inflate(R.layout.recyclerview_item, parent, false)
-        return MyViewHolder(view)
+        val item =  MyViewHolder(view)
+        holderList.add(item)
+        return item
     }
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //position is index of grocery in array list of grocery item class instances
+        //set up each item view as it appears on screen while scrolling
 
         holder.groceryCheckBox.isChecked = imageModelArrayList[position].getSelected()
         holder.groceryCheckBox.setText(imageModelArrayList[position].getItemName())
 
-        holder.groceryCheckBox.tag = position //reset tag on item to current position
+        holder.groceryCheckBox.tag = position //set initial tag to current position
+        holder.deleteBtn.tag = position
+
 
         //listen for clicks on checkboxes and respond
         holder.groceryCheckBox.setOnClickListener {
+
             val pos = holder.groceryCheckBox.tag as Int
-
-
             if (imageModelArrayList[pos].getSelected()) {
                 imageModelArrayList[pos].setSelecteds(false)
             } else {
@@ -56,10 +61,21 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
         }
 
         holder.deleteBtn.setOnClickListener {
-            imageModelArrayList.removeAt(position)
-            notifyItemRemoved(position)
-            //updateItemTags()
+            val pos = holder.deleteBtn.tag as Int
+            Log.d("TAG", pos.toString())
+            imageModelArrayList.removeAt(pos)
+            holderList.removeAt(pos)
+            notifyItemRemoved(pos)
+            updateTags()
         }
+    }
+
+    fun updateTags(){
+        imageModelArrayList.forEachIndexed { i, element ->
+            holderList[i].groceryCheckBox.tag = i
+            holderList[i].deleteBtn.tag = i
+        }
+
     }
 
 
@@ -75,6 +91,8 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
     }
 
 
+
+    //the 'thing' that the data is stored in and gets recycled during scroll
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //inner class represents individual items within recylcerview
         var groceryCheckBox: CheckBox

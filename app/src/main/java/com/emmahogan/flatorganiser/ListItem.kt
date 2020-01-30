@@ -1,7 +1,7 @@
 package com.emmahogan.flatorganiser
 
 
-//TODO comment this file so you don't get confused by your bullshit 1am code again
+//POJO for setting up list items
 class ListItem {
 
     var isSelected : Boolean = false
