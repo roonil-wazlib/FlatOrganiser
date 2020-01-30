@@ -160,6 +160,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun openShopping(){
         val intent = Intent(this, ShoppingListActivity::class.java)
+        intent.putExtra("user", currentUser)
         startActivity(intent)
     }
 }

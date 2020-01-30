@@ -1,32 +1,34 @@
 package com.emmahogan.flatorganiser
 
 import android.content.Context
-import android.nfc.Tag
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import java.util.ArrayList
 
 
 //this class takes data from dataset and uses it to communicate with the layoutmanager
-class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayList<ListItem>) :
+class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayList<ListItem>, currentUser: User) :
     RecyclerView.Adapter<ReAdapter.MyViewHolder>() {
 
     companion object {
         lateinit var imageModelArrayList: ArrayList<ListItem>
     }
 
+
     private val inflater : LayoutInflater
     var holderList = mutableListOf<MyViewHolder>()
+    var user = User()
+
 
     init {
         inflater = LayoutInflater.from(context)
         imageModelArrayList = imageModelArrayListMain //list of ReModel class instances
+        user = currentUser
     }
 
 
@@ -58,6 +60,7 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
             } else {
                 imageModelArrayList[pos].setSelecteds(true)
             }
+            writeToDb()
         }
 
         holder.deleteBtn.setOnClickListener {
@@ -67,9 +70,11 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
             holderList.removeAt(pos)
             notifyItemRemoved(pos)
             updateTags()
+            writeToDb()
         }
     }
 
+    //update tags on view holders
     fun updateTags(){
         imageModelArrayList.forEachIndexed { i, element ->
             holderList[i].groceryCheckBox.tag = i
@@ -84,12 +89,21 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
         return imageModelArrayList.size
     }
 
+
     fun addItem(item : ListItem){
         //add new item to recycler view
         imageModelArrayList.add(item)
         notifyItemInserted(itemCount)
     }
 
+
+    fun writeToDb(){
+        val listData = HashMap<String, Any>()
+        for (x in imageModelArrayList!!){
+            listData.put(x.getItemName(), x.getSelected())
+        }
+        (CloudFirestore::addShoppingList)(CloudFirestore(), user.flat.toString(), listData)
+    }
 
 
     //the 'thing' that the data is stored in and gets recycled during scroll
