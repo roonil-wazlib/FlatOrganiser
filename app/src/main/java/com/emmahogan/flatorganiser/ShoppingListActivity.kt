@@ -6,6 +6,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import java.util.ArrayList
 
@@ -16,21 +17,39 @@ class ShoppingListActivity : AppCompatActivity() {
     private var recyclerView: RecyclerView? = null
     private var modelArrayList: ArrayList<ListItem>? = null
     private var customAdapter: ReAdapter? = null
-    private var groceriesList = mutableListOf<String>()
 
+    private lateinit var groceriesList : HashMap<String, Any>
     lateinit var newItemET : EditText
     lateinit var currentUser : User
 
+    private var db = FirebaseFirestore.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_shopping_list)
 
         //get current user
         currentUser = intent.getParcelableExtra("user")
 
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_shopping_list)
+
         recyclerView = findViewById(R.id.recycler)
-        createList()
+
+        val docRef = db.collection("flats/${currentUser.flat.toString()}/data").document("shopping_list")
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                    groceriesList = document.data as HashMap<String, Any>
+                    createList()
+                } else {
+                    Log.d("TAG", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+
 
         //get reference to new item edit text and add button
         newItemET = findViewById(R.id.new_grocery)
@@ -39,16 +58,16 @@ class ShoppingListActivity : AppCompatActivity() {
     }
 
     //update this to populate from hashmap in db, including correct isSelect value
-    private fun getModel(isSelect: Boolean): ArrayList<ListItem> {
+    private fun createModel(): ArrayList<ListItem> {
         val list = ArrayList<ListItem>()
-        for (item in groceriesList) {
+        for ((key, value) in groceriesList) {
 
             //get class instance for each item in list
             val model = ListItem()
             //set selected checkbuttons
-            model.setSelecteds(isSelect)
+            model.setSelecteds(value as Boolean)
             //set grocery name
-            model.setItemName(item)
+            model.setItemName(key)
             //add class instance to list of grocery class instances
             list.add(model)
         }
@@ -67,7 +86,8 @@ class ShoppingListActivity : AppCompatActivity() {
 
 
     private fun createList(){
-        modelArrayList = getModel(false)
+        modelArrayList = createModel()
+        Log.d("TAG", modelArrayList.toString())
         customAdapter = ReAdapter(this, modelArrayList!!, currentUser)
         recyclerView!!.adapter = customAdapter
         recyclerView!!.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
