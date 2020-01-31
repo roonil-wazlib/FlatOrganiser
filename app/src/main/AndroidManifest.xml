@@ -25,7 +25,8 @@
         <activity android:name=".CreateFlatActivity"/>
         <activity android:name=".JoinFlatActivity"/>
         <activity android:name=".MainActivity"/>
-	<activity android:name=".ShoppingListActivity"/>
+	    <activity android:name=".ShoppingListActivity"/>
+        <activity android:name=".EditAccountActivity"/>
 
     </application>
 

@@ -39,7 +39,7 @@ class SettingsActivity : AppCompatActivity() {
         editButton.setOnClickListener{ editAccount() }
 
         //get intent bundles
-        currentUser = intent.getParcelableExtra("currentUser")
+        currentUser = intent.getParcelableExtra("user")
     }
 
 
@@ -73,6 +73,9 @@ class SettingsActivity : AppCompatActivity() {
     private fun editAccount(){
         //do something here - new activity?
         //yeah will need a new activity - allow change of flat as well as account editing for name change, password change, email update etc
+        val intent = Intent(this, EditAccountActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
     }
 
 
