@@ -156,6 +156,7 @@ class SignUpActivity : AppCompatActivity() {
 
 //define properties of user child
 //(properties must be initialised to keep javabeans happy)
+//parcelize allows objects to be put as intents
 @Parcelize
 @IgnoreExtraProperties
 data class User(

@@ -2,6 +2,7 @@ package com.emmahogan.flatorganiser
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -29,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var currentUser : User
     lateinit var createJoinDisplay : LinearLayout
+    lateinit var homeTableDisplay : LinearLayout
 
 
     private val nameListener = object : ValueEventListener {
@@ -61,8 +64,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val user = mAuth!!.currentUser
-
         //tell database to listen for name
         mDatabaseReference.addValueEventListener(nameListener)
 
@@ -80,8 +81,14 @@ class HomeActivity : AppCompatActivity() {
         createFlatButton.setOnClickListener{ createFlat() }
         joinFlatButton.setOnClickListener{ joinFlat() }
 
-        //initalise layout containing create and join buttons
+        //initalise layouts
         createJoinDisplay = findViewById(R.id.create_join_layout)
+        homeTableDisplay = findViewById(R.id.home_table_layout)
+        homeTableDisplay.setVisibility(View.GONE) //changes when user data retrieved and user found to be in flat
+
+        //initialise shopping list button
+        val shoppingBtn : Button = findViewById(R.id.shopping_list)
+        shoppingBtn.setOnClickListener{ openShopping() }
 
         //end activity when user logs out
         mAuth.addAuthStateListener {
@@ -144,6 +151,16 @@ class HomeActivity : AppCompatActivity() {
         if (userInFlat()){
             //user is already in a flat
             createJoinDisplay.setVisibility(View.GONE)
+            homeTableDisplay.setVisibility(View.VISIBLE)
+        }else{
+            homeTableDisplay.setVisibility(View.GONE)
+            createJoinDisplay.setVisibility(View.VISIBLE)
         }
+    }
+
+    private fun openShopping(){
+        val intent = Intent(this, ShoppingListActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
     }
 }

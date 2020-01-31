@@ -59,7 +59,7 @@ class CloudFirestore {
 
         flatReference.set(flat)
             .addOnSuccessListener {}
-            .addOnFailureListener {}
+            .addOnFailureListener {}    //TODO add logs
 
         val member = HashMap<String, Any>()
         member.put("name", currentUser.name.toString())
@@ -73,7 +73,7 @@ class CloudFirestore {
 
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
             .addOnSuccessListener {}
-            .addOnFailureListener {}
+            .addOnFailureListener {}   //TODO add logs
 
         return updatedUser
     }
@@ -98,8 +98,16 @@ class CloudFirestore {
 
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
             .addOnSuccessListener {}
-            .addOnFailureListener {}
+            .addOnFailureListener {} //TODO add logs
 
         return updatedUser
+    }
+
+
+    fun addShoppingList(flatID: String, listData: HashMap<String, Any>){
+        val flatReference = db.collection("flats").document(flatID)
+        flatReference.collection("data").document("shopping_list").set(listData)
+            .addOnSuccessListener {}
+            .addOnFailureListener {} //TODO add logs
     }
 }
