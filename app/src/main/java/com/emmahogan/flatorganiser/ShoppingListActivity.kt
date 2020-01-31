@@ -40,7 +40,10 @@ class ShoppingListActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    groceriesList = document.data as HashMap<String, Any>
+                    try{groceriesList = document.data as HashMap<String, Any>}
+                    catch(e: TypeCastException){
+                        groceriesList = hashMapOf()
+                    }
                     createList()
                 } else {
                     Log.d("TAG", "No such document")
