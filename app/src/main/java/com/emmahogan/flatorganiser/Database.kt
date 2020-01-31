@@ -58,8 +58,8 @@ class CloudFirestore {
         val flatReference = db.collection("flats").document()
 
         flatReference.set(flat)
-            .addOnSuccessListener {}
-            .addOnFailureListener {}    //TODO add logs
+            .addOnSuccessListener {Log.d("TAG", "Flat created")}
+            .addOnFailureListener {Log.d("TAG", "Something went wrong creating flat")}
 
         val member = HashMap<String, Any>()
         member.put("name", currentUser.name.toString())
@@ -72,8 +72,8 @@ class CloudFirestore {
             (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), flatId, currentUser)
 
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
-            .addOnSuccessListener {}
-            .addOnFailureListener {}   //TODO add logs
+            .addOnSuccessListener {Log.d("TAG", "User added successfully")}
+            .addOnFailureListener {Log.d("TAG", "Something went wrong adding user")}
 
         return updatedUser
     }
@@ -97,8 +97,8 @@ class CloudFirestore {
         member.put("email", updatedUser.email.toString())
 
         flatReference.collection("members").document(mAuth.currentUser!!.uid).set(member)
-            .addOnSuccessListener {}
-            .addOnFailureListener {} //TODO add logs
+            .addOnSuccessListener {Log.d("TAG", "User joined flat successfully")}
+            .addOnFailureListener {Log.d("TAG", "Something went wrong joining flat")}
 
         return updatedUser
     }
@@ -107,7 +107,7 @@ class CloudFirestore {
     fun addShoppingList(flatID: String, listData: HashMap<String, Any>){
         val flatReference = db.collection("flats").document(flatID)
         flatReference.collection("data").document("shopping_list").set(listData)
-            .addOnSuccessListener {}
-            .addOnFailureListener {} //TODO add logs
+            .addOnSuccessListener {Log.d("TAG", "Shopping list doc created/updated")}
+            .addOnFailureListener {Log.d("TAG", "Something went wrong writing shopping list")}
     }
 }

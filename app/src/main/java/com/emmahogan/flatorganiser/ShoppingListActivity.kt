@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import java.util.ArrayList
 
 
-//TODO comment this file so you don't get confused by your bullshit 1am code again
+
 class ShoppingListActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null

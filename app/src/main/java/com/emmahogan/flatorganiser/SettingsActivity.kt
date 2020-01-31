@@ -72,6 +72,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun editAccount(){
         //do something here - new activity?
+        //yeah will need a new activity - allow change of flat as well as account editing for name change, password change, email update etc
     }
 
 
