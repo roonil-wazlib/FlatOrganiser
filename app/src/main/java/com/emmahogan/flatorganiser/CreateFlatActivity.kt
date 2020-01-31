@@ -20,7 +20,7 @@ class CreateFlatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_flat)
 
         //get intent bundles
-        currentUser = intent.getParcelableExtra("currentUser")
+        currentUser = intent.getParcelableExtra("user")
 
         //set up widgets
         flatIdTV = findViewById(R.id.flat_id)

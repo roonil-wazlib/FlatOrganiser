@@ -19,7 +19,7 @@ class JoinFlatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_join_flat)
 
         //get intent bundles
-        currentUser = intent.getParcelableExtra("currentUser")
+        currentUser = intent.getParcelableExtra("user")
 
         //set up widgets
         flatIdET = findViewById(R.id.flat_id)

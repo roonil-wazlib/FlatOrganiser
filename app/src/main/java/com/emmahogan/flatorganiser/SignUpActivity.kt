@@ -26,6 +26,8 @@ class SignUpActivity : AppCompatActivity() {
     //Get reference to users child
     private var mDatabaseReference = mDatabase.reference.child("users")
 
+    lateinit var currentUser : User
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,9 +68,11 @@ class SignUpActivity : AppCompatActivity() {
                         //Registration OK
                         val firebaseUser = mAuth.currentUser
                         (RealtimeDatabase::writeNewUser)(RealtimeDatabase(), firebaseUser!!.uid, name, email)
+                        currentUser = User(name, email, "")
 
                         //go to home
                         val intent = Intent(this, HomeActivity::class.java)
+                        intent.putExtra("user", currentUser)
                         startActivity(intent)
                         this.finish()
 

@@ -34,38 +34,13 @@ class HomeActivity : AppCompatActivity() {
     lateinit var homeTableDisplay : LinearLayout
 
 
-    private val nameListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot : DataSnapshot) {
-            // Get User objects as iterable
-            val users = dataSnapshot.children
-
-            //find current user and update name
-            for (user in users) {
-                if (user.key == mAuth.currentUser!!.uid) {
-                    val name = user.getValue(User::class.java)!!.name
-                    val email = user.getValue(User::class.java)!!.email
-                    val flatId = user.getValue(User::class.java)!!.flat
-                    instantiateUser(name, email, flatId)
-                    updateDisplay()
-                    break
-                }
-            }
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            //Getting user name failed, show error message
-            Toast.makeText(this@HomeActivity, "Something went wrong.", Toast.LENGTH_SHORT).show()
-            // ...
-        }
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        //tell database to listen for name
-        mDatabaseReference.addValueEventListener(nameListener)
+        //get user data
+        //get intent bundles
+        currentUser = intent.getParcelableExtra("user")
 
         //set up logout button
         val logoutButton : Button = findViewById(R.id.logout_button)
@@ -85,14 +60,17 @@ class HomeActivity : AppCompatActivity() {
         createJoinDisplay = findViewById(R.id.create_join_layout)
         homeTableDisplay = findViewById(R.id.home_table_layout)
         homeTableDisplay.setVisibility(View.GONE) //changes when user data retrieved and user found to be in flat
+        updateDisplay()
 
         //initialise shopping list button
         val shoppingBtn : Button = findViewById(R.id.shopping_list)
         shoppingBtn.setOnClickListener{ openShopping() }
 
-        //end activity when user logs out
+        //go back to MainActivity on LogOut
         mAuth.addAuthStateListener {
             if(mAuth.currentUser == null){
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 this.finish()
             }
         }
@@ -117,7 +95,7 @@ class HomeActivity : AppCompatActivity() {
         }
         else{
             val intent = Intent(this, CreateFlatActivity::class.java)
-            intent.putExtra("currentUser", currentUser)
+            intent.putExtra("user", currentUser)
             startActivity(intent)
         }
     }
@@ -132,12 +110,6 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("currentUser", currentUser)
             startActivity(intent)
         }
-    }
-
-
-    private fun instantiateUser(name : String?, email : String?, flatId : String?) {
-        currentUser = User(name, email, flatId)
-        Toast.makeText(this, "DONE", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -157,6 +129,7 @@ class HomeActivity : AppCompatActivity() {
             createJoinDisplay.setVisibility(View.VISIBLE)
         }
     }
+
 
     private fun openShopping(){
         val intent = Intent(this, ShoppingListActivity::class.java)
