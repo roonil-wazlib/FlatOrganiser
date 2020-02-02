@@ -25,5 +25,7 @@ class EditAccountActivity : AppCompatActivity() {
 
         val currentFlatTV : TextView = findViewById(R.id.currentFlat)
         currentFlatTV.setText(currentUser.flat.toString())
+
+        //TODO link change flat to joinflatactivity, new code should do the trick
     }
 }
