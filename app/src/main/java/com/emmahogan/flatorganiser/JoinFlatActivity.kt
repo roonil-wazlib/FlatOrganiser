@@ -32,9 +32,17 @@ class JoinFlatActivity : AppCompatActivity() {
         //set up widgets
         flatIdET = findViewById(R.id.flat_id)
         val joinBtn : Button = findViewById(R.id.join_flat)
-        joinBtn.setOnClickListener{(CloudFirestore::joinFlat)(CloudFirestore(), flatIdET.getText().toString(), currentUser) }
+        joinBtn.setOnClickListener{ joinFlat(previousFlat) }
 
         deleteFromFlat(previousFlat)
+
+    }
+
+    private fun joinFlat(previousFlat : String){
+        (CloudFirestore::joinFlat)(CloudFirestore(), flatIdET.getText().toString(), currentUser)
+        if(previousFlat != flatIdET.text.toString()){
+            deleteFromFlat(previousFlat) //fix removal from current flat bug
+        }
 
     }
 

@@ -105,6 +105,7 @@ class CloudFirestore {
 
 
     fun deleteFromFlat(previousFlat : String, currentUser : User){
+        //TODO check delete from realtime db
         //delete user from collection of flat members
         if (previousFlat != "") {
             val userReference = db.collection("flats").document(previousFlat).collection("members").document(mAuth.currentUser!!.uid)
@@ -121,7 +122,7 @@ class CloudFirestore {
         val flatReference = db.collection("flats").document(previousFlat)
         flatReference.get().addOnSuccessListener { document ->
             if (document != null) {
-                if (document.data!!["flatmates"].toString() == "[]") {
+                if (document.data!!["flatmates"].toString() == "[]") { //TODO check cause of null pointer exception here
                     deleteFlat(currentUser)
                 }
             } else {

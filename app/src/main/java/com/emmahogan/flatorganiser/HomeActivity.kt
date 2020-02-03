@@ -107,7 +107,7 @@ class HomeActivity : AppCompatActivity() {
         }
         else{
             val intent = Intent(this, JoinFlatActivity::class.java)
-            intent.putExtra("currentUser", currentUser)
+            intent.putExtra("user", currentUser)
             startActivity(intent)
         }
     }
