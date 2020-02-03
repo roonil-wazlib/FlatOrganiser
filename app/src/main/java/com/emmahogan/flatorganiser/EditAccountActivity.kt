@@ -1,6 +1,8 @@
 package com.emmahogan.flatorganiser
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +28,14 @@ class EditAccountActivity : AppCompatActivity() {
         val currentFlatTV : TextView = findViewById(R.id.currentFlat)
         currentFlatTV.setText(currentUser.flat.toString())
 
-        //TODO link change flat to joinflatactivity, new code should do the trick
+        val changeFlat : Button = findViewById(R.id.changeFlat)
+        changeFlat.setOnClickListener{ changeFlat() }
+    }
+
+
+    private fun changeFlat(){
+        val intent = Intent(this, JoinFlatActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
     }
 }

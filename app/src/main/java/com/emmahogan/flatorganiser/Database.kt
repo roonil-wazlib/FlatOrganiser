@@ -36,7 +36,7 @@ class RealtimeDatabase{
 
 
 
-
+//TODO add delete flat and delete from flat functionality
 class CloudFirestore {
     //get reference to Firebase Auth
     private var mAuth = FirebaseAuth.getInstance()
@@ -101,6 +101,41 @@ class CloudFirestore {
             .addOnFailureListener {Log.d("TAG", "Something went wrong joining flat")}
 
         return updatedUser
+    }
+
+
+    fun deleteFromFlat(previousFlat : String, currentUser : User){
+        //delete user from collection of flat members
+        if (previousFlat != "") {
+            val userReference = db.collection("flats").document(previousFlat).collection("members").document(mAuth.currentUser!!.uid)
+            userReference.delete()
+
+            val flatReference = db.collection("flats").document(currentUser.flat.toString())
+            flatReference.update("flatmates", FieldValue.arrayRemove(mAuth.currentUser!!.uid))
+
+            checkDeleteFlat(previousFlat, currentUser) //delete flat collection if last flatmate just removed
+        }
+    }
+
+    fun checkDeleteFlat(previousFlat : String, currentUser : User) {
+        val flatReference = db.collection("flats").document(previousFlat)
+        flatReference.get().addOnSuccessListener { document ->
+            if (document != null) {
+                if (document.data!!["flatmates"].toString() == "[]") {
+                    deleteFlat(currentUser)
+                }
+            } else {
+                Log.d("TAG", "No such document")
+            }
+        }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+    }
+
+    fun deleteFlat(currentUser : User){
+        val flatReference = db.collection("flats").document(currentUser.flat.toString())
+        flatReference.delete()
     }
 
 
