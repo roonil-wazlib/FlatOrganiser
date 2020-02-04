@@ -1,4 +1,5 @@
 package com.emmahogan.flatorganiser
+
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -7,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import java.util.ArrayList
 
 

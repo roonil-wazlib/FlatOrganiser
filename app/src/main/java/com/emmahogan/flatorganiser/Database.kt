@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import android.util.Log
-import com.google.common.primitives.UnsignedBytes.toInt
 import com.google.firebase.firestore.FieldValue
 
 
@@ -36,7 +35,7 @@ class RealtimeDatabase{
 
 
 
-//TODO add delete flat and delete from flat functionality
+
 class CloudFirestore {
     //get reference to Firebase Auth
     private var mAuth = FirebaseAuth.getInstance()
@@ -87,7 +86,7 @@ class CloudFirestore {
 
         val flatReference = db.collection("flats").document(flatID)
 
-        flatReference.update("flatmates", FieldValue.arrayUnion(mAuth.currentUser!!.uid)) //TODO figure out why this works on join flat but not change flat
+        flatReference.update("flatmates", FieldValue.arrayUnion(mAuth.currentUser!!.uid))
 
         //TODO figure out why this is broken
         //flatReference.update("flat_size", FieldValue.increment(1))
@@ -121,7 +120,7 @@ class CloudFirestore {
         val flatReference = db.collection("flats").document(previousFlat)
         flatReference.get().addOnSuccessListener { document ->
             if (document != null) {
-                if (document.data!!["flatmates"].toString() == "[]") { //TODO check cause of null pointer exception here
+                if (document.data!!["flatmates"].toString() == "[]") {
                     deleteFlat(currentUser)
                 }
             } else {
