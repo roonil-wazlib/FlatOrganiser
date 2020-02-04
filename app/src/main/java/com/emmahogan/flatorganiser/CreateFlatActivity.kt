@@ -59,5 +59,13 @@ class CreateFlatActivity : AppCompatActivity() {
     }
 
 
+    override fun onBackPressed(){
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
+        this.finish()
+    }
+
+
     //TODO on back pressed restart HomeActivity to update the display appropriately. Clear flags.
 }

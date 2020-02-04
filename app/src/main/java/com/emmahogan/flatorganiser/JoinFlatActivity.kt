@@ -1,5 +1,6 @@
 package com.emmahogan.flatorganiser
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -47,5 +48,12 @@ class JoinFlatActivity : AppCompatActivity() {
     private fun deleteFromFlat(previousFlat : String){
         //delete user from collection of flat members
         (CloudFirestore::deleteFromFlat)(CloudFirestore(), previousFlat, currentUser)
+    }
+
+    override fun onBackPressed(){
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
+        this.finish()
     }
 }
