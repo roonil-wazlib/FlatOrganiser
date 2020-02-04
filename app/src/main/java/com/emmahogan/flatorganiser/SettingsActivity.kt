@@ -10,13 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.api.Distribution
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_settings.*
+
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -145,15 +143,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun deleteFromFlat(){
         //delete user from collection of flat members
-        if (currentUser.flat != "") {
-            val userReference = db.collection("flats").document(currentUser.flat.toString()).collection("members").document(mAuth.currentUser!!.uid)
-            userReference.delete()
-
-            val flatReference = db.collection("flats").document(currentUser.flat.toString())
-            flatReference.update("flatmates", FieldValue.arrayRemove(mAuth.currentUser!!.uid))
-
-            checkDeleteFlat() //delete flat collection if last flatmate just removed
-        }
+        (CloudFirestore::deleteFromFlat)(CloudFirestore(), currentUser.flat.toString(), currentUser)
     }
 
 
@@ -164,27 +154,27 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+//added to database class. delete after sufficient testing. code moved 05/02/2020
+//    private fun checkDeleteFlat() {
+//        val flatReference = db.collection("flats").document(currentUser.flat.toString())
+//        flatReference.get().addOnSuccessListener { document ->
+//            if (document != null) {
+//                if (document.data!!["flatmates"].toString() == "[]") {
+//                    deleteFlat()
+//                }
+//            } else {
+//                Log.d("TAG", "No such document")
+//            }
+//        }
+//            .addOnFailureListener { exception ->
+//                Log.d("TAG", "get failed with ", exception)
+//            }
+//    }
 
-    private fun checkDeleteFlat() {
-        val flatReference = db.collection("flats").document(currentUser.flat.toString())
-        flatReference.get().addOnSuccessListener { document ->
-            if (document != null) {
-                if (document.data!!["flatmates"].toString() == "[]") {
-                    deleteFlat()
-                }
-            } else {
-                Log.d("TAG", "No such document")
-            }
-        }
-            .addOnFailureListener { exception ->
-                Log.d("TAG", "get failed with ", exception)
-            }
-    }
 
-
-    fun deleteFlat(){
-        val flatReference = db.collection("flats").document(currentUser.flat.toString())
-        flatReference.delete()
-        mAuth.signOut()
-    }
+//    fun deleteFlat(){
+//        val flatReference = db.collection("flats").document(currentUser.flat.toString())
+//        flatReference.delete()
+//        mAuth.signOut()
+//    }
 }

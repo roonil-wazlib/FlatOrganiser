@@ -104,16 +104,16 @@ class CloudFirestore {
     }
 
 
-    fun deleteFromFlat(previousFlat : String, currentUser : User){
+    fun deleteFromFlat(flatToDeleteFrom : String, currentUser : User){
         //delete user from collection of flat members
-        if (previousFlat != "") {
-            val userReference = db.collection("flats").document(previousFlat).collection("members").document(mAuth.currentUser!!.uid)
+        if (flatToDeleteFrom != "") {
+            val userReference = db.collection("flats").document(flatToDeleteFrom).collection("members").document(mAuth.currentUser!!.uid)
             userReference.delete()
 
-            val flatReference = db.collection("flats").document(previousFlat)
+            val flatReference = db.collection("flats").document(flatToDeleteFrom)
             flatReference.update("flatmates", FieldValue.arrayRemove(mAuth.currentUser!!.uid))
 
-            checkDeleteFlat(previousFlat, currentUser) //delete flat collection if last flatmate just removed
+            checkDeleteFlat(flatToDeleteFrom, currentUser) //delete flat collection if last flatmate just removed
         }
     }
 
