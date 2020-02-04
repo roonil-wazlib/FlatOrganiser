@@ -83,6 +83,7 @@ class SettingsActivity : AppCompatActivity() {
         //delete auth account
         val user = mAuth.currentUser
 
+        //TODO reauthenticate account here to fix this bug
         user?.delete()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -143,5 +144,6 @@ class SettingsActivity : AppCompatActivity() {
     fun deleteFlat(){
         val flatReference = db.collection("flats").document(currentUser.flat.toString())
         flatReference.delete()
+        mAuth.signOut()
     }
 }

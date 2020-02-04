@@ -34,19 +34,16 @@ class JoinFlatActivity : AppCompatActivity() {
         val joinBtn : Button = findViewById(R.id.join_flat)
         joinBtn.setOnClickListener{ joinFlat(previousFlat) }
 
-        deleteFromFlat(previousFlat)
-
     }
 
     private fun joinFlat(previousFlat : String){
         (CloudFirestore::joinFlat)(CloudFirestore(), flatIdET.getText().toString(), currentUser)
         if(previousFlat != flatIdET.text.toString()){
-            deleteFromFlat(previousFlat) //fix removal from current flat bug
+            deleteFromFlat(previousFlat) //fixes removal from current flat bug
         }
 
     }
 
-    //TODO fully test this
     private fun deleteFromFlat(previousFlat : String){
         //delete user from collection of flat members
         (CloudFirestore::deleteFromFlat)(CloudFirestore(), previousFlat, currentUser)

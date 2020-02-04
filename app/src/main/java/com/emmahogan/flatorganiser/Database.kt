@@ -87,7 +87,7 @@ class CloudFirestore {
 
         val flatReference = db.collection("flats").document(flatID)
 
-        flatReference.update("flatmates", FieldValue.arrayUnion(mAuth.currentUser!!.uid))
+        flatReference.update("flatmates", FieldValue.arrayUnion(mAuth.currentUser!!.uid)) //TODO figure out why this works on join flat but not change flat
 
         //TODO figure out why this is broken
         //flatReference.update("flat_size", FieldValue.increment(1))
@@ -105,7 +105,6 @@ class CloudFirestore {
 
 
     fun deleteFromFlat(previousFlat : String, currentUser : User){
-        //TODO check delete from realtime db
         //delete user from collection of flat members
         if (previousFlat != "") {
             val userReference = db.collection("flats").document(previousFlat).collection("members").document(mAuth.currentUser!!.uid)

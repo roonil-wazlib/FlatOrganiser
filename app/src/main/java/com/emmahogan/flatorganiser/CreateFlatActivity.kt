@@ -57,4 +57,7 @@ class CreateFlatActivity : AppCompatActivity() {
         }
 
     }
+
+
+    //TODO on back pressed restart HomeActivity to update the display appropriately. Clear flags.
 }
