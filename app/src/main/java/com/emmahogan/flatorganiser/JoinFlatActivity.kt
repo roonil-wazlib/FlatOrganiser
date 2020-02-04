@@ -11,7 +11,6 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-//TODO test new delete from previous flat code
 class JoinFlatActivity : AppCompatActivity() {
 
     lateinit var currentUser : User

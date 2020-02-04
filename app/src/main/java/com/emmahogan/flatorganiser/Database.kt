@@ -110,7 +110,7 @@ class CloudFirestore {
             val userReference = db.collection("flats").document(previousFlat).collection("members").document(mAuth.currentUser!!.uid)
             userReference.delete()
 
-            val flatReference = db.collection("flats").document(currentUser.flat.toString())
+            val flatReference = db.collection("flats").document(previousFlat)
             flatReference.update("flatmates", FieldValue.arrayRemove(mAuth.currentUser!!.uid))
 
             checkDeleteFlat(previousFlat, currentUser) //delete flat collection if last flatmate just removed
