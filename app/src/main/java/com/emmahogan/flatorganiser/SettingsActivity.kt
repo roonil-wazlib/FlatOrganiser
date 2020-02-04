@@ -3,14 +3,20 @@ package com.emmahogan.flatorganiser
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.api.Distribution
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_settings.*
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -25,14 +31,23 @@ class SettingsActivity : AppCompatActivity() {
 
     lateinit var currentUser : User
 
+    lateinit var reauthBox : LinearLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        //set up delete account button
-        val deleteButton : Button = findViewById(R.id.delete)
-        deleteButton.setOnClickListener{ onDelete() }
+        reauthBox = findViewById(R.id.delete_reauth)
+        reauthBox.setVisibility(View.GONE)
+
+        //set up enlarge reauth button
+        val enlargeReauthBtn : Button = findViewById(R.id.reauth)
+        enlargeReauthBtn.setOnClickListener{ enlargeReAuth(enlargeReauthBtn) }
+
+        //set up delete button
+        val deleteBtn : Button = findViewById(R.id.delete)
+        deleteBtn.setOnClickListener{onDelete()}
 
         //set up edit details
         val editButton : Button = findViewById(R.id.edit)
@@ -43,7 +58,34 @@ class SettingsActivity : AppCompatActivity() {
     }
 
 
+    private fun enlargeReAuth(btn : Button){
+        val reauthBox : LinearLayout = findViewById(R.id.delete_reauth)
+        reauthBox.setVisibility(View.VISIBLE)
+        btn.setVisibility(View.INVISIBLE)
+    }
+
+
+    private fun reAuth(){
+        //set up email and password TVs
+        val emailTV : TextView = findViewById(R.id.email)
+        val passwordTV : TextView = findViewById(R.id.password)
+
+        val email = emailTV.text.toString()
+        val password = passwordTV.text.toString()
+        val credential = EmailAuthProvider
+            .getCredential(email, password)
+
+        mAuth.currentUser?.reauthenticate(credential)
+            ?.addOnCompleteListener { Log.d("TAG", "User re-authenticated.") }
+
+    }
+
+
     private fun onDelete(){
+
+        //reauthenticate user
+        reAuth()
+
         //bring up are you sure
 
         val builder = AlertDialog.Builder(this)
@@ -83,7 +125,6 @@ class SettingsActivity : AppCompatActivity() {
         //delete auth account
         val user = mAuth.currentUser
 
-        //TODO reauthenticate account here to fix this bug
         user?.delete()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {

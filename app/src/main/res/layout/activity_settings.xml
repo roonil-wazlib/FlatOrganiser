@@ -11,9 +11,37 @@
         android:text="@string/edit_account" />
 
     <Button
-        android:id="@+id/delete"
+        android:id="@+id/reauth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete"
-        android:onClick="onDelete"/>
+        android:onClick="reAuth"/>
+
+    <LinearLayout
+        android:id="@+id/delete_reauth"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:onClick="onDelete"/>
+    </LinearLayout>
+
 </LinearLayout>
