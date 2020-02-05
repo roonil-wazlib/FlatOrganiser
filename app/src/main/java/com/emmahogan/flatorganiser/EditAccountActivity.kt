@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class EditAccountActivity : AppCompatActivity() {
@@ -33,7 +34,7 @@ class EditAccountActivity : AppCompatActivity() {
         changeFlat.setOnClickListener{ changeFlat() }
 
         val leaveFlat : Button = findViewById(R.id.leaveFlat)
-        leaveFlat.setOnClickListener{ leaveFlat() }
+        leaveFlat.setOnClickListener{ leaveFlatCheck() }
     }
 
 
@@ -44,10 +45,29 @@ class EditAccountActivity : AppCompatActivity() {
     }
 
 
+    private fun leaveFlatCheck(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Leave flat?")
+        builder.setMessage("This action is not reversable. Your flat data will be lost.")
+
+
+        builder.setPositiveButton("Continue"){dialog, which ->
+            leaveFlat()
+        }
+
+        builder.setNegativeButton("No"){dialog,which ->
+            //close alert dialog
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+
     private fun leaveFlat(){
-        //TODO run are you sure?
         (CloudFirestore::deleteFromFlat)(CloudFirestore(), currentUser.flat.toString(), currentUser)
         Toast.makeText(this, "Removing from flat...", Toast.LENGTH_SHORT).show()
+        currentUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), "", currentUser)
         val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("user", currentUser)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

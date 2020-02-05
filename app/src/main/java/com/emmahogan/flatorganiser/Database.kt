@@ -112,16 +112,16 @@ class CloudFirestore {
             val flatReference = db.collection("flats").document(flatToDeleteFrom)
             flatReference.update("flatmates", FieldValue.arrayRemove(mAuth.currentUser!!.uid))
 
-            checkDeleteFlat(flatToDeleteFrom, currentUser) //delete flat collection if last flatmate just removed
+            checkDeleteFlat(flatToDeleteFrom, flatToDeleteFrom) //delete flat collection if last flatmate just removed
         }
     }
 
-    fun checkDeleteFlat(previousFlat : String, currentUser : User) {
+    fun checkDeleteFlat(previousFlat : String, flat : String) {
         val flatReference = db.collection("flats").document(previousFlat)
         flatReference.get().addOnSuccessListener { document ->
             if (document != null) {
                 if (document.data!!["flatmates"].toString() == "[]") {
-                    deleteFlat(currentUser)
+                    deleteFlat(flat)
                 }
             } else {
                 Log.d("TAG", "No such document")
@@ -132,8 +132,8 @@ class CloudFirestore {
             }
     }
 
-    fun deleteFlat(currentUser : User){
-        val flatReference = db.collection("flats").document(currentUser.flat.toString())
+    fun deleteFlat(flat : String){
+        val flatReference = db.collection("flats").document(flat)
         flatReference.delete()
     }
 
