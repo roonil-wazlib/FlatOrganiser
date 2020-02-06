@@ -2,6 +2,7 @@ package com.emmahogan.flatorganiser
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -96,6 +97,7 @@ class HomeActivity : AppCompatActivity() {
         if(userInFlat()){
             Toast.makeText(this@HomeActivity, "You're already in a flat!", Toast.LENGTH_SHORT).show()
         } else{
+            Log.d("TAG", "WORKING")
             val intent = Intent(this, CreateFlatActivity::class.java)
             intent.putExtra("user", currentUser)
             startActivity(intent)

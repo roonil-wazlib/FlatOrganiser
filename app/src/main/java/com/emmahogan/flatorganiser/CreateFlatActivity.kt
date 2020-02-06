@@ -8,7 +8,6 @@ import android.widget.Toast
 import android.content.Intent
 
 
-
 class CreateFlatActivity : AppCompatActivity() {
 
     lateinit var currentUser : User
@@ -26,11 +25,11 @@ class CreateFlatActivity : AppCompatActivity() {
         flatIdTV = findViewById(R.id.flat_id)
         val shareBtn : Button = findViewById(R.id.share_flat)
         shareBtn.setOnClickListener{ shareFlat() }
-
         //create flat in flats collection
-        currentUser = (CloudFirestore::addFlatToDatabase)(CloudFirestore(),currentUser)
+        currentUser = (CloudFirestore::addFlatToDatabase)(CloudFirestore(), currentUser) //this line causes activity to close unexpectedly???
         updateFlatIdTextView(currentUser.flat)
     }
+
 
     private fun updateFlatIdTextView(flatId : String?){
         flatIdTV.setText(flatId)
@@ -55,7 +54,6 @@ class CreateFlatActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
-
     }
 
 
