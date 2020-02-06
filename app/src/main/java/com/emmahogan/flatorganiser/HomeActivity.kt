@@ -33,9 +33,22 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         //get user data
-        //get intent bundles
         currentUser = intent.getParcelableExtra("user")
 
+        setUpDashboard()
+
+        //go back to MainActivity on LogOut
+        mAuth.addAuthStateListener {
+            if(mAuth.currentUser == null){
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                this.finish()
+            }
+        }
+    }
+
+
+    private fun setUpDashboard(){
         //set up logout button
         val logoutButton : Button = findViewById(R.id.logout_button)
         logoutButton.setOnClickListener{ logOut() }
@@ -60,15 +73,11 @@ class HomeActivity : AppCompatActivity() {
         val shoppingBtn : Button = findViewById(R.id.shopping_list)
         shoppingBtn.setOnClickListener{ openShopping() }
 
-        //go back to MainActivity on LogOut
-        mAuth.addAuthStateListener {
-            if(mAuth.currentUser == null){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                this.finish()
-            }
-        }
+        //initialise bins button
+        val binsBtn : Button = findViewById(R.id.bins)
+        binsBtn.setOnClickListener{ openBinsActivity() }
     }
+
 
     private fun logOut(){
         mAuth.signOut()
@@ -86,8 +95,7 @@ class HomeActivity : AppCompatActivity() {
 
         if(userInFlat()){
             Toast.makeText(this@HomeActivity, "You're already in a flat!", Toast.LENGTH_SHORT).show()
-        }
-        else{
+        } else{
             val intent = Intent(this, CreateFlatActivity::class.java)
             intent.putExtra("user", currentUser)
             startActivity(intent)
@@ -99,8 +107,7 @@ class HomeActivity : AppCompatActivity() {
     private fun joinFlat(){
         if(userInFlat()) {
             Toast.makeText(this@HomeActivity, "You're already in a flat!", Toast.LENGTH_SHORT).show()
-        }
-        else{
+        } else{
             val intent = Intent(this, JoinFlatActivity::class.java)
             intent.putExtra("user", currentUser)
             startActivity(intent)
@@ -120,7 +127,7 @@ class HomeActivity : AppCompatActivity() {
             //user is already in a flat
             createJoinDisplay.setVisibility(View.GONE)
             homeTableDisplay.setVisibility(View.VISIBLE)
-        }else{
+        } else{
             homeTableDisplay.setVisibility(View.GONE)
             createJoinDisplay.setVisibility(View.VISIBLE)
         }
@@ -129,6 +136,13 @@ class HomeActivity : AppCompatActivity() {
 
     private fun openShopping(){
         val intent = Intent(this, ShoppingListActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
+    }
+
+
+    private fun openBinsActivity(){
+        val intent = Intent(this, BinsActivity::class.java)
         intent.putExtra("user", currentUser)
         startActivity(intent)
     }
