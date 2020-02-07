@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="selected_background">#AA6600</color>
+    <color name="unselected_background">#000000</color>
+    <color name="red_bin_colour">#FF0000</color>
+    <color name="yellow_bin_colour">#FFFF00</color>
+    <color name="green_bin_colour">#00FF00</color>
+    <color name="black_bin_colour">#000000</color>
 </resources>

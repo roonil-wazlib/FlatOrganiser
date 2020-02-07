@@ -27,7 +27,7 @@
         <activity android:name=".MainActivity"/>
 	    <activity android:name=".ShoppingListActivity"/>
         <activity android:name=".EditAccountActivity"/>
-        <activity android:name=".BinsActivity"/>
+        <activity android:name=".SetupBinsActivity"/>
 
     </application>
 

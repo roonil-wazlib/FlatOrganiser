@@ -144,7 +144,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun openBinsActivity(){
-        val intent = Intent(this, BinsActivity::class.java)
+        val intent = Intent(this, SetupBinsActivity::class.java)
         intent.putExtra("user", currentUser)
         startActivity(intent)
     }
