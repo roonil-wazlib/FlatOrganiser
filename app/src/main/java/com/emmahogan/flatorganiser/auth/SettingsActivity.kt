@@ -1,4 +1,4 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.emmahogan.flatorganiser.CloudFirestore
+import com.emmahogan.flatorganiser.R
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase

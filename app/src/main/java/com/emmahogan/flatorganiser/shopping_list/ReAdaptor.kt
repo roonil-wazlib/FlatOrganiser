@@ -1,4 +1,4 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.shopping_list
 
 import android.content.Context
 import android.util.Log
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
+import com.emmahogan.flatorganiser.CloudFirestore
+import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.auth.User
 import java.util.ArrayList
 
 

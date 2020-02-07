@@ -1,4 +1,4 @@
-package com.emmahogan.flatorganiser;
+package com.emmahogan.flatorganiser.flat;
 
 import android.os.Bundle
 import android.widget.Button
@@ -6,6 +6,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import android.content.Intent
+import com.emmahogan.flatorganiser.CloudFirestore
+import com.emmahogan.flatorganiser.display.HomeActivity
+import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.auth.User
 
 
 class CreateFlatActivity : AppCompatActivity() {

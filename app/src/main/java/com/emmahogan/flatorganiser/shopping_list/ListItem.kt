@@ -1,4 +1,4 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.shopping_list
 
 
 //POJO for setting up list items

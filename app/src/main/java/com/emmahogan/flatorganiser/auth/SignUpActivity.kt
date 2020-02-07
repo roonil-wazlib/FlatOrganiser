@@ -1,4 +1,4 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
+import com.emmahogan.flatorganiser.display.HomeActivity
+import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.RealtimeDatabase
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.database.*

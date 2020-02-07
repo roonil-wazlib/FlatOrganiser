@@ -1,9 +1,12 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.display
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.auth.MainActivity
+import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

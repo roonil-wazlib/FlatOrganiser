@@ -1,9 +1,10 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.emmahogan.flatorganiser.R
 
 
 class MainActivity : AppCompatActivity() {

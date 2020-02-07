@@ -1,4 +1,4 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.shopping_list
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,9 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.emmahogan.flatorganiser.CloudFirestore
+import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.ArrayList
 
@@ -91,7 +94,8 @@ class ShoppingListActivity : AppCompatActivity() {
     private fun createList(){
         modelArrayList = createModel()
         Log.d("TAG", modelArrayList.toString())
-        customAdapter = ReAdapter(this, modelArrayList!!, currentUser)
+        customAdapter =
+            ReAdapter(this, modelArrayList!!, currentUser)
         recyclerView!!.adapter = customAdapter
         recyclerView!!.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
     }

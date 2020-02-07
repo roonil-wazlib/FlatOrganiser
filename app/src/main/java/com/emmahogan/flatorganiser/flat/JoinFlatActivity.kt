@@ -1,10 +1,14 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.flat
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.emmahogan.flatorganiser.CloudFirestore
+import com.emmahogan.flatorganiser.display.HomeActivity
+import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

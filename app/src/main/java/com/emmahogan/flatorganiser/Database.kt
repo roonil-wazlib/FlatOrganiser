@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import android.util.Log
+import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.firestore.FieldValue
 
 
@@ -17,7 +18,7 @@ class RealtimeDatabase{
     private var mDatabaseReference = mDatabase.reference.child("users")
 
 
-    fun updateUserAccount(flatID : String?, currentUser : User) : User{
+    fun updateUserAccount(flatID : String?, currentUser : User) : User {
         val userId = mAuth.currentUser!!.uid
 
         currentUser.changeFlat(flatID)

@@ -1,4 +1,4 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.display
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,12 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.shopping_list.ShoppingListActivity
+import com.emmahogan.flatorganiser.auth.*
+import com.emmahogan.flatorganiser.bins.SetupBinsActivity
+import com.emmahogan.flatorganiser.flat.CreateFlatActivity
+import com.emmahogan.flatorganiser.flat.JoinFlatActivity
 import com.google.firebase.database.FirebaseDatabase
 
 

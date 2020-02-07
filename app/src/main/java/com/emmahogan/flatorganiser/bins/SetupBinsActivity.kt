@@ -1,8 +1,10 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.bins
 
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.auth.User
 
 class SetupBinsActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.emmahogan.flatorganiser
+package com.emmahogan.flatorganiser.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.emmahogan.flatorganiser.*
+import com.emmahogan.flatorganiser.display.HomeActivity
+import com.emmahogan.flatorganiser.flat.JoinFlatActivity
 
 class EditAccountActivity : AppCompatActivity() {
 
