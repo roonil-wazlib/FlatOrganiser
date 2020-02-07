@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -63,8 +64,240 @@
 
     </TableLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/frequency_question"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8" />
+        android:text="When do they go out?"
+        android:layout_weight="0.1"
+        android:gravity="center"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7">
+
+        <TableRow
+            android:id="@+id/red_time"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/red_bin_bg"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="Every"
+                android:layout_gravity="center"/>
+
+            <Spinner
+                android:id="@+id/red_spinner"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequency_array"
+                android:prompt="@string/frequency_prompt"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="Starting: "
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/red_calendar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/calendar" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/yellow_time"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/yellow_bin_bg"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="Every"
+                android:layout_gravity="center"/>
+
+            <Spinner
+                android:id="@+id/yellow_spinner"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequency_array"
+                android:prompt="@string/frequency_prompt"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="Starting: "
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/yellow_calendar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/calendar" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/green_time"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/green_bin_bg"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="Every"
+                android:layout_gravity="center"/>
+
+            <Spinner
+                android:id="@+id/green_spinner"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequency_array"
+                android:prompt="@string/frequency_prompt"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="Starting: "
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/green_calendar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/calendar" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/black_time"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/black_bin_bg"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="Every"
+                android:layout_gravity="center"/>
+
+            <Spinner
+                android:id="@+id/black_spinner"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequency_array"
+                android:prompt="@string/frequency_prompt"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content"
+                android:text="Starting: "
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/black_calendar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/calendar" />
+
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:onClick="onBackPressed"/>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Submit"
+            android:onClick="onSubmit"/>
+    </LinearLayout>
+
+
 </LinearLayout>
