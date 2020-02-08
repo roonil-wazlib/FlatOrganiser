@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/appBackground">
 
     <TextView
         android:layout_width="match_parent"
@@ -104,7 +105,7 @@
                 android:id="@+id/red_spinner"
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
-                android:background="#FF0000"
+                android:background="@color/appBackground"
                 android:layout_height="wrap_content"
                 android:entries="@array/frequency_array"
                 android:prompt="@string/frequency_prompt"/>
@@ -155,7 +156,7 @@
                 android:id="@+id/yellow_spinner"
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
-                android:background="#FF0000"
+                android:background="@color/appBackground"
                 android:layout_height="wrap_content"
                 android:entries="@array/frequency_array"
                 android:prompt="@string/frequency_prompt"/>
@@ -205,7 +206,7 @@
                 android:id="@+id/green_spinner"
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
-                android:background="#FF0000"
+                android:background="@color/appBackground"
                 android:layout_height="wrap_content"
                 android:entries="@array/frequency_array"
                 android:prompt="@string/frequency_prompt"/>
@@ -256,7 +257,7 @@
                 android:id="@+id/black_spinner"
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
-                android:background="#FF0000"
+                android:background="@color/appBackground"
                 android:layout_height="wrap_content"
                 android:entries="@array/frequency_array"
                 android:prompt="@string/frequency_prompt"/>
