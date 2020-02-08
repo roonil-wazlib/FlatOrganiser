@@ -1,10 +1,9 @@
 package com.emmahogan.flatorganiser.bins
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
@@ -19,6 +18,11 @@ class SetupBinsActivity : AppCompatActivity() {
     lateinit var greenTableRow : TableRow
     lateinit var blackTableRow : TableRow
 
+    lateinit var redSpinner : Spinner
+    lateinit var yellowSpinner : Spinner
+    lateinit var greenSpinner : Spinner
+    lateinit var blackSpinner : Spinner
+
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setup_bins)
@@ -28,6 +32,7 @@ class SetupBinsActivity : AppCompatActivity() {
 
         setUpBinSelect()
         setUpFrequencyMenu()
+        setUpSpinners()
         setUpNavigatorBar()
     }
 
@@ -56,10 +61,10 @@ class SetupBinsActivity : AppCompatActivity() {
         greenTableRow = findViewById(R.id.green_time)
         blackTableRow = findViewById(R.id.black_time)
 
-        redTableRow.setVisibility(View.GONE)
-        yellowTableRow.setVisibility(View.GONE)
-        greenTableRow.setVisibility(View.GONE)
-        blackTableRow.setVisibility(View.GONE)
+        redTableRow.setVisibility(View.INVISIBLE)
+        yellowTableRow.setVisibility(View.INVISIBLE)
+        greenTableRow.setVisibility(View.INVISIBLE)
+        blackTableRow.setVisibility(View.INVISIBLE)
     }
 
 
@@ -100,20 +105,44 @@ class SetupBinsActivity : AppCompatActivity() {
             when(btn.id){
                 R.id.red -> {
                     btn.setBackgroundResource(R.drawable.red_bin_bg)
-                    redTableRow.setVisibility(View.GONE)
+                    redTableRow.setVisibility(View.INVISIBLE)
                 }
                 R.id.yellow -> {
                     btn.setBackgroundResource(R.drawable.yellow_bin_bg)
-                    yellowTableRow.setVisibility(View.GONE)
+                    yellowTableRow.setVisibility(View.INVISIBLE)
                 }
                 R.id.green -> {
                     btn.setBackgroundResource(R.drawable.green_bin_bg)
-                    greenTableRow.setVisibility(View.GONE)
+                    greenTableRow.setVisibility(View.INVISIBLE)
                 }
                 R.id.black -> {
                     btn.setBackgroundResource(R.drawable.black_bin_bg)
-                    blackTableRow.setVisibility(View.GONE)
+                    blackTableRow.setVisibility(View.INVISIBLE)
                 }
+            }
+        }
+    }
+
+
+    fun setUpSpinners(){
+        redSpinner = findViewById(R.id.red_spinner)
+        yellowSpinner = findViewById(R.id.yellow_spinner)
+        greenSpinner = findViewById(R.id.green_spinner)
+        blackSpinner = findViewById(R.id.black_spinner)
+
+        redSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                // Display the selected item text on text view
+                redSpinner.prompt = "Every ${parent.getItemAtPosition(position).toString()}"
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>){
+                // Another interface callback
             }
         }
     }
