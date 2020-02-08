@@ -124,29 +124,12 @@ class SetupBinsActivity : AppCompatActivity() {
     }
 
 
-    fun setUpSpinners(){
+    fun setUpSpinners() {
         redSpinner = findViewById(R.id.red_spinner)
         yellowSpinner = findViewById(R.id.yellow_spinner)
         greenSpinner = findViewById(R.id.green_spinner)
         blackSpinner = findViewById(R.id.black_spinner)
-
-        redSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                // Display the selected item text on text view
-                redSpinner.prompt = "Every ${parent.getItemAtPosition(position).toString()}"
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>){
-                // Another interface callback
-            }
-        }
     }
-
 
     override fun onBackPressed(){
         this.finish()

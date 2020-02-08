@@ -16,6 +16,7 @@
     <string name="frequency_prompt">Choose bin frequency</string>
 
     <string-array name="frequency_array">
+        <item>Select:</item>
         <item>1 Week</item>
         <item>2 Weeks</item>
 
