@@ -8,11 +8,6 @@ import com.emmahogan.flatorganiser.auth.User
 import android.app.DatePickerDialog
 import java.util.Calendar;
 import android.widget.EditText
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
 
 
 
@@ -33,7 +28,7 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     lateinit var picker: DatePickerDialog
-    private var eText: EditText? = null //TODO check when to do this and when to use lateinit...unclear to me
+    //private var eText: EditText? = null //TODO check when to do this and when to use lateinit...unclear to me
 
 
     override fun onCreate(savedInstanceState : Bundle?){
@@ -83,10 +78,10 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     private fun setUpCalendars(){
-        val redCalendar : ImageView = findViewById(com.emmahogan.flatorganiser.R.id.red_calendar)
-        val yellowCalendar : ImageView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_calendar)
-        val greenCalendar : ImageView = findViewById(com.emmahogan.flatorganiser.R.id.green_calendar)
-        val blackCalendar : ImageView = findViewById(com.emmahogan.flatorganiser.R.id.black_calendar)
+        val redCalendar : Button = findViewById(com.emmahogan.flatorganiser.R.id.red_calendar)
+        val yellowCalendar : Button = findViewById(com.emmahogan.flatorganiser.R.id.yellow_calendar)
+        val greenCalendar : Button = findViewById(com.emmahogan.flatorganiser.R.id.green_calendar)
+        val blackCalendar : Button = findViewById(com.emmahogan.flatorganiser.R.id.black_calendar)
 
         redCalendar.setOnClickListener{ openCalendar(redCalendar) }
         yellowCalendar.setOnClickListener{ openCalendar(yellowCalendar) }
@@ -168,7 +163,8 @@ class SetupBinsActivity : AppCompatActivity() {
 
     }
 
-    private fun openCalendar(calendar : ImageView){
+
+    private fun openCalendar(calendar : Button){
         val cldr = Calendar.getInstance()
         val day = cldr.get(Calendar.DAY_OF_MONTH)
         val month = cldr.get(Calendar.MONTH)
@@ -176,9 +172,7 @@ class SetupBinsActivity : AppCompatActivity() {
         // date picker dialog
         picker = DatePickerDialog(this,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                eText?.setText(
-                    dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
-                )
+                calendar.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
             }, year, month, day
         )
         picker.show()

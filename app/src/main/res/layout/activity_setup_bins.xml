@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBackground">
@@ -117,14 +116,11 @@
                 android:text="Starting: "
                 android:layout_gravity="center"/>
 
-            <ImageView
+            <Button
                 android:id="@+id/red_calendar"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/calendar" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"/>
 
 
         </TableRow>
@@ -168,14 +164,11 @@
                 android:text="Starting: "
                 android:layout_gravity="center"/>
 
-            <ImageView
+            <Button
                 android:id="@+id/yellow_calendar"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/calendar" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"/>
 
         </TableRow>
 
@@ -218,14 +211,11 @@
                 android:text="Starting: "
                 android:layout_gravity="center"/>
 
-            <ImageView
+            <Button
                 android:id="@+id/green_calendar"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/calendar" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"/>
 
 
         </TableRow>
@@ -269,14 +259,11 @@
                 android:text="Starting: "
                 android:layout_gravity="center"/>
 
-            <ImageView
+            <Button
                 android:id="@+id/black_calendar"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/calendar" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"/>
 
         </TableRow>
     </TableLayout>
