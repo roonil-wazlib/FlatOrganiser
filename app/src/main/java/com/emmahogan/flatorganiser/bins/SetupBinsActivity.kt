@@ -1,13 +1,21 @@
 package com.emmahogan.flatorganiser.bins
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
-import kotlinx.android.synthetic.main.activity_setup_bins.*
+import android.app.DatePickerDialog
+import java.util.Calendar;
+import android.widget.EditText
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
+
+
 
 class SetupBinsActivity : AppCompatActivity() {
 
@@ -23,9 +31,14 @@ class SetupBinsActivity : AppCompatActivity() {
     lateinit var greenSpinner : Spinner
     lateinit var blackSpinner : Spinner
 
+
+    lateinit var picker: DatePickerDialog
+    private var eText: EditText? = null //TODO check when to do this and when to use lateinit...unclear to me
+
+
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setup_bins)
+        setContentView(com.emmahogan.flatorganiser.R.layout.activity_setup_bins)
 
         //get user data
         currentUser = intent.getParcelableExtra("user")
@@ -33,33 +46,34 @@ class SetupBinsActivity : AppCompatActivity() {
         setUpBinSelect()
         setUpFrequencyMenu()
         setUpSpinners()
+        setUpCalendars()
         setUpNavigatorBar()
     }
 
 
     private fun setUpBinSelect(){
-        val redBtn : Button = findViewById(R.id.red)
+        val redBtn : Button = findViewById(com.emmahogan.flatorganiser.R.id.red)
         redBtn.setOnClickListener{ changeBorder(redBtn) }
 
-        val greenBtn : Button = findViewById(R.id.green)
+        val greenBtn : Button = findViewById(com.emmahogan.flatorganiser.R.id.green)
         greenBtn.setOnClickListener{ changeBorder(greenBtn) }
 
-        val yellowBtn : Button = findViewById(R.id.yellow)
+        val yellowBtn : Button = findViewById(com.emmahogan.flatorganiser.R.id.yellow)
         yellowBtn.setOnClickListener{ changeBorder(yellowBtn) }
 
-        val blackBtn : Button = findViewById(R.id.black)
+        val blackBtn : Button = findViewById(com.emmahogan.flatorganiser.R.id.black)
         blackBtn.setOnClickListener { changeBorder(blackBtn) }
     }
 
 
     private fun setUpFrequencyMenu(){
-        val frequency_question : TextView = findViewById(R.id.frequency_question)
+        val frequency_question : TextView = findViewById(com.emmahogan.flatorganiser.R.id.frequency_question)
         frequency_question.setVisibility(View.GONE)
 
-        redTableRow = findViewById(R.id.red_time)
-        yellowTableRow = findViewById(R.id.yellow_time)
-        greenTableRow = findViewById(R.id.green_time)
-        blackTableRow = findViewById(R.id.black_time)
+        redTableRow = findViewById(com.emmahogan.flatorganiser.R.id.red_time)
+        yellowTableRow = findViewById(com.emmahogan.flatorganiser.R.id.yellow_time)
+        greenTableRow = findViewById(com.emmahogan.flatorganiser.R.id.green_time)
+        blackTableRow = findViewById(com.emmahogan.flatorganiser.R.id.black_time)
 
         redTableRow.setVisibility(View.INVISIBLE)
         yellowTableRow.setVisibility(View.INVISIBLE)
@@ -68,11 +82,24 @@ class SetupBinsActivity : AppCompatActivity() {
     }
 
 
+    private fun setUpCalendars(){
+        val redCalendar : ImageView = findViewById(com.emmahogan.flatorganiser.R.id.red_calendar)
+        val yellowCalendar : ImageView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_calendar)
+        val greenCalendar : ImageView = findViewById(com.emmahogan.flatorganiser.R.id.green_calendar)
+        val blackCalendar : ImageView = findViewById(com.emmahogan.flatorganiser.R.id.black_calendar)
+
+        redCalendar.setOnClickListener{ openCalendar(redCalendar) }
+        yellowCalendar.setOnClickListener{ openCalendar(yellowCalendar) }
+        greenCalendar.setOnClickListener{ openCalendar(greenCalendar) }
+        blackCalendar.setOnClickListener{ openCalendar(blackCalendar) }
+    }
+
+
     private fun setUpNavigatorBar(){
-        val cancel : Button = findViewById(R.id.cancel)
+        val cancel : Button = findViewById(com.emmahogan.flatorganiser.R.id.cancel)
         cancel.setOnClickListener{ onBackPressed() }
 
-        val submit : Button = findViewById(R.id.submit)
+        val submit : Button = findViewById(com.emmahogan.flatorganiser.R.id.submit)
         submit.setOnClickListener{ onSubmit() }
     }
 
@@ -82,20 +109,20 @@ class SetupBinsActivity : AppCompatActivity() {
         if(btn.tag == "0"){
             btn.tag = "1"
             when(btn.id){
-                R.id.red -> {
-                    btn.setBackgroundResource(R.drawable.red_bin_selected_bg)
+                com.emmahogan.flatorganiser.R.id.red -> {
+                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.red_bin_selected_bg)
                     redTableRow.setVisibility(View.VISIBLE)
                 }
-                R.id.yellow -> {
-                    btn.setBackgroundResource(R.drawable.yellow_bin_selected_bg)
+                com.emmahogan.flatorganiser.R.id.yellow -> {
+                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.yellow_bin_selected_bg)
                     yellowTableRow.setVisibility(View.VISIBLE)
                 }
-                R.id.green -> {
-                    btn.setBackgroundResource(R.drawable.green_bin_selected_bg)
+                com.emmahogan.flatorganiser.R.id.green -> {
+                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.green_bin_selected_bg)
                     greenTableRow.setVisibility(View.VISIBLE)
                 }
-                R.id.black -> {
-                    btn.setBackgroundResource(R.drawable.black_bin_selected_bg)
+                com.emmahogan.flatorganiser.R.id.black -> {
+                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.black_bin_selected_bg)
                     blackTableRow.setVisibility(View.VISIBLE)
                 }
             }
@@ -103,20 +130,20 @@ class SetupBinsActivity : AppCompatActivity() {
         else{
             btn.tag = "0"
             when(btn.id){
-                R.id.red -> {
-                    btn.setBackgroundResource(R.drawable.red_bin_bg)
+                com.emmahogan.flatorganiser.R.id.red -> {
+                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.red_bin_bg)
                     redTableRow.setVisibility(View.INVISIBLE)
                 }
-                R.id.yellow -> {
-                    btn.setBackgroundResource(R.drawable.yellow_bin_bg)
+                com.emmahogan.flatorganiser.R.id.yellow -> {
+                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.yellow_bin_bg)
                     yellowTableRow.setVisibility(View.INVISIBLE)
                 }
-                R.id.green -> {
-                    btn.setBackgroundResource(R.drawable.green_bin_bg)
+                com.emmahogan.flatorganiser.R.id.green -> {
+                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.green_bin_bg)
                     greenTableRow.setVisibility(View.INVISIBLE)
                 }
-                R.id.black -> {
-                    btn.setBackgroundResource(R.drawable.black_bin_bg)
+                com.emmahogan.flatorganiser.R.id.black -> {
+                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.black_bin_bg)
                     blackTableRow.setVisibility(View.INVISIBLE)
                 }
             }
@@ -125,11 +152,12 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     fun setUpSpinners() {
-        redSpinner = findViewById(R.id.red_spinner)
-        yellowSpinner = findViewById(R.id.yellow_spinner)
-        greenSpinner = findViewById(R.id.green_spinner)
-        blackSpinner = findViewById(R.id.black_spinner)
+        redSpinner = findViewById(com.emmahogan.flatorganiser.R.id.red_spinner)
+        yellowSpinner = findViewById(com.emmahogan.flatorganiser.R.id.yellow_spinner)
+        greenSpinner = findViewById(com.emmahogan.flatorganiser.R.id.green_spinner)
+        blackSpinner = findViewById(com.emmahogan.flatorganiser.R.id.black_spinner)
     }
+
 
     override fun onBackPressed(){
         this.finish()
@@ -138,5 +166,21 @@ class SetupBinsActivity : AppCompatActivity() {
 
     private fun onSubmit(){
 
+    }
+
+    private fun openCalendar(calendar : ImageView){
+        val cldr = Calendar.getInstance()
+        val day = cldr.get(Calendar.DAY_OF_MONTH)
+        val month = cldr.get(Calendar.MONTH)
+        val year = cldr.get(Calendar.YEAR)
+        // date picker dialog
+        picker = DatePickerDialog(this,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                eText?.setText(
+                    dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                )
+            }, year, month, day
+        )
+        picker.show()
     }
 }
