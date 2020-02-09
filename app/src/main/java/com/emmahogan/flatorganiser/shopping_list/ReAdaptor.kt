@@ -78,7 +78,8 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
     fun addItem(item : ListItem){
         //add new item to recycler view
         imageModelArrayList.add(item)
-        notifyDataSetChanged()
+        notifyItemInserted(itemCount-1)
+        notifyItemRangeChanged(itemCount-1, itemCount)
     }
 
 
