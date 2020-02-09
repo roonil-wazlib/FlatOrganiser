@@ -1,7 +1,6 @@
 package com.emmahogan.flatorganiser.shopping_list
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,40 +49,23 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
         holder.groceryCheckBox.isChecked = imageModelArrayList[position].getSelected()
         holder.groceryCheckBox.setText(imageModelArrayList[position].getItemName())
 
-        holder.groceryCheckBox.tag = position //set initial tag to current position
-        holder.deleteBtn.tag = position
-
-
         //listen for clicks on checkboxes and respond
         holder.groceryCheckBox.setOnClickListener {
 
-            val pos = holder.groceryCheckBox.tag as Int
-            if (imageModelArrayList[pos].getSelected()) {
-                imageModelArrayList[pos].setSelecteds(false)
+            if (imageModelArrayList[position].getSelected()) {
+                imageModelArrayList[position].setSelecteds(false)
             } else {
-                imageModelArrayList[pos].setSelecteds(true)
+                imageModelArrayList[position].setSelecteds(true)
             }
             writeToDb()
         }
 
         holder.deleteBtn.setOnClickListener {
-            val pos = holder.deleteBtn.tag as Int
-            Log.d("TAG", pos.toString())
-            imageModelArrayList.removeAt(pos)
-            holderList.removeAt(pos)
-            notifyItemRemoved(pos)
-            updateTags()
+            imageModelArrayList.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
             writeToDb()
         }
-    }
-
-    //update tags on view holders
-    fun updateTags(){
-        imageModelArrayList.forEachIndexed { i, element ->
-            holderList[i].groceryCheckBox.tag = i
-            holderList[i].deleteBtn.tag = i
-        }
-
     }
 
 
@@ -96,7 +78,7 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
     fun addItem(item : ListItem){
         //add new item to recycler view
         imageModelArrayList.add(item)
-        notifyItemInserted(itemCount)
+        notifyDataSetChanged()
     }
 
 

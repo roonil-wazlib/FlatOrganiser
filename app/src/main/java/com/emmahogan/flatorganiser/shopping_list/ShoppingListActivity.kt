@@ -63,7 +63,7 @@ class ShoppingListActivity : AppCompatActivity() {
         addBtn.setOnClickListener{ addItem() }
     }
 
-    //update this to populate from hashmap in db, including correct isSelect value
+
     private fun createModel(): ArrayList<ListItem> {
         val list = ArrayList<ListItem>()
         for ((key, value) in groceriesList) {
