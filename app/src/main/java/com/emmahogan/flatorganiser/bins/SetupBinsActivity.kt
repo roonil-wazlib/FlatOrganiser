@@ -6,9 +6,12 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.auth.User
 import android.app.DatePickerDialog
+import android.os.Parcelable
 import java.util.Calendar;
 import android.widget.EditText
 import com.emmahogan.flatorganiser.CloudFirestore
+import com.emmahogan.flatorganiser.R
+import io.grpc.internal.SharedResourceHolder
 
 
 class SetupBinsActivity : AppCompatActivity() {
@@ -30,6 +33,7 @@ class SetupBinsActivity : AppCompatActivity() {
     lateinit var greenCalendar : Button
     lateinit var blackCalendar : Button
 
+    var bins = mutableListOf<Bin>()
 
     lateinit var picker: DatePickerDialog
     //private var eText: EditText? = null //TODO check when to do this and when to use lateinit...unclear to me
@@ -42,37 +46,38 @@ class SetupBinsActivity : AppCompatActivity() {
         //get user data
         currentUser = intent.getParcelableExtra("user")
 
-        setUpBinSelect()
         setUpFrequencyMenu()
         setUpSpinners()
         setUpCalendars()
+        setUpBinObjects()
+        setUpBinSelect()
         setUpNavigatorBar()
     }
 
 
     private fun setUpBinSelect(){
-        val redBtn : Button = findViewById(com.emmahogan.flatorganiser.R.id.red)
-        redBtn.setOnClickListener{ changeBorder(redBtn) }
+        val redBtn : Button = findViewById(R.id.red)
+        redBtn.setOnClickListener{ changeBorder(bins[0], redBtn) }
 
-        val greenBtn : Button = findViewById(com.emmahogan.flatorganiser.R.id.green)
-        greenBtn.setOnClickListener{ changeBorder(greenBtn) }
+        val yellowBtn : Button = findViewById(R.id.yellow)
+        yellowBtn.setOnClickListener{ changeBorder(bins[1], yellowBtn)}
 
-        val yellowBtn : Button = findViewById(com.emmahogan.flatorganiser.R.id.yellow)
-        yellowBtn.setOnClickListener{ changeBorder(yellowBtn) }
+        val greenBtn : Button = findViewById(R.id.green)
+        greenBtn.setOnClickListener{ changeBorder(bins[2], greenBtn) }
 
-        val blackBtn : Button = findViewById(com.emmahogan.flatorganiser.R.id.black)
-        blackBtn.setOnClickListener { changeBorder(blackBtn) }
+        val blackBtn : Button = findViewById(R.id.black)
+        blackBtn.setOnClickListener { changeBorder(bins[3], blackBtn) }
     }
 
 
     private fun setUpFrequencyMenu(){
-        val frequency_question : TextView = findViewById(com.emmahogan.flatorganiser.R.id.frequency_question)
+        val frequency_question : TextView = findViewById(R.id.frequency_question)
         frequency_question.setVisibility(View.GONE)
 
-        redTableRow = findViewById(com.emmahogan.flatorganiser.R.id.red_time)
-        yellowTableRow = findViewById(com.emmahogan.flatorganiser.R.id.yellow_time)
-        greenTableRow = findViewById(com.emmahogan.flatorganiser.R.id.green_time)
-        blackTableRow = findViewById(com.emmahogan.flatorganiser.R.id.black_time)
+        redTableRow = findViewById(R.id.red_time)
+        yellowTableRow = findViewById(R.id.yellow_time)
+        greenTableRow = findViewById(R.id.green_time)
+        blackTableRow = findViewById(R.id.black_time)
 
         redTableRow.setVisibility(View.INVISIBLE)
         yellowTableRow.setVisibility(View.INVISIBLE)
@@ -82,10 +87,10 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     private fun setUpCalendars(){
-        redCalendar = findViewById(com.emmahogan.flatorganiser.R.id.red_calendar)
-        yellowCalendar = findViewById(com.emmahogan.flatorganiser.R.id.yellow_calendar)
-        greenCalendar = findViewById(com.emmahogan.flatorganiser.R.id.green_calendar)
-        blackCalendar = findViewById(com.emmahogan.flatorganiser.R.id.black_calendar)
+        redCalendar = findViewById(R.id.red_calendar)
+        yellowCalendar = findViewById(R.id.yellow_calendar)
+        greenCalendar = findViewById(R.id.green_calendar)
+        blackCalendar = findViewById(R.id.black_calendar)
 
         redCalendar.setOnClickListener{ openCalendar(redCalendar) }
         yellowCalendar.setOnClickListener{ openCalendar(yellowCalendar) }
@@ -95,66 +100,47 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     private fun setUpNavigatorBar(){
-        val cancel : Button = findViewById(com.emmahogan.flatorganiser.R.id.cancel)
+        val cancel : Button = findViewById(R.id.cancel)
         cancel.setOnClickListener{ onBackPressed() }
 
-        val submit : Button = findViewById(com.emmahogan.flatorganiser.R.id.submit)
+        val submit : Button = findViewById(R.id.submit)
         submit.setOnClickListener{ onSubmit() }
     }
 
 
-    private fun changeBorder(btn : Button){
+    private fun changeBorder(bin : Bin, btn : Button){
         //TODO fix this monstrosity
-        if(btn.tag == "0"){
-            btn.tag = "1"
-            when(btn.id){
-                com.emmahogan.flatorganiser.R.id.red -> {
-                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.red_bin_selected_bg)
-                    redTableRow.setVisibility(View.VISIBLE)
-                }
-                com.emmahogan.flatorganiser.R.id.yellow -> {
-                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.yellow_bin_selected_bg)
-                    yellowTableRow.setVisibility(View.VISIBLE)
-                }
-                com.emmahogan.flatorganiser.R.id.green -> {
-                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.green_bin_selected_bg)
-                    greenTableRow.setVisibility(View.VISIBLE)
-                }
-                com.emmahogan.flatorganiser.R.id.black -> {
-                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.black_bin_selected_bg)
-                    blackTableRow.setVisibility(View.VISIBLE)
-                }
-            }
-        }
-        else{
-            btn.tag = "0"
-            when(btn.id){
-                com.emmahogan.flatorganiser.R.id.red -> {
-                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.red_bin_bg)
-                    redTableRow.setVisibility(View.INVISIBLE)
-                }
-                com.emmahogan.flatorganiser.R.id.yellow -> {
-                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.yellow_bin_bg)
-                    yellowTableRow.setVisibility(View.INVISIBLE)
-                }
-                com.emmahogan.flatorganiser.R.id.green -> {
-                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.green_bin_bg)
-                    greenTableRow.setVisibility(View.INVISIBLE)
-                }
-                com.emmahogan.flatorganiser.R.id.black -> {
-                    btn.setBackgroundResource(com.emmahogan.flatorganiser.R.drawable.black_bin_bg)
-                    blackTableRow.setVisibility(View.INVISIBLE)
-                }
-            }
+
+        if (bin.selected){
+            bin.deselectBin()
+            bin.section.setVisibility(View.INVISIBLE)
+            btn.setBackgroundResource(bin.borderBg)
+        }else{
+            bin.selectBin()
+            bin.section.setVisibility(View.VISIBLE)
+            btn.setBackgroundResource(bin.noBorderBg)
         }
     }
 
 
     fun setUpSpinners() {
-        redSpinner = findViewById(com.emmahogan.flatorganiser.R.id.red_spinner)
-        yellowSpinner = findViewById(com.emmahogan.flatorganiser.R.id.yellow_spinner)
-        greenSpinner = findViewById(com.emmahogan.flatorganiser.R.id.green_spinner)
-        blackSpinner = findViewById(com.emmahogan.flatorganiser.R.id.black_spinner)
+        redSpinner = findViewById(R.id.red_spinner)
+        yellowSpinner = findViewById(R.id.yellow_spinner)
+        greenSpinner = findViewById(R.id.green_spinner)
+        blackSpinner = findViewById(R.id.black_spinner)
+    }
+
+
+    private fun setUpBinObjects(){
+        val redBin = Bin("red", redSpinner, redCalendar, redTableRow, R.drawable.red_bin_bg, R.drawable.red_bin_selected_bg)
+        val yellowBin = Bin("yellow", yellowSpinner, yellowCalendar, yellowTableRow, R.drawable.yellow_bin_bg, R.drawable.yellow_bin_selected_bg)
+        val greenBin = Bin("green", greenSpinner, greenCalendar, greenTableRow, R.drawable.green_bin_bg, R.drawable.green_bin_selected_bg)
+        val blackBin = Bin("black", blackSpinner, blackCalendar, blackTableRow, R.drawable.black_bin_bg, R.drawable.black_bin_selected_bg)
+
+        bins.add(redBin)
+        bins.add(yellowBin)
+        bins.add(greenBin)
+        bins.add(blackBin)
     }
 
 
@@ -171,12 +157,12 @@ class SetupBinsActivity : AppCompatActivity() {
 
         val listData = HashMap<String, Any>()
 
-        listData.put("red", mapOf("start_data" to redCalendar.text.toString(), "frequency" to redSpinner.selectedItem.toString() ))
-        listData.put("yellow", mapOf("start_data" to yellowCalendar.text.toString(), "frequency" to yellowSpinner.selectedItem.toString() ))
-        listData.put("green", mapOf("start_data" to greenCalendar.text.toString(), "frequency" to greenSpinner.selectedItem.toString() ))
-        listData.put("black", mapOf("start_data" to blackCalendar.text.toString(), "frequency" to blackSpinner.selectedItem.toString() ))
+        for (bin in bins){
+            if (bin.selected) listData.put(bin.colour, mapOf("start_data" to bin.date.text.toString(), "frequency" to bin.frequency.selectedItem.toString()))
+        }
 
         (CloudFirestore::addBinDates)(CloudFirestore(), flat.toString(), listData)
+        Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -192,5 +178,23 @@ class SetupBinsActivity : AppCompatActivity() {
             }, year, month, day
         )
         picker.show()
+    }
+}
+
+
+data class Bin(
+    var colour: String,
+    var frequency : Spinner,
+    var date : Button,
+    var section : TableRow,
+    var noBorderBg : Int,
+    var borderBg : Int,
+    var selected : Boolean = false
+) {
+    fun selectBin(){
+        this.selected = true
+    }
+    fun deselectBin(){
+        this.selected = false
     }
 }
