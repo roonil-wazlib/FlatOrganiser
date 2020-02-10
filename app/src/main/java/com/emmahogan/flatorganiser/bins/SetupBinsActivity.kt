@@ -6,42 +6,40 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.auth.User
 import android.app.DatePickerDialog
-import android.os.Parcelable
-import java.util.Calendar;
-import android.widget.EditText
+import java.util.Calendar
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
-import io.grpc.internal.SharedResourceHolder
+
 
 
 class SetupBinsActivity : AppCompatActivity() {
 
-    lateinit var currentUser : User
+    private lateinit var currentUser : User
 
-    lateinit var redTableRow : TableRow
-    lateinit var yellowTableRow : TableRow
-    lateinit var greenTableRow : TableRow
-    lateinit var blackTableRow : TableRow
+    private lateinit var redTableRow : TableRow
+    private lateinit var yellowTableRow : TableRow
+    private lateinit var greenTableRow : TableRow
+    private lateinit var blackTableRow : TableRow
 
-    lateinit var redSpinner : Spinner
-    lateinit var yellowSpinner : Spinner
-    lateinit var greenSpinner : Spinner
-    lateinit var blackSpinner : Spinner
+    private lateinit var redSpinner : Spinner
+    private lateinit var yellowSpinner : Spinner
+    private lateinit var greenSpinner : Spinner
+    private lateinit var blackSpinner : Spinner
 
-    lateinit var redCalendar : Button
-    lateinit var yellowCalendar : Button
-    lateinit var greenCalendar : Button
-    lateinit var blackCalendar : Button
+    private lateinit var redCalendar : Button
+    private lateinit var yellowCalendar : Button
+    private lateinit var greenCalendar : Button
+    private lateinit var blackCalendar : Button
 
-    var bins = mutableListOf<Bin>()
+    private var bins = mutableListOf<Bin>()
 
-    lateinit var picker: DatePickerDialog
+    private lateinit var picker: DatePickerDialog
     //private var eText: EditText? = null //TODO check when to do this and when to use lateinit...unclear to me
 
 
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(com.emmahogan.flatorganiser.R.layout.activity_setup_bins)
+        setContentView(R.layout.activity_setup_bins)
 
         //get user data
         currentUser = intent.getParcelableExtra("user")
@@ -71,18 +69,18 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     private fun setUpFrequencyMenu(){
-        val frequency_question : TextView = findViewById(R.id.frequency_question)
-        frequency_question.setVisibility(View.GONE)
+        val frequencyQuestion : TextView = findViewById(R.id.frequency_question)
+        frequencyQuestion.visibility = View.GONE
 
         redTableRow = findViewById(R.id.red_time)
         yellowTableRow = findViewById(R.id.yellow_time)
         greenTableRow = findViewById(R.id.green_time)
         blackTableRow = findViewById(R.id.black_time)
 
-        redTableRow.setVisibility(View.INVISIBLE)
-        yellowTableRow.setVisibility(View.INVISIBLE)
-        greenTableRow.setVisibility(View.INVISIBLE)
-        blackTableRow.setVisibility(View.INVISIBLE)
+        redTableRow.visibility = View.INVISIBLE
+        yellowTableRow.visibility = View.INVISIBLE
+        greenTableRow.visibility = View.INVISIBLE
+        blackTableRow.visibility = View.INVISIBLE
     }
 
 
@@ -111,18 +109,18 @@ class SetupBinsActivity : AppCompatActivity() {
     private fun changeBorder(bin : Bin, btn : Button){
         if (bin.selected){
             bin.deselectBin()
-            bin.section.setVisibility(View.INVISIBLE)
+            bin.section.visibility = View.INVISIBLE
             btn.setBackgroundResource(bin.noBorderBg)
         }
         else{
             bin.selectBin()
-            bin.section.setVisibility(View.VISIBLE)
+            bin.section.visibility = View.VISIBLE
             btn.setBackgroundResource(bin.borderBg)
         }
     }
 
 
-    fun setUpSpinners() {
+    private fun setUpSpinners() {
         redSpinner = findViewById(R.id.red_spinner)
         yellowSpinner = findViewById(R.id.yellow_spinner)
         greenSpinner = findViewById(R.id.green_spinner)
@@ -171,15 +169,16 @@ class SetupBinsActivity : AppCompatActivity() {
     }
 
 
-    private fun openCalendar(calendar : Button){
-        val cldr = Calendar.getInstance()
-        val day = cldr.get(Calendar.DAY_OF_MONTH)
-        val month = cldr.get(Calendar.MONTH)
-        val year = cldr.get(Calendar.YEAR)
+    private fun openCalendar(calendarBtn : Button){
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
         // date picker dialog
         picker = DatePickerDialog(this,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                calendar.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
+            DatePickerDialog.OnDateSetListener {_, selectedYear, monthOfYear, dayOfMonth ->
+                val date = "${dayOfMonth}/${monthOfYear + 1}/${selectedYear}"
+                calendarBtn.text = date
             }, year, month, day
         )
         picker.show()
