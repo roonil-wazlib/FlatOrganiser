@@ -151,18 +151,24 @@ class SetupBinsActivity : AppCompatActivity() {
 
     private fun onSubmit(){
         //check all info filled out....if not just display toast
-
-        //if info correctly filled out:
-        val flat = currentUser.flat
-
-        val listData = HashMap<String, Any>()
-
-        for (bin in bins){
-            if (bin.selected) listData.put(bin.colour, mapOf("start_data" to bin.date.text.toString(), "frequency" to bin.frequency.selectedItem.toString()))
+        if(!atLeastOneBin()){
+            Toast.makeText(this, "You must select at least one bin.", Toast.LENGTH_SHORT).show()
         }
+        else if (infoFilledOut()){
+            //if info correctly filled out:
+            val flat = currentUser.flat
+            val listData = HashMap<String, Any>()
 
-        (CloudFirestore::addBinDates)(CloudFirestore(), flat.toString(), listData)
-        Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
+            for (bin in bins){
+                if (bin.selected) listData.put(bin.colour, mapOf("start_data" to bin.date.text.toString(), "frequency" to bin.frequency.selectedItem.toString()))
+            }
+
+            (CloudFirestore::addBinDates)(CloudFirestore(), flat.toString(), listData)
+            Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            Toast.makeText(this, "Please fill out all dates and times", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
@@ -178,6 +184,28 @@ class SetupBinsActivity : AppCompatActivity() {
             }, year, month, day
         )
         picker.show()
+    }
+
+
+    private fun infoFilledOut() : Boolean{
+        var isSelected = true
+        for (bin in bins){
+            if (bin.selected){
+                if (bin.frequency.selectedItem.toString() == "Select:" || bin.date.text.toString() == "Date"){
+                    isSelected = false
+                }
+            }
+        }
+        return isSelected
+    }
+
+
+    private fun atLeastOneBin() : Boolean{
+        var somethingSelected = false
+        for (bin in bins){
+            if (bin.selected) somethingSelected = true
+        }
+        return somethingSelected
     }
 }
 
