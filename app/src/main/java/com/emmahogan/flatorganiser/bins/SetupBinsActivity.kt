@@ -8,8 +8,7 @@ import com.emmahogan.flatorganiser.auth.User
 import android.app.DatePickerDialog
 import java.util.Calendar;
 import android.widget.EditText
-
-
+import com.emmahogan.flatorganiser.CloudFirestore
 
 
 class SetupBinsActivity : AppCompatActivity() {
@@ -25,6 +24,11 @@ class SetupBinsActivity : AppCompatActivity() {
     lateinit var yellowSpinner : Spinner
     lateinit var greenSpinner : Spinner
     lateinit var blackSpinner : Spinner
+
+    lateinit var redCalendar : Button
+    lateinit var yellowCalendar : Button
+    lateinit var greenCalendar : Button
+    lateinit var blackCalendar : Button
 
 
     lateinit var picker: DatePickerDialog
@@ -78,10 +82,10 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     private fun setUpCalendars(){
-        val redCalendar : Button = findViewById(com.emmahogan.flatorganiser.R.id.red_calendar)
-        val yellowCalendar : Button = findViewById(com.emmahogan.flatorganiser.R.id.yellow_calendar)
-        val greenCalendar : Button = findViewById(com.emmahogan.flatorganiser.R.id.green_calendar)
-        val blackCalendar : Button = findViewById(com.emmahogan.flatorganiser.R.id.black_calendar)
+        redCalendar = findViewById(com.emmahogan.flatorganiser.R.id.red_calendar)
+        yellowCalendar = findViewById(com.emmahogan.flatorganiser.R.id.yellow_calendar)
+        greenCalendar = findViewById(com.emmahogan.flatorganiser.R.id.green_calendar)
+        blackCalendar = findViewById(com.emmahogan.flatorganiser.R.id.black_calendar)
 
         redCalendar.setOnClickListener{ openCalendar(redCalendar) }
         yellowCalendar.setOnClickListener{ openCalendar(yellowCalendar) }
@@ -160,7 +164,19 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     private fun onSubmit(){
+        //check all info filled out....if not just display toast
 
+        //if info correctly filled out:
+        val flat = currentUser.flat
+
+        val listData = HashMap<String, Any>()
+
+        listData.put("red", mapOf("start_data" to redCalendar.text.toString(), "frequency" to redSpinner.selectedItem.toString() ))
+        listData.put("yellow", mapOf("start_data" to yellowCalendar.text.toString(), "frequency" to yellowSpinner.selectedItem.toString() ))
+        listData.put("green", mapOf("start_data" to greenCalendar.text.toString(), "frequency" to greenSpinner.selectedItem.toString() ))
+        listData.put("black", mapOf("start_data" to blackCalendar.text.toString(), "frequency" to blackSpinner.selectedItem.toString() ))
+
+        (CloudFirestore::addBinDates)(CloudFirestore(), flat.toString(), listData)
     }
 
 

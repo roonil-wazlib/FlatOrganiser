@@ -139,10 +139,18 @@ class CloudFirestore {
     }
 
 
-    fun addShoppingList(flatID: String, listData: HashMap<String, Any>){
+    fun addShoppingList(flatID : String, listData : HashMap<String, Any>){
         val flatReference = db.collection("flats").document(flatID)
         flatReference.collection("data").document("shopping_list").set(listData)
             .addOnSuccessListener {Log.d("TAG", "Shopping list doc created/updated")}
             .addOnFailureListener {Log.d("TAG", "Something went wrong writing shopping list")}
+    }
+
+
+    fun addBinDates(flatID : String, listData : HashMap<String, Any>){
+        val flatReference = db.collection("flats").document(flatID)
+        flatReference.collection("data").document("bin_dates").set(listData)
+            .addOnSuccessListener {Log.d("TAG", "Bin info added")}
+            .addOnFailureListener {Log.d("TAG", "Something went wrong adding bin info")}
     }
 }
