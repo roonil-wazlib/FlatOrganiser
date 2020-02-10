@@ -109,16 +109,15 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     private fun changeBorder(bin : Bin, btn : Button){
-        //TODO fix this monstrosity
-
         if (bin.selected){
             bin.deselectBin()
             bin.section.setVisibility(View.INVISIBLE)
-            btn.setBackgroundResource(bin.borderBg)
-        }else{
+            btn.setBackgroundResource(bin.noBorderBg)
+        }
+        else{
             bin.selectBin()
             bin.section.setVisibility(View.VISIBLE)
-            btn.setBackgroundResource(bin.noBorderBg)
+            btn.setBackgroundResource(bin.borderBg)
         }
     }
 
