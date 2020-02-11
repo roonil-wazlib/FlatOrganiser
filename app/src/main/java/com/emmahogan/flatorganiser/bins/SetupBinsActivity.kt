@@ -6,10 +6,13 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.auth.User
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.util.Log
 import java.util.Calendar
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
-
+import com.emmahogan.flatorganiser.RealtimeDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class SetupBinsActivity : AppCompatActivity() {
@@ -36,6 +39,8 @@ class SetupBinsActivity : AppCompatActivity() {
     private lateinit var picker: DatePickerDialog
     //private var eText: EditText? = null //TODO check when to do this and when to use lateinit...unclear to me
 
+    private var db = FirebaseFirestore.getInstance()
+
 
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
@@ -43,6 +48,22 @@ class SetupBinsActivity : AppCompatActivity() {
 
         //get user data
         currentUser = intent.getParcelableExtra("user")
+
+
+        val docRef = db.collection("flats/${currentUser.flat.toString()}/data").document("bin_dates")
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    currentUser.setBinsAdded()
+                    (RealtimeDatabase::updateUser)(RealtimeDatabase(), currentUser)
+                    openBinsActivity()
+                } else {
+                    Log.d("TAG", "User flat has no bin info set up")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
 
         setUpFrequencyMenu()
         setUpSpinners()
@@ -160,8 +181,10 @@ class SetupBinsActivity : AppCompatActivity() {
                 if (bin.selected) listData.put(bin.colour, mapOf("start_data" to bin.date.text.toString(), "frequency" to bin.frequency.selectedItem.toString()))
             }
 
-            (CloudFirestore::addBinDates)(CloudFirestore(), flat.toString(), listData)
+            (CloudFirestore::addBinDates)(CloudFirestore(), currentUser, flat.toString(), listData)
             Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
+
+            openBinsActivity()
         }
         else{
             Toast.makeText(this, "Please fill out all dates and times", Toast.LENGTH_SHORT).show()
@@ -204,6 +227,14 @@ class SetupBinsActivity : AppCompatActivity() {
             if (bin.selected) somethingSelected = true
         }
         return somethingSelected
+    }
+
+
+    private fun openBinsActivity(){
+        val intent = Intent(this, BinsActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
+        this.finish()
     }
 }
 

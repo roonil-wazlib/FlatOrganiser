@@ -32,6 +32,11 @@ class RealtimeDatabase{
         val user = User(name, email)
         mDatabaseReference.child(userId).setValue(user)
     }
+
+
+    fun updateUser(currentUser : User){
+        mDatabaseReference.child(mAuth.currentUser!!.uid).setValue(currentUser)
+    }
 }
 
 
@@ -147,10 +152,12 @@ class CloudFirestore {
     }
 
 
-    fun addBinDates(flatID : String, listData : HashMap<String, Any>){
+    fun addBinDates(currentUser: User, flatID : String, listData : HashMap<String, Any>){
         val flatReference = db.collection("flats").document(flatID)
         flatReference.collection("data").document("bin_dates").set(listData)
             .addOnSuccessListener {Log.d("TAG", "Bin info added")}
             .addOnFailureListener {Log.d("TAG", "Something went wrong adding bin info")}
+        currentUser.setBinsAdded()
+        (RealtimeDatabase::updateUser)(RealtimeDatabase(), currentUser)
     }
 }

@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.shopping_list.ShoppingListActivity
 import com.emmahogan.flatorganiser.auth.*
+import com.emmahogan.flatorganiser.bins.BinsActivity
 import com.emmahogan.flatorganiser.bins.SetupBinsActivity
 import com.emmahogan.flatorganiser.flat.CreateFlatActivity
 import com.emmahogan.flatorganiser.flat.JoinFlatActivity
@@ -150,7 +151,13 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun openBinsActivity(){
-        val intent = Intent(this, SetupBinsActivity::class.java)
+        var intent : Intent
+        when(currentUser.binsAdded){
+            true -> intent = Intent(this, BinsActivity::class.java)
+            false -> intent = Intent(this, SetupBinsActivity::class.java)
+        }
+
+        Log.d("TAG", intent.toString())
         intent.putExtra("user", currentUser)
         startActivity(intent)
     }

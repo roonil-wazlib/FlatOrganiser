@@ -169,10 +169,14 @@ class SignUpActivity : AppCompatActivity() {
 data class User(
     var name: String? = "",
     var email: String? = "",
-    var flat: String? = ""
+    var flat: String? = "",
+    var binsAdded : Boolean = false
 ) : Parcelable {
     fun changeFlat(newFlat : String?){
         this.flat = newFlat
+    }
+    fun setBinsAdded(){
+        this.binsAdded = true
     }
     fun changeName(newName : String?){
         this.name = newName

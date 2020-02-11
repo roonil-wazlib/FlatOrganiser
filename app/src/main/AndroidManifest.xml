@@ -28,6 +28,7 @@
 	    <activity android:name=".shopping_list.ShoppingListActivity"/>
         <activity android:name=".auth.EditAccountActivity"/>
         <activity android:name=".bins.SetupBinsActivity"/>
+        <activity android:name=".bins.BinsActivity"/>
 
     </application>
 
