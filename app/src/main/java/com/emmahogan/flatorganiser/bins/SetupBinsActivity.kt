@@ -178,7 +178,7 @@ class SetupBinsActivity : AppCompatActivity() {
             val listData = HashMap<String, Any>()
 
             for (bin in bins){
-                if (bin.selected) listData.put(bin.colour, mapOf("start_data" to bin.date.text.toString(), "frequency" to bin.frequency.selectedItem.toString()))
+                if (bin.selected) listData.put(bin.colour, mapOf<String, String>("start_data" to bin.date.text.toString(), "frequency" to bin.frequency.selectedItem.toString()))
             }
 
             (CloudFirestore::addBinDates)(CloudFirestore(), currentUser, flat.toString(), listData)
