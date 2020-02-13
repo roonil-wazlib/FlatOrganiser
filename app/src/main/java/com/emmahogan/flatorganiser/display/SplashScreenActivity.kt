@@ -37,7 +37,8 @@ class SplashScreenActivity : AppCompatActivity() {
                     val name = user.getValue(User::class.java)!!.name
                     val email = user.getValue(User::class.java)!!.email
                     val flatId = user.getValue(User::class.java)!!.flat
-                    instantiateUser(name, email, flatId)
+                    val binsAdded = user.getValue(User::class.java)!!.binsAdded
+                    instantiateUser(name, email, flatId, binsAdded)
                     //go to home activity
                     openHome()
                     break
@@ -69,8 +70,8 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
 
-    private fun instantiateUser(name : String?, email : String?, flatId : String?){
-        currentUser = User(name, email, flatId)
+    private fun instantiateUser(name : String?, email : String?, flatId : String?, binsAdded : Boolean){
+        currentUser = User(name, email, flatId, binsAdded)
     }
 
 

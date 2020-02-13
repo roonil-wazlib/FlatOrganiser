@@ -3,14 +3,19 @@ package com.emmahogan.flatorganiser.bins
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.auth.User
 import com.emmahogan.flatorganiser.display.HomeActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.reflect.typeOf
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.emmahogan.flatorganiser.bins.BinInfo
+
+
 
 
 class BinsActivity : AppCompatActivity() {
@@ -45,11 +50,7 @@ class BinsActivity : AppCompatActivity() {
 
                         bins.put(binColour, BinInfo(frequency, startDate))
                     }
-//                    for (bin in bins){
-//                        Log.d("TAG", bin.toString())
-//                    }
-
-                    //TODO set up activity here
+                    populateDisplay()
 
                 } else {
                     Log.d("TAG", "No such document")
@@ -69,7 +70,7 @@ class BinsActivity : AppCompatActivity() {
     }
 
 
-    fun getCurrentDate() : String {
+    private fun getCurrentDate() : String {
         val c = Calendar.getInstance().getTime()
         println("Current time => $c")
 
@@ -77,6 +78,22 @@ class BinsActivity : AppCompatActivity() {
         val formattedDate = df.format(c)
 
         return formattedDate
+    }
+
+
+    private fun populateDisplay(){
+        for(bin in bins){
+            val day = getDayFromDate(bin.value.startDate)
+            Log.d("TAG", day)
+        }
+    }
+
+
+    private fun getDayFromDate(date : String) : String{
+        val date = SimpleDateFormat("dd/M/yyyy").parse(date)
+        val day =  SimpleDateFormat("EE").format(date)
+
+        return day.toString()
     }
 }
 
