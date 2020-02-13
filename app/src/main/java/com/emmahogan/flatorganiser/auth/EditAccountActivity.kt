@@ -67,7 +67,7 @@ class EditAccountActivity : AppCompatActivity() {
     }
 
 
-    private fun leaveFlat(){
+    private fun leaveFlat(){ //TODO figure out why create flat button breaks only after leave flat????
         (CloudFirestore::deleteFromFlat)(CloudFirestore(), currentUser.flat.toString(), currentUser)
         Toast.makeText(this, "Removing from flat...", Toast.LENGTH_SHORT).show()
 

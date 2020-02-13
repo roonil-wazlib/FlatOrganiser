@@ -15,6 +15,7 @@ import com.emmahogan.flatorganiser.RealtimeDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
 
+//TODO fully test bin activty and setup bin activity
 class SetupBinsActivity : AppCompatActivity() {
 
     private lateinit var currentUser : User
@@ -37,8 +38,6 @@ class SetupBinsActivity : AppCompatActivity() {
     private var bins = mutableListOf<Bin>()
 
     private lateinit var picker: DatePickerDialog
-    //private var eText: EditText? = null //TODO check when to do this and when to use lateinit...unclear to me
-
     private var db = FirebaseFirestore.getInstance()
 
 
@@ -178,7 +177,7 @@ class SetupBinsActivity : AppCompatActivity() {
             val listData = HashMap<String, Any>()
 
             for (bin in bins){
-                if (bin.selected) listData.put(bin.colour, mapOf<String, String>("start_data" to bin.date.text.toString(), "frequency" to bin.frequency.selectedItem.toString()))
+                if (bin.selected) listData[bin.colour] = mapOf("start_data" to bin.date.text.toString(), "frequency" to bin.frequency.selectedItem.toString())
             }
 
             (CloudFirestore::addBinDates)(CloudFirestore(), currentUser, flat.toString(), listData)

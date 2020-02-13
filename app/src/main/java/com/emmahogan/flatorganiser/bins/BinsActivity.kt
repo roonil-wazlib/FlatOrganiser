@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.auth.User
 import com.emmahogan.flatorganiser.display.HomeActivity
 import com.google.firebase.firestore.FirebaseFirestore
-import java.lang.Math.abs
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,13 +64,13 @@ class BinsActivity : AppCompatActivity() {
 
     private fun setUpTextViews(){
         val redTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.red_bin)
-        binTV.put("red", redTV)
+        binTV["red"] = redTV
         val yellowTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_bin)
-        binTV.put("yellow", yellowTV)
+        binTV["yellow"] = yellowTV
         val greenTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.green_bin)
-        binTV.put("green", greenTV)
+        binTV["green"] = greenTV
         val blackTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.black_bin)
-        binTV.put("black", blackTV)
+        binTV["black"] = blackTV
     }
 
 
@@ -85,12 +84,8 @@ class BinsActivity : AppCompatActivity() {
 
     private fun getCurrentDate() : String {
         val c = Calendar.getInstance().getTime()
-        println("Current time => $c")
-
         val df = SimpleDateFormat("dd/M/yyyy")
-        val formattedDate = df.format(c)
-
-        return formattedDate
+        return df.format(c)
     }
 
 
@@ -115,8 +110,8 @@ class BinsActivity : AppCompatActivity() {
     }
 
 
-    private fun getDayFromDate(date : String) : String{
-        val date = SimpleDateFormat("dd/M/yyyy").parse(date)
+    private fun getDayFromDate(dateStr : String) : String{
+        val date = SimpleDateFormat("dd/M/yyyy").parse(dateStr)
         val day =  SimpleDateFormat("EEEE").format(date)
 
         return day.toString()
@@ -124,7 +119,7 @@ class BinsActivity : AppCompatActivity() {
 
 
     private fun updateTV(colour : String, day : String, frequency : String){
-        val format = "${colour.capitalize()} bin goes out every ${frequency} on ${day}s."
+        val format = "${colour.capitalize()} bin goes out every $frequency on ${day}s."
         binTV[colour]!!.text = format
     }
 
@@ -136,7 +131,7 @@ class BinsActivity : AppCompatActivity() {
         val hours = minutes / 60
         val days = hours / 24
 
-        if (days <= 14 && days > 0) {
+        if (days <= 14 && days > 0) { //TODO convert to range check
             return date
         }
         else {
