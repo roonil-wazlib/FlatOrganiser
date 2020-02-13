@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import com.emmahogan.flatorganiser.display.HomeActivity
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_bins.view.*
+import java.lang.Math.abs
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,13 +64,13 @@ class BinsActivity : AppCompatActivity() {
 
 
     private fun setUpTextViews(){
-        val redTV : TextView = findViewById(R.id.red_bin)
+        val redTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.red_bin)
         binTV.put("red", redTV)
-        val yellowTV : TextView = findViewById(R.id.yellow_bin)
+        val yellowTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_bin)
         binTV.put("yellow", yellowTV)
-        val greenTV : TextView = findViewById(R.id.green_bin)
+        val greenTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.green_bin)
         binTV.put("green", greenTV)
-        val blackTV : TextView = findViewById(R.id.black_bin)
+        val blackTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.black_bin)
         binTV.put("black", blackTV)
     }
 
@@ -88,7 +87,7 @@ class BinsActivity : AppCompatActivity() {
         val c = Calendar.getInstance().getTime()
         println("Current time => $c")
 
-        val df = SimpleDateFormat("dd/MMM/yyyy")
+        val df = SimpleDateFormat("dd/M/yyyy")
         val formattedDate = df.format(c)
 
         return formattedDate
@@ -101,6 +100,17 @@ class BinsActivity : AppCompatActivity() {
             val day = getDayFromDate(bin.value.startDate)
             val frequency = bin.value.frequency
             updateTV(colour, day, frequency)
+
+            var freqNum : Int
+            when(frequency){
+                "1 week" -> freqNum = 7
+                else -> freqNum = 14
+            }
+
+            val currentDate = SimpleDateFormat("dd/M/yyyy").parse(date)
+            val date = SimpleDateFormat("dd/M/yyyy").parse(bin.value.startDate)
+            val nextDate = getNextDate(date, currentDate, freqNum)
+            Log.d("TAG", nextDate.toString())
         }
     }
 
@@ -117,7 +127,28 @@ class BinsActivity : AppCompatActivity() {
         val format = "${colour.capitalize()} bin goes out every ${frequency} on ${day}s."
         binTV[colour]!!.text = format
     }
+
+
+    private fun getNextDate(date : Date, currentDate : Date, frequency : Int) : Date {
+        val diff = date.time - currentDate.time
+        val seconds = diff / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+        val days = hours / 24
+
+        if (days <= 14 && days > 0) {
+            return date
+        }
+        else {
+            val c = Calendar.getInstance();
+            c.time = date
+            c.add(Calendar.DAY_OF_YEAR, frequency)
+            val newDate = c.time
+            return getNextDate(newDate, currentDate, frequency)
+        }
+    }
 }
+
 
 data class BinInfo(
     var frequency : String,

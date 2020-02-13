@@ -8,19 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.display.HomeActivity
 import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.RealtimeDatabase
 import com.emmahogan.flatorganiser.auth.User
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 
 class JoinFlatActivity : AppCompatActivity() {
 
     lateinit var currentUser : User
     lateinit var flatIdET : EditText
-
-    private var mAuth = FirebaseAuth.getInstance()
-    //get reference to Firestore Cloud instance
-    private var db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
@@ -49,6 +44,9 @@ class JoinFlatActivity : AppCompatActivity() {
     private fun deleteFromFlat(previousFlat : String){
         //delete user from collection of flat members
         (CloudFirestore::deleteFromFlat)(CloudFirestore(), previousFlat, currentUser)
+        //update user bin info
+        currentUser.unAddBins()
+        (RealtimeDatabase::updateUser)(RealtimeDatabase(), currentUser)
     }
 
     override fun onBackPressed(){

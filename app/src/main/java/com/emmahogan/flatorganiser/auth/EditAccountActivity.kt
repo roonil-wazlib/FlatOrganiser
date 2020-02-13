@@ -70,7 +70,11 @@ class EditAccountActivity : AppCompatActivity() {
     private fun leaveFlat(){
         (CloudFirestore::deleteFromFlat)(CloudFirestore(), currentUser.flat.toString(), currentUser)
         Toast.makeText(this, "Removing from flat...", Toast.LENGTH_SHORT).show()
+
+        //TODO sort out this mess of updateUser functions - only need one ffs
         currentUser = (RealtimeDatabase::updateUserAccount)(RealtimeDatabase(), "", currentUser)
+        currentUser.unAddBins()
+        (RealtimeDatabase::updateUser)(RealtimeDatabase(), currentUser)
         val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("user", currentUser)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

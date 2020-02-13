@@ -178,6 +178,9 @@ data class User(
     fun setBinsAdded(){
         this.binsAdded = true
     }
+    fun unAddBins(){
+        this.binsAdded = false
+    }
     fun changeName(newName : String?){
         this.name = newName
     }

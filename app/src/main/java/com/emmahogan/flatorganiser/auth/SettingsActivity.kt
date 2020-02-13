@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
+import com.emmahogan.flatorganiser.RealtimeDatabase
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -144,6 +145,8 @@ class SettingsActivity : AppCompatActivity() {
     private fun deleteFromFlat(){
         //delete user from collection of flat members
         (CloudFirestore::deleteFromFlat)(CloudFirestore(), currentUser.flat.toString(), currentUser)
+        currentUser.unAddBins()
+        (RealtimeDatabase::updateUser)(RealtimeDatabase(), currentUser)
     }
 
 

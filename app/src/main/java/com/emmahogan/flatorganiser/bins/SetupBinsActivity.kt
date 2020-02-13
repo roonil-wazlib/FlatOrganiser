@@ -53,7 +53,7 @@ class SetupBinsActivity : AppCompatActivity() {
         val docRef = db.collection("flats/${currentUser.flat.toString()}/data").document("bin_dates")
         docRef.get()
             .addOnSuccessListener { document ->
-                if (document != null) {
+                if (document != null && document.data != null) {
                     currentUser.setBinsAdded()
                     (RealtimeDatabase::updateUser)(RealtimeDatabase(), currentUser)
                     openBinsActivity()
