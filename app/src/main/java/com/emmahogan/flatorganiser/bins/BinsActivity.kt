@@ -94,7 +94,6 @@ class BinsActivity : AppCompatActivity() {
             val colour = bin.key
             val day = getDayFromDate(bin.value.startDate)
             val frequency = bin.value.frequency
-            updateTV(colour, day, frequency)
 
             var freqNum : Int
             when(frequency){
@@ -104,8 +103,11 @@ class BinsActivity : AppCompatActivity() {
 
             val currentDate = SimpleDateFormat("dd/M/yyyy").parse(date)
             val date = SimpleDateFormat("dd/M/yyyy").parse(bin.value.startDate)
-            val nextDate = getNextDate(date, currentDate, freqNum)
-            Log.d("TAG", nextDate.toString())
+            val nextDateFull = getNextDate(date, currentDate, freqNum)
+            val nextDateFormatted = SimpleDateFormat("EEEE").format(nextDateFull)
+            val week = whichWeek(nextDateFull, currentDate)
+
+            updateTV(colour, nextDateFormatted, week)
         }
     }
 
@@ -118,8 +120,8 @@ class BinsActivity : AppCompatActivity() {
     }
 
 
-    private fun updateTV(colour : String, day : String, frequency : String){
-        val format = "${colour.capitalize()} bin goes out every $frequency on ${day}s."
+    private fun updateTV(colour : String, nextDate : String, week : String){
+        val format = "${colour.capitalize()} bin next goes out on $nextDate ${week}."
         binTV[colour]!!.text = format
     }
 
@@ -140,6 +142,22 @@ class BinsActivity : AppCompatActivity() {
             c.add(Calendar.DAY_OF_YEAR, frequency)
             val newDate = c.time
             return getNextDate(newDate, currentDate, frequency)
+        }
+    }
+
+
+    private fun whichWeek(date : Date, currentDate: Date) : String{
+        val diff = date.time - currentDate.time
+        val seconds = diff / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+        val days = hours / 24
+
+        if (days <= 7){
+            return "this week"
+        }
+        else{
+            return "next week"
         }
     }
 }
