@@ -10,8 +10,7 @@ import com.emmahogan.flatorganiser.display.HomeActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
-
-
+import kotlin.collections.HashMap
 
 
 class BinsActivity : AppCompatActivity() {
@@ -19,7 +18,8 @@ class BinsActivity : AppCompatActivity() {
     lateinit var currentUser : User
     lateinit var date : String
     var bins = HashMap<String, BinInfo>()
-    var binTV = HashMap<String, TextView>()
+    var nextBinTV = HashMap<String, TextView>()
+    var thisBinTV = HashMap<String, TextView>()
 
     private var db = FirebaseFirestore.getInstance()
 
@@ -63,14 +63,23 @@ class BinsActivity : AppCompatActivity() {
 
 
     private fun setUpTextViews(){
-        val redTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.red_bin)
-        binTV["red"] = redTV
-        val yellowTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_bin)
-        binTV["yellow"] = yellowTV
-        val greenTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.green_bin)
-        binTV["green"] = greenTV
-        val blackTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.black_bin)
-        binTV["black"] = blackTV
+        val redTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.red_bin_this)
+        thisBinTV["red"] = redTV
+        val yellowTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_bin_this)
+        thisBinTV["yellow"] = yellowTV
+        val greenTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.green_bin_this)
+        thisBinTV["green"] = greenTV
+        val blackTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.black_bin_this)
+        thisBinTV["black"] = blackTV
+
+        val nextRedTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.red_bin)
+        nextBinTV["red"] = nextRedTV
+        val nextYellowTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_bin)
+        nextBinTV["yellow"] = nextYellowTV
+        val nextGreenTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.green_bin)
+        nextBinTV["green"] = nextGreenTV
+        val nextBlackTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.black_bin)
+        nextBinTV["black"] = nextBlackTV
     }
 
 
@@ -93,21 +102,19 @@ class BinsActivity : AppCompatActivity() {
         for(bin in bins){
             val colour = bin.key
             val day = getDayFromDate(bin.value.startDate)
-            val frequency = bin.value.frequency
+            val frequency = bin.value.frequency[0].toString().toInt()
 
-            var freqNum : Int
-            when(frequency){
-                "1 week" -> freqNum = 7
-                else -> freqNum = 14
-            }
+            val freqNum = frequency * 7
+            var everyWeek = false
+            if (freqNum == 7) everyWeek = true
 
             val currentDate = SimpleDateFormat("dd/M/yyyy").parse(date)
             val date = SimpleDateFormat("dd/M/yyyy").parse(bin.value.startDate)
             val nextDateFull = getNextDate(date, currentDate, freqNum)
-            val nextDateFormatted = SimpleDateFormat("EEEE").format(nextDateFull)
+            val nextDateFormatted = SimpleDateFormat("dd/M/yyyy").format(nextDateFull)
             val week = whichWeek(nextDateFull, currentDate)
 
-            updateTV(colour, nextDateFormatted, week)
+            updateTV(colour, day, nextDateFormatted, week, everyWeek)
         }
     }
 
@@ -120,9 +127,21 @@ class BinsActivity : AppCompatActivity() {
     }
 
 
-    private fun updateTV(colour : String, nextDate : String, week : String){
-        val format = "${colour.capitalize()} bin next goes out on $nextDate ${week}."
-        binTV[colour]!!.text = format
+    private fun updateTV(colour : String, day : String, nextDate : String, week : String, everyWeek : Boolean){
+        if(week == "this week") {
+            val format = "${colour.capitalize()} bin next goes out on $day $nextDate."
+            thisBinTV[colour]!!.text = format
+            if(everyWeek){
+                val nextWeek = addDaysToDate(SimpleDateFormat("dd/M/yyyy").parse(nextDate), 7)
+                val nextWeekFormatted = SimpleDateFormat("dd/M/yyyy").format(nextWeek)
+                val format = "${colour.capitalize()} bin goes out on $day $nextWeekFormatted"
+                nextBinTV[colour]!!.text = format
+            }
+        }
+        else{
+            val format = "${colour.capitalize()} bin next goes out on $day $nextDate."
+            nextBinTV[colour]!!.text = format
+        }
     }
 
 
@@ -137,12 +156,17 @@ class BinsActivity : AppCompatActivity() {
             return date
         }
         else {
-            val c = Calendar.getInstance();
-            c.time = date
-            c.add(Calendar.DAY_OF_YEAR, frequency)
-            val newDate = c.time
+            val newDate = addDaysToDate(date, frequency)
             return getNextDate(newDate, currentDate, frequency)
         }
+    }
+
+
+    private fun addDaysToDate(date : Date, daysToAdd : Int) : Date{
+        val c = Calendar.getInstance()
+        c.time = date
+        c.add(Calendar.DAY_OF_YEAR, daysToAdd)
+        return c.time
     }
 
 
