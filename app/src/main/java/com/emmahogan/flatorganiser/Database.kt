@@ -6,6 +6,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import android.util.Log
 import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 
 
 class RealtimeDatabase{

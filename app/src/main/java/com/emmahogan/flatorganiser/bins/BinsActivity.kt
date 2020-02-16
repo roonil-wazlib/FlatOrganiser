@@ -152,7 +152,7 @@ class BinsActivity : AppCompatActivity() {
         val hours = minutes / 60
         val days = hours / 24
 
-        if (days <= 14 && days > 0) { //TODO convert to range check
+        if (days in 1..14) { //TODO convert to range check
             return date
         }
         else {
