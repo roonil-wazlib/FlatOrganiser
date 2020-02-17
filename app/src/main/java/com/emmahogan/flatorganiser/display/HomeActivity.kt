@@ -161,4 +161,10 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra("user", currentUser)
         startActivity(intent)
     }
+
+
+    private fun openDinnerPlanner(){
+        var intent : Intent
+
+    }
 }

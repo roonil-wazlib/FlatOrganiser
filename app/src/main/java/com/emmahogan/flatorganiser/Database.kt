@@ -60,7 +60,6 @@ class CloudFirestore {
 
         val flat = HashMap<String, Any>()
         flat.put("flatmates", mutableListOf(mAuth.currentUser!!.uid))
-        flat.put("flat_size", 1)
 
         val flatReference = db.collection("flats").document()
 
@@ -95,9 +94,6 @@ class CloudFirestore {
         val flatReference = db.collection("flats").document(flatID)
 
         flatReference.update("flatmates", FieldValue.arrayUnion(mAuth.currentUser!!.uid))
-
-        //TODO figure out why this is broken
-        //flatReference.update("flat_size", FieldValue.increment(1))
 
         val member = HashMap<String, Any>()
         member.put("name", updatedUser.name.toString())
