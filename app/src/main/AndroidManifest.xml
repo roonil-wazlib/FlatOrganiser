@@ -31,6 +31,7 @@
         <activity android:name=".auth.EditAccountActivity"/>
         <activity android:name=".bins.SetupBinsActivity"/>
         <activity android:name=".bins.BinsActivity"/>
+        <activity android:name=".dinner_plan.DinnerPlanActivity"/>
 
 
         <service android:name=".MyFirebaseMessagingService">

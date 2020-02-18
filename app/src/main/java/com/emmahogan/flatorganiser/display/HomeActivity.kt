@@ -14,6 +14,7 @@ import com.emmahogan.flatorganiser.shopping_list.ShoppingListActivity
 import com.emmahogan.flatorganiser.auth.*
 import com.emmahogan.flatorganiser.bins.BinsActivity
 import com.emmahogan.flatorganiser.bins.SetupBinsActivity
+import com.emmahogan.flatorganiser.dinner_plan.DinnerPlanActivity
 import com.emmahogan.flatorganiser.flat.CreateFlatActivity
 import com.emmahogan.flatorganiser.flat.JoinFlatActivity
 import com.google.firebase.database.FirebaseDatabase
@@ -84,6 +85,9 @@ class HomeActivity : AppCompatActivity() {
         //initialise bins button
         val binsBtn : Button = findViewById(R.id.bins)
         binsBtn.setOnClickListener{ openBinsActivity() }
+
+        val dinnerBtn : Button = findViewById(R.id.dinner)
+        dinnerBtn.setOnClickListener{openDinnerPlanner()}
     }
 
 
@@ -164,7 +168,9 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun openDinnerPlanner(){
-        var intent : Intent
+        var intent = Intent(this, DinnerPlanActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
 
     }
 }
