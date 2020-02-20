@@ -1,5 +1,5 @@
 # FlatOrganiser
-Project to organise flat related tasks and data and sync data between flatmates devices.
+Project to organise flat related tasks and data, and sync data between flatmates' devices.
 
 ## Authentication
 Authenticates using Firebase Auth. Users are stored in Realtime Database, and flat data is stored in Cloud Firestore. No real reason to use both, just wanted to experiment.
