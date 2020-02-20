@@ -36,7 +36,9 @@ An activity to help flatmates keep track of which colour bins go out when. The f
 
 From there, any time the activity is accessed by any flatmate, it displays infomation about which bins are going out in the current week, and which are going out the following week, calculated using the frequency and startingd date information provided.
 
-Yet to implement: Functionality to edit this info at a later date, an easier to read and understand display for which bins go out when.
+In the future I want push notifications the night before bins go out, but this is a work in progress. Currently the only working notifications must be assigned directly from Firebase, which is useless.
+
+Yet to implement: Functionality to edit this info at a later date, an easier to read and understand display for which bins go out when, functioning push notifications.
 
 KNOWN BUGS: None.
 
