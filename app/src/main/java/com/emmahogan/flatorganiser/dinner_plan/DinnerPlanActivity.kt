@@ -1,14 +1,24 @@
 package com.emmahogan.flatorganiser.dinner_plan
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
+import kotlinx.android.synthetic.main.single_day_dinner.*
+import java.util.ArrayList
 
 class DinnerPlanActivity : AppCompatActivity() {
 
-
+    private var recyclerView: RecyclerView? = null
+    private var modelArrayList: ArrayList<DayItem>? = null
+    private var customAdapter: DinnerAdapter? = null
     lateinit var currentUser : User
+
+    private lateinit var mealsList : HashMap<String, Any>
 
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
@@ -16,5 +26,49 @@ class DinnerPlanActivity : AppCompatActivity() {
 
         //get user data
         currentUser = intent.getParcelableExtra("user")
+
+        recyclerView = findViewById(R.id.recycler)
+
+        //get reference to new item edit text and add button
+        val saveBtn : Button = findViewById(R.id.save)
+
+        mealsList = HashMap<String, Any>()
+
+        val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+        for (day in days){
+            mealsList.put(day, "")
+        }
+        createList()
+    }
+
+    private fun createModel(): ArrayList<DayItem> {
+        val list = ArrayList<DayItem>()
+        for ((key, value) in mealsList) {
+
+            //get class instance for each item in list
+            val model = DayItem()
+            model.day = key
+            model.meal = value.toString()
+            model.chef = value.toString()
+            list.add(model)
+        }
+        return list
+    }
+
+
+    private fun createList(){
+        modelArrayList = createModel()
+        customAdapter = DinnerAdapter(this, modelArrayList!!, currentUser)
+        recyclerView!!.adapter = customAdapter
+        recyclerView!!.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+    }
+
+
+    fun writeToDb(){
+        val listData = HashMap<String, Any>()
+        for (x in modelArrayList!!){
+            listData.put(x.day, x.chef)
+        }
+        (CloudFirestore::addShoppingList)(CloudFirestore(), currentUser.flat.toString(), listData)
     }
 }
