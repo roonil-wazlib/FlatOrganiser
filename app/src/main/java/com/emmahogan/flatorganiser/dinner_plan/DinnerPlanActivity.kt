@@ -9,7 +9,7 @@ class DinnerPlanActivity : AppCompatActivity() {
 
 
     lateinit var currentUser : User
-    
+
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dinner_plan)
