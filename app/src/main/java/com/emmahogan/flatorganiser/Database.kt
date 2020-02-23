@@ -120,7 +120,7 @@ class CloudFirestore {
         }
     }
 
-    fun checkDeleteFlat(previousFlat : String, flat : String) {
+    private fun checkDeleteFlat(previousFlat : String, flat : String) {
         val flatReference = db.collection("flats").document(previousFlat)
         flatReference.get().addOnSuccessListener { document ->
             if (document != null) {
@@ -136,7 +136,7 @@ class CloudFirestore {
             }
     }
 
-    fun deleteFlat(flat : String){
+    private fun deleteFlat(flat : String){
         val flatReference = db.collection("flats").document(flat)
         flatReference.delete()
     }
@@ -147,6 +147,13 @@ class CloudFirestore {
         flatReference.collection("data").document("shopping_list").set(listData)
             .addOnSuccessListener {Log.d("TAG", "Shopping list doc created/updated")}
             .addOnFailureListener {Log.d("TAG", "Something went wrong writing shopping list")}
+    }
+
+    fun addDinnerInfo(flatID : String, listData : HashMap<String, Any>){
+        val flatReference = db.collection("flats").document(flatID)
+        flatReference.collection("data").document("dinner_plans").set(listData)
+            .addOnSuccessListener{Log.d("TAG", "Dinner plans added to database")}
+            .addOnFailureListener{Log.d("TAG", "Sometihng went wrong writing dinner plans")}
     }
 
 

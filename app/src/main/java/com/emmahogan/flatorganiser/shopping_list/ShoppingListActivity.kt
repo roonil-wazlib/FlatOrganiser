@@ -101,7 +101,7 @@ class ShoppingListActivity : AppCompatActivity() {
     }
 
 
-    fun writeToDb(){
+    private fun writeToDb(){
         val listData = HashMap<String, Any>()
         for (x in modelArrayList!!){
             listData.put(x.getItemName(), x.getSelected())

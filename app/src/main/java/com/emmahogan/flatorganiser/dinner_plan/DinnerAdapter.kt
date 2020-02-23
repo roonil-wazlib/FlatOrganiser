@@ -12,7 +12,7 @@ import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import java.util.ArrayList
 
-class DinnerAdapter(private val context : Context, imageModelArrayListMain: ArrayList<DayItem>, currentUser: User) :
+class DinnerAdapter(private val context : Context?, imageModelArrayListMain: ArrayList<DayItem>, currentUser: User) :
     RecyclerView.Adapter<DinnerAdapter.MyViewHolder>() {
 
 
@@ -28,7 +28,7 @@ class DinnerAdapter(private val context : Context, imageModelArrayListMain: Arra
 
     init {
         inflater = LayoutInflater.from(context)
-        imageModelArrayList = imageModelArrayListMain //list of ReModel class instances
+        imageModelArrayList = imageModelArrayListMain
         user = currentUser
     }
 
@@ -44,9 +44,8 @@ class DinnerAdapter(private val context : Context, imageModelArrayListMain: Arra
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //set up each item view as it appears on screen while scrolling
-
         holder.chefEditText.setText(imageModelArrayList[position].chef)
-        holder.day.setText(imageModelArrayList[position].day)
+        holder.mealEditText.setText(imageModelArrayList[position].meal)
     }
 
 
@@ -61,7 +60,7 @@ class DinnerAdapter(private val context : Context, imageModelArrayListMain: Arra
         for (x in imageModelArrayList!!){
             listData.put(x.day, x.chef)
         }
-        (CloudFirestore::addShoppingList)(CloudFirestore(), user.flat.toString(), listData)
+        (CloudFirestore::addDinnerInfo)(CloudFirestore(), user.flat.toString(), listData)
     }
 
 
