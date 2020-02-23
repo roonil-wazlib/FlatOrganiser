@@ -16,7 +16,7 @@ class DinnerPlanActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
     private var modelArrayList: ArrayList<DayItem>? = null
-    lateinit private var customAdapter: DinnerAdapter
+    private lateinit var customAdapter: DinnerAdapter
     lateinit var currentUser : User
 
     private lateinit var mealsList : HashMap<String, Any>

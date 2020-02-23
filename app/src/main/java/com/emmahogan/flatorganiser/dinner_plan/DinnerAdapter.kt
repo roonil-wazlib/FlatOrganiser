@@ -1,6 +1,7 @@
 package com.emmahogan.flatorganiser.dinner_plan
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,7 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //set up each item view as it appears on screen while scrolling
+        holder.day.setText(imageModelArrayList[position].day)
         holder.chefEditText.setText(imageModelArrayList[position].chef)
         holder.mealEditText.setText(imageModelArrayList[position].meal)
     }
@@ -57,9 +59,12 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
 
     fun writeToDb(){
         val listData = HashMap<String, Any>()
-        for (x in imageModelArrayList!!){
-            listData.put(x.day, x.chef)
+        for (x in holderList){
+            val info = mapOf("meal" to x.mealEditText.text.toString(), "chef" to x.chefEditText.text.toString())
+            listData.put(x.day.text.toString(),info)
+            Log.d("TAG", info.toString())
         }
+
         (CloudFirestore::addDinnerInfo)(CloudFirestore(), user.flat.toString(), listData)
     }
 
