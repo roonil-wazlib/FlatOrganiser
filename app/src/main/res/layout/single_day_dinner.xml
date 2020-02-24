@@ -34,10 +34,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@drawable/bordered_section">
+                android:background="@drawable/bordered_section"
+                android:padding="8dp">
 
                 <LinearLayout
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -50,12 +51,12 @@
                     <EditText
                         android:id="@+id/chef"
                         android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
+                        android:layout_height="wrap_content"
                         android:inputType="textPersonName"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -68,9 +69,7 @@
                     <EditText
                         android:id="@+id/meal"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:inputType="textPersonName"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:layout_height="wrap_content"
@@ -80,8 +79,7 @@
                     <TextView
                         android:id="@+id/ingredients"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
