@@ -21,7 +21,6 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
         lateinit var imageModelArrayList: ArrayList<DayItem>
     }
 
-
     private val inflater : LayoutInflater
     var holderList = mutableListOf<MyViewHolder>()
     var user = User()
@@ -54,6 +53,19 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
     override fun getItemCount(): Int {
         //get number of items in list
         return imageModelArrayList.size
+    }
+
+
+    fun updateDayItemInfo(){
+        //pretty gross but there's only ever going to be 5 things in each list so not a huge issue
+        for (x in imageModelArrayList){
+            for (y in holderList){
+                if (x.day == y.day.text){
+                    x.chef = y.chefEditText.text.toString()
+                    x.meal = y.mealEditText.text.toString()
+                }
+            }
+        }
     }
 
 

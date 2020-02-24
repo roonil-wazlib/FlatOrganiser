@@ -20,6 +20,7 @@ class DinnerPlanActivity : AppCompatActivity() {
     lateinit var currentUser : User
 
     private lateinit var mealsList : HashMap<String, Any>
+    private var days  = listOf<String>()
 
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
@@ -35,7 +36,7 @@ class DinnerPlanActivity : AppCompatActivity() {
 
         mealsList = HashMap()
 
-        val days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+        days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
         for (day in days){
             mealsList.put(day, "")
         }
@@ -44,17 +45,21 @@ class DinnerPlanActivity : AppCompatActivity() {
 
     private fun createModel(): ArrayList<DayItem> {
         val list = ArrayList<DayItem>()
-        for ((key, value) in mealsList) {
-
-            //get class instance for each item in list
-            val model = DayItem()
-            model.day = key
-            model.meal = value.toString()
-            model.chef = value.toString()
-            list.add(model)
+        for(day in days) {
+            //get list in correct day order
+            for ((key, value) in mealsList) {
+                //get class instance for each item in list
+                if(key==day) {
+                    val model = DayItem()
+                    model.day = key
+                    model.meal = value.toString()
+                    model.chef = value.toString()
+                    list.add(model)
+                }
+            }
         }
         return list
-    }
+   }
 
 
     private fun createList(){
@@ -65,6 +70,7 @@ class DinnerPlanActivity : AppCompatActivity() {
     }
 
     private fun save(){
+        (DinnerAdapter::updateDayItemInfo)(customAdapter)
         (DinnerAdapter::writeToDb)(customAdapter)
     }
 
