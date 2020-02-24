@@ -67,16 +67,17 @@ class DinnerPlanActivity : AppCompatActivity() {
         val list = ArrayList<DayItem>()
         for(day in days) {
             //get list in correct day order
+            val model = DayItem()
+            model.day = day
             for ((key, value) in mealsList) {
                 //get class instance for each item in list
                 if(key==day) {
-                    val model = DayItem()
-                    model.day = key
                     model.meal = value.toString()
                     model.chef = value.toString()
-                    list.add(model)
+                    break
                 }
             }
+            list.add(model)
         }
         return list
    }
