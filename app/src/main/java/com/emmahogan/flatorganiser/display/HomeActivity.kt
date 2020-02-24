@@ -25,16 +25,9 @@ class HomeActivity : AppCompatActivity() {
 
     private var mAuth = FirebaseAuth.getInstance()
 
-    //Initialise Firebase db
-    private var mDatabase = FirebaseDatabase.getInstance()
-
-    //Get reference to users child
-    private var mDatabaseReference = mDatabase.reference.child("users")
-
-
     lateinit var currentUser : User
-    lateinit var createJoinDisplay : LinearLayout
-    lateinit var homeTableDisplay : LinearLayout
+    private lateinit var createJoinDisplay : LinearLayout
+    private lateinit var homeTableDisplay : LinearLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,22 +148,21 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun openBinsActivity(){
-        var intent : Intent
+        val intent : Intent
         when(currentUser.binsAdded){
             true -> intent = Intent(this, BinsActivity::class.java)
             false -> intent = Intent(this, SetupBinsActivity::class.java)
         }
 
-        Log.d("TAG", intent.toString())
         intent.putExtra("user", currentUser)
         startActivity(intent)
     }
 
 
     private fun openDinnerPlanner(){
-        var intent = Intent(this, DinnerPlanActivity::class.java)
+        val intent = Intent(this, DinnerPlanActivity::class.java)
         intent.putExtra("user", currentUser)
         startActivity(intent)
-
+        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
     }
 }

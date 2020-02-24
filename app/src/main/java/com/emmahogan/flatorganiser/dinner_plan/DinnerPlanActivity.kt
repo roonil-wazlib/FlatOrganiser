@@ -35,7 +35,7 @@ class DinnerPlanActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler)
 
         days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-        
+
         val saveBtn : Button = findViewById(R.id.save)
         saveBtn.setOnClickListener{save()}
 
