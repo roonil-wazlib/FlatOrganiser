@@ -12,6 +12,8 @@ import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.ArrayList
 
+
+
 class DinnerPlanActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
@@ -44,7 +46,7 @@ class DinnerPlanActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    try{mealsList = document.data as HashMap<String, Any>}
+                    try{ mealsList = document.data as HashMap<String, Any> }
                     catch(e: TypeCastException){
                         for (day in days){
                             mealsList.put(day, "")
@@ -58,10 +60,8 @@ class DinnerPlanActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
-
-
-
     }
+
 
     private fun createModel(): ArrayList<DayItem> {
         val list = ArrayList<DayItem>()
@@ -71,9 +71,10 @@ class DinnerPlanActivity : AppCompatActivity() {
             model.day = day
             for ((key, value) in mealsList) {
                 //get class instance for each item in list
+                value as Map<String, String>
                 if(key==day) {
-                    model.meal = value.toString()
-                    model.chef = value.toString()
+                    model.meal = value["meal"].toString()
+                    model.chef = value["chef"].toString()
                     break
                 }
             }
@@ -89,6 +90,7 @@ class DinnerPlanActivity : AppCompatActivity() {
         recyclerView!!.adapter = customAdapter
         recyclerView!!.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
     }
+
 
     private fun save(){
         (DinnerAdapter::updateDayItemInfo)(customAdapter)
