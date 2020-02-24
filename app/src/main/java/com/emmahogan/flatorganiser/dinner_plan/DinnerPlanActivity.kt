@@ -7,12 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_dinner_plan.*
-import kotlinx.android.synthetic.main.single_day_dinner.*
 import java.util.ArrayList
 
 class DinnerPlanActivity : AppCompatActivity() {

@@ -74,7 +74,6 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
         for (x in holderList){
             val info = mapOf("meal" to x.mealEditText.text.toString(), "chef" to x.chefEditText.text.toString())
             listData.put(x.day.text.toString(),info)
-            Log.d("TAG", info.toString())
         }
 
         (CloudFirestore::addDinnerInfo)(CloudFirestore(), user.flat.toString(), listData)
