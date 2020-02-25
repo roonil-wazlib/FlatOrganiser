@@ -142,6 +142,7 @@ class SetupBinsActivity : AppCompatActivity() {
 
 
     private fun setUpSpinners() {
+        //TODO fix display text on these bois
         redSpinner = findViewById(R.id.red_spinner)
         yellowSpinner = findViewById(R.id.yellow_spinner)
         greenSpinner = findViewById(R.id.green_spinner)
