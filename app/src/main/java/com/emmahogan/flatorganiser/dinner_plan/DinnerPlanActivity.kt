@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.ArrayList
-
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class DinnerPlanActivity : AppCompatActivity() {
@@ -34,10 +35,12 @@ class DinnerPlanActivity : AppCompatActivity() {
         currentUser = intent.getParcelableExtra("user")
         recyclerView = findViewById(R.id.recycler)
 
-        days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+        days = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
         val saveBtn : Button = findViewById(R.id.save)
         saveBtn.setOnClickListener{save()}
+
+        val day = getDayIndex()
 
         mealsList = HashMap()
 
@@ -46,13 +49,16 @@ class DinnerPlanActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    try{ mealsList = document.data as HashMap<String, Any> }
+                    try{
+                        mealsList = document.data as HashMap<String, Any>
+                    }
                     catch(e: TypeCastException){
                         for (day in days){
                             mealsList.put(day, "")
                         }
                     }
                     createList()
+                    scrollToCurrentDay(day)
                 } else {
                     Log.d("TAG", "No such document")
                 }
@@ -98,4 +104,14 @@ class DinnerPlanActivity : AppCompatActivity() {
         Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show()
     }
 
+
+    private fun getDayIndex() : Int {
+        val day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+        Log.d("TAG", day.toString())
+        return day - 2
+    }
+
+    private fun scrollToCurrentDay(x : Int){
+        recyclerView?.scrollToPosition(x)
+    }
 }
