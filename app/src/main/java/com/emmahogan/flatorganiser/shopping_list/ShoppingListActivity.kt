@@ -22,7 +22,7 @@ class ShoppingListActivity : AppCompatActivity() {
     private var customAdapter: ReAdapter? = null
 
     private lateinit var groceriesList : HashMap<String, Any>
-    lateinit var newItemET : EditText
+    private lateinit var newItemET : EditText
     lateinit var currentUser : User
 
     private var db = FirebaseFirestore.getInstance()
@@ -93,7 +93,6 @@ class ShoppingListActivity : AppCompatActivity() {
 
     private fun createList(){
         modelArrayList = createModel()
-        Log.d("TAG", modelArrayList.toString())
         customAdapter =
             ReAdapter(this, modelArrayList!!, currentUser)
         recyclerView!!.adapter = customAdapter
@@ -101,7 +100,7 @@ class ShoppingListActivity : AppCompatActivity() {
     }
 
 
-    fun writeToDb(){
+    private fun writeToDb(){
         val listData = HashMap<String, Any>()
         for (x in modelArrayList!!){
             listData.put(x.getItemName(), x.getSelected())
