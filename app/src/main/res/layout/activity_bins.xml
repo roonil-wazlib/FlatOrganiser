@@ -3,22 +3,30 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EDIT"
+        android:onClick="edit"
+        android:layout_gravity="right"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.2"
         android:orientation="vertical"
-        android:background="@drawable/bordered_section">
+        android:background="@drawable/bordered_section"
+        android:padding="20dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="Going out this week:"
-            android:padding="20dp"
             android:textSize="24sp"
-            android:textColor="@color/black_bin_colour"/>
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/red_bin_this"

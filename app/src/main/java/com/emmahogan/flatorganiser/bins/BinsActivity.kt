@@ -3,11 +3,15 @@ package com.emmahogan.flatorganiser.bins
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import com.emmahogan.flatorganiser.display.HomeActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_settings.*
+import kotlinx.android.synthetic.main.activity_settings.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -34,6 +38,10 @@ class BinsActivity : AppCompatActivity() {
 
         //get textview objects
         setUpTextViews()
+
+        //get edit button
+        val editBtn : Button = findViewById(R.id.edit)
+        editBtn.setOnClickListener{edit()}
 
 
         val docRef = db.collection("flats/${currentUser.flat.toString()}/data").document("bin_dates")
@@ -63,22 +71,22 @@ class BinsActivity : AppCompatActivity() {
 
 
     private fun setUpTextViews(){
-        val redTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.red_bin_this)
+        val redTV : TextView = findViewById(R.id.red_bin_this)
         thisBinTV["red"] = redTV
-        val yellowTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_bin_this)
+        val yellowTV : TextView = findViewById(R.id.yellow_bin_this)
         thisBinTV["yellow"] = yellowTV
-        val greenTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.green_bin_this)
+        val greenTV : TextView = findViewById(R.id.green_bin_this)
         thisBinTV["green"] = greenTV
-        val blackTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.black_bin_this)
+        val blackTV : TextView = findViewById(R.id.black_bin_this)
         thisBinTV["black"] = blackTV
 
-        val nextRedTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.red_bin)
+        val nextRedTV : TextView = findViewById(R.id.red_bin)
         nextBinTV["red"] = nextRedTV
-        val nextYellowTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.yellow_bin)
+        val nextYellowTV : TextView = findViewById(R.id.yellow_bin)
         nextBinTV["yellow"] = nextYellowTV
-        val nextGreenTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.green_bin)
+        val nextGreenTV : TextView = findViewById(R.id.green_bin)
         nextBinTV["green"] = nextGreenTV
-        val nextBlackTV : TextView = findViewById(com.emmahogan.flatorganiser.R.id.black_bin)
+        val nextBlackTV : TextView = findViewById(R.id.black_bin)
         nextBinTV["black"] = nextBlackTV
     }
 
@@ -183,6 +191,14 @@ class BinsActivity : AppCompatActivity() {
         else{
             return "next week"
         }
+    }
+
+
+    private fun edit(){
+        //return to setup bins activity
+        val intent = Intent(this, SetupBinsActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
     }
 }
 
