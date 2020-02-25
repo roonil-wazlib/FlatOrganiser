@@ -47,12 +47,13 @@ class SetupBinsActivity : AppCompatActivity() {
 
         //get user data
         currentUser = intent.getParcelableExtra("user")
+        val edit : Boolean = intent.getBooleanExtra("edit", false)
 
 
         val docRef = db.collection("flats/${currentUser.flat.toString()}/data").document("bin_dates")
         docRef.get()
             .addOnSuccessListener { document ->
-                if (document != null && document.data != null) {
+                if (document != null && document.data != null && !edit) {
                     currentUser.setBinsAdded()
                     (RealtimeDatabase::updateUser)(RealtimeDatabase(), currentUser)
                     openBinsActivity()

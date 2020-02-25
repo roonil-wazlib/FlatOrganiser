@@ -198,6 +198,7 @@ class BinsActivity : AppCompatActivity() {
         //return to setup bins activity
         val intent = Intent(this, SetupBinsActivity::class.java)
         intent.putExtra("user", currentUser)
+        intent.putExtra("edit", true)
         startActivity(intent)
     }
 }
