@@ -34,22 +34,22 @@ KNOWN BUGS: None.
 ### Bins
 An activity to help flatmates keep track of which colour bins go out when. The first flatmate to access the activity enters information about what colour bins they have in their location, how often they go out (weekly, every second week), and what date is the next time they will go out. I have used DatePickerDialog to speed this process up for the user.
 
-From there, any time the activity is accessed by any flatmate, it displays infomation about which bins are going out in the current week, and which are going out the following week, calculated using the frequency and startingd date information provided.
+From there, any time the activity is accessed by any flatmate, it displays infomation about which bins are going out in the current week, and which are going out the following week, calculated using the frequency and startingd date information provided. The info can be edited at any time via an edit button which returns the user to the setup page. I am yet to send current dates through to autopopulate the spinner, calendar etc fields in this case.
 
 In the future I want push notifications the night before bins go out, but this is a work in progress. Currently the only working notifications must be assigned directly from Firebase, which is useless.
 
-Yet to implement: Functionality to edit this info at a later date, an easier to read and understand display for which bins go out when, functioning push notifications.
+Yet to implement: An easier to read and understand display for which bins go out when, autopopulation of setup bins fields on edit, functioning push notifications.
 
-KNOWN BUGS: None.
+KNOWN BUGS: Spinner text not displaying properly. Still perfectly functional, just an XML bug.
 
 ### Dinner
-An activity to store infomation about which flatmate is cooking which night, what they are cooking, and what ingredients are required. Currently only a skeleton activity with no functionality.
+An activity to store infomation about which flatmate is cooking which night, what they are cooking, and what ingredients are required. Uses Recycler View to populate dinner view boxes. User can edit the chef and meal assigned to each week day, and save this data to Cloud Firestore database. On opening the activity, the activity checks what the date is and auto scrolls to that day within the activity. Yet to implement option to add ingredients, although the box is already there.
 
 Long term goal is link with shopping list activity to allow users to add ingredients directly to the shopping list from the dinner activity without changing screens.
 
-Yet to implement: Everything
+Yet to implement: Ingredients list addition and sync with database, link with shopping list activity.
 
-KNOWN BUGS: Nothing, because that's all it does.
+KNOWN BUGS: Nothing, yet.
 
 
 ## Planned future dashboard activities:
