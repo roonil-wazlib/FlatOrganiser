@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.firestore.FirebaseFirestore
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
