@@ -53,7 +53,7 @@ class DinnerPlanActivity : AppCompatActivity() {
                     }
                     catch(e: TypeCastException){
                         for (day in days){
-                            mealsList.put(day, "")
+                            mealsList.put(day, mapOf("meal" to "", "chef" to ""))
                         }
                     }
                     createList()
@@ -74,6 +74,7 @@ class DinnerPlanActivity : AppCompatActivity() {
             //get list in correct day order
             val model = DayItem()
             model.day = day
+            Log.d("TAG", mealsList.toString())
             for ((key, value) in mealsList) {
                 //get class instance for each item in list
                 value as Map<String, String>

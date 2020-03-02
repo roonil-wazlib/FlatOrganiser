@@ -2,6 +2,7 @@ package com.emmahogan.flatorganiser.display
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.emmahogan.flatorganiser.R
@@ -59,6 +60,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
         //display loading toast
         Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show()
+
+        Log.d("TAG", mAuth.currentUser.toString())
 
         if (mAuth.currentUser != null){
             //load user
