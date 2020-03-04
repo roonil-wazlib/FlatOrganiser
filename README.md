@@ -63,4 +63,4 @@ Some form of representation for which chores need doing by whom and when. Eg who
 Activity to show flatmates who is where and at what times - eg at uni, work etc. Long term would like to sync with the UC Timetable, but will need to find time to scrape that data as well as implementing the UI.
 
 ### To do list
-Self explanatory.
+Self explanatory. Some kind of algorithm that sorts tasks into priority based on due date and importance would be cool
