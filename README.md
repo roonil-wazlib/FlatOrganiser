@@ -42,14 +42,14 @@ In the future I want push notifications the night before bins go out, but this i
 
 Yet to implement: An easier to read and understand display for which bins go out when, autopopulation of setup bins fields on edit, functioning push notifications.
 
-KNOWN BUGS: Spinner text not displaying properly. Still perfectly functional, just an XML bug.
+KNOWN BUGS: None
 
 ### Dinner
 An activity to store infomation about which flatmate is cooking which night, what they are cooking, and what ingredients are required. Uses Recycler View to populate dinner view boxes. User can edit the chef and meal assigned to each week day, and save this data to Cloud Firestore database. On opening the activity, the activity checks what the date is and auto scrolls to that day within the activity. Yet to implement option to add ingredients, although the box is already there.
 
 Long term goal is link with shopping list activity to allow users to add ingredients directly to the shopping list from the dinner activity without changing screens.
 
-Yet to implement: Ingredients list addition and sync with database, link with shopping list activity.
+Yet to implement: Link ingredients list with shopping list activity.
 
 KNOWN BUGS: Nothing, yet.
 
