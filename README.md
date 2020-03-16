@@ -10,7 +10,9 @@ Editting account info is a work in progress.
 
 Yet to implement: Full functionality for editting user info, forgot password option, and email confirmation on sign up.
 
-KNOWN BUGS: Very occasionally sign in fails and causes a crash, but I have not yet been able to replicate this error while debugging, and therefore haven't been able to determine the issue.
+KNOWN BUGS: 
+ - Very occasionally sign in fails and causes a crash, but I have not yet been able to replicate this error while debugging, and therefore haven't been able to determine the issue.
+ - App freezes on splashscreen when opened without internet connection - as expected, just haven't implemented a better alternative yet.
 
 ## Flats
 Users can either create a new flat or join an already established flat on sign in. App functionality can not be accessed until this has happened.
@@ -58,7 +60,7 @@ KNOWN BUGS: Nothing, yet.
 Some form of representation for which chores need doing by whom and when. Eg who's putting the bins out this week. Probably formatted similarly to dinner activity.
 
 ### Timetable
-Activity to show flatmates who is where and at what times - eg at uni, work etc. Long term would like to sync with the UC Timetable, but will need to find time to learn how to scrape that data first.
+Activity to show flatmates who is where and at what times - eg at uni, work etc. Long term would like to sync with the UC Timetable, but will need to find time to scrape that data as well as implementing the UI.
 
 ### To do list
-Self explanatory.
+Self explanatory. Some kind of algorithm that sorts tasks into priority based on due date and importance would be cool
