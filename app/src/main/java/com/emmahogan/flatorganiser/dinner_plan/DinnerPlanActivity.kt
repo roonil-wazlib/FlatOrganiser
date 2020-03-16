@@ -81,6 +81,7 @@ class DinnerPlanActivity : AppCompatActivity() {
                 if(key==day) {
                     model.meal = value["meal"].toString()
                     model.chef = value["chef"].toString()
+                    model.ingredients = value["ingredients"].toString()
                     break
                 }
             }
