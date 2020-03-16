@@ -97,7 +97,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingRight="25dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,8 +109,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:layout_weight="0.75"
-                        android:text="Every"
+                        android:layout_weight="0.7"
+                        android:text="Every:"
                         android:gravity="right"
                         android:layout_gravity="center"/>
 
@@ -134,7 +135,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:layout_weight="0.75"
+                        android:layout_weight="0.7"
                         android:gravity="right"
                         android:layout_gravity="center"
                         android:text="Starting: " />
@@ -173,33 +174,67 @@
                 android:layout_weight="1"
                 android:background="@drawable/yellow_bin_bg" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:text="Every" />
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:paddingRight="25dp">
 
-            <Spinner
-                android:id="@+id/yellow_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.2"
-                android:entries="@array/frequency_array"
-                android:prompt="@string/frequency_prompt" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:text="Starting: " />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:layout_weight="0.7"
+                        android:text="Every:"
+                        android:gravity="right"
+                        android:layout_gravity="center"/>
 
-            <Button
-                android:id="@+id/yellow_calendar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date" />
+                    <Spinner
+                        android:id="@+id/yellow_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:entries="@array/frequency_array"
+                        android:prompt="@string/frequency_prompt"
+                        android:gravity="center"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:layout_weight="0.7"
+                        android:gravity="right"
+                        android:layout_gravity="center"
+                        android:text="Starting: " />
+
+                    <Button
+                        android:id="@+id/yellow_calendar"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Date" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </TableRow>
 
@@ -219,33 +254,67 @@
                 android:layout_weight="1"
                 android:background="@drawable/green_bin_bg" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:text="Every" />
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:paddingRight="25dp">
 
-            <Spinner
-                android:id="@+id/green_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.2"
-                android:entries="@array/frequency_array"
-                android:prompt="@string/frequency_prompt" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:text="Starting: " />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:layout_weight="0.7"
+                        android:text="Every:"
+                        android:gravity="right"
+                        android:layout_gravity="center"/>
 
-            <Button
-                android:id="@+id/green_calendar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date" />
+                    <Spinner
+                        android:id="@+id/green_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:entries="@array/frequency_array"
+                        android:prompt="@string/frequency_prompt"
+                        android:gravity="center"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:layout_weight="0.7"
+                        android:gravity="right"
+                        android:layout_gravity="center"
+                        android:text="Starting: " />
+
+                    <Button
+                        android:id="@+id/green_calendar"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Date" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
         </TableRow>
@@ -266,33 +335,67 @@
                 android:layout_weight="1"
                 android:background="@drawable/black_bin_bg" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:text="Every" />
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:paddingRight="25dp">
 
-            <Spinner
-                android:id="@+id/black_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.2"
-                android:entries="@array/frequency_array"
-                android:prompt="@string/frequency_prompt" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:text="Starting: " />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:layout_weight="0.7"
+                        android:text="Every:"
+                        android:gravity="right"
+                        android:layout_gravity="center"/>
 
-            <Button
-                android:id="@+id/black_calendar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date" />
+                    <Spinner
+                        android:id="@+id/black_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:entries="@array/frequency_array"
+                        android:prompt="@string/frequency_prompt"
+                        android:gravity="center"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:layout_weight="0.7"
+                        android:gravity="right"
+                        android:layout_gravity="center"
+                        android:text="Starting: " />
+
+                    <Button
+                        android:id="@+id/black_calendar"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Date" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </TableRow>
     </TableLayout>
