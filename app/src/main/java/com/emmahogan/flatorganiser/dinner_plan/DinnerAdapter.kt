@@ -47,6 +47,7 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
         holder.day.setText(imageModelArrayList[position].day)
         holder.chefEditText.setText(imageModelArrayList[position].chef)
         holder.mealEditText.setText(imageModelArrayList[position].meal)
+        holder.ingredientsEditText.setText(imageModelArrayList[position].ingredients)
     }
 
 
@@ -63,6 +64,7 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
                 if (x.day == y.day.text){
                     x.chef = y.chefEditText.text.toString()
                     x.meal = y.mealEditText.text.toString()
+                    x.ingredients = y.ingredientsEditText.toString()
                 }
             }
         }
@@ -72,7 +74,7 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
     fun writeToDb(){
         val listData = HashMap<String, Any>()
         for (x in holderList){
-            val info = mapOf("meal" to x.mealEditText.text.toString(), "chef" to x.chefEditText.text.toString())
+            val info = mapOf("meal" to x.mealEditText.text.toString(), "chef" to x.chefEditText.text.toString(), "ingredients" to x.ingredientsEditText.text.toString())
             listData.put(x.day.text.toString(),info)
         }
 
@@ -86,10 +88,12 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
         var mealEditText : EditText
         var chefEditText : EditText
         var day : TextView
+        var ingredientsEditText : EditText
         init {
             day = itemView.findViewById(R.id.day)
             chefEditText = itemView.findViewById(R.id.chef)
             mealEditText = itemView.findViewById(R.id.meal)
+            ingredientsEditText = itemView.findViewById(R.id.ingredients)
         }
     }
 }

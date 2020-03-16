@@ -6,5 +6,6 @@ class DayItem {
     var meal : String = ""
     var chef : String = ""
     var day : String = ""
+    var ingredients : String = ""
 
 }
