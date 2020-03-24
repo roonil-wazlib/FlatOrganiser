@@ -36,11 +36,11 @@ KNOWN BUGS: None.
 ### Bins
 An activity to help flatmates keep track of which colour bins go out when. The first flatmate to access the activity enters information about what colour bins they have in their location, how often they go out (weekly, every second week), and what date is the next time they will go out. I have used DatePickerDialog to speed this process up for the user.
 
-From there, any time the activity is accessed by any flatmate, it displays infomation about which bins are going out in the current week, and which are going out the following week, calculated using the frequency and startingd date information provided. The info can be edited at any time via an edit button which returns the user to the setup page. I am yet to send current dates through to autopopulate the spinner, calendar etc fields in this case.
+From there, any time the activity is accessed by any flatmate, it displays infomation about which bins are going out in the current week, and which are going out the following week, calculated using the frequency and startingd date information provided. The info can be edited at any time via an edit button which returns the user to the setup page, and fields autopopulate from the database for easy editing.
 
 In the future I want push notifications the night before bins go out, but this is a work in progress. Currently the only working notifications must be assigned directly from Firebase, which is useless.
 
-Yet to implement: An easier to read and understand display for which bins go out when, autopopulation of setup bins fields on edit, functioning push notifications.
+Yet to implement: An easier to read and understand display for which bins go out when, functioning push notifications.
 
 KNOWN BUGS: None
 
