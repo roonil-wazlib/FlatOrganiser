@@ -20,6 +20,11 @@ class SetupBinsActivity : AppCompatActivity() {
 
     private lateinit var currentUser : User
 
+    private lateinit var redBtn : Button
+    private lateinit var yellowBtn : Button
+    private lateinit var greenBtn : Button
+    private lateinit var blackBtn : Button
+
     private lateinit var redTableRow : TableRow
     private lateinit var yellowTableRow : TableRow
     private lateinit var greenTableRow : TableRow
@@ -36,6 +41,8 @@ class SetupBinsActivity : AppCompatActivity() {
     private lateinit var blackCalendar : Button
 
     private var bins = mutableListOf<Bin>()
+    private var binSelect = mutableListOf<Button>()
+    var binsInfo = HashMap<String, BinInfo>()
 
     private lateinit var picker: DatePickerDialog
     private var db = FirebaseFirestore.getInstance()
@@ -71,21 +78,52 @@ class SetupBinsActivity : AppCompatActivity() {
         setUpBinObjects()
         setUpBinSelect()
         setUpNavigatorBar()
+
+        if (edit) {
+            val docRef = db.collection("flats/${currentUser.flat.toString()}/data").document("bin_dates")
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                        for ((bin, info) in document.data!!){
+                            info as Map<String, String>
+
+                            val binColour = bin.toString()
+                            val frequency = info["frequency"].toString()
+                            val startDate = info["start_data"].toString()
+
+                            binsInfo.put(binColour, BinInfo(frequency, startDate))
+                        }
+                        setBinInfo()
+
+                    } else {
+                        Log.d("TAG", "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("TAG", "get failed with ", exception)
+                }
+        }
     }
 
 
     private fun setUpBinSelect(){
-        val redBtn : Button = findViewById(R.id.red)
+        redBtn = findViewById(R.id.red)
         redBtn.setOnClickListener{ changeBorder(bins[0], redBtn) }
 
-        val yellowBtn : Button = findViewById(R.id.yellow)
+        yellowBtn = findViewById(R.id.yellow)
         yellowBtn.setOnClickListener{ changeBorder(bins[1], yellowBtn)}
 
-        val greenBtn : Button = findViewById(R.id.green)
+        greenBtn = findViewById(R.id.green)
         greenBtn.setOnClickListener{ changeBorder(bins[2], greenBtn) }
 
-        val blackBtn : Button = findViewById(R.id.black)
+        blackBtn = findViewById(R.id.black)
         blackBtn.setOnClickListener { changeBorder(bins[3], blackBtn) }
+
+        binSelect.add(redBtn)
+        binSelect.add(yellowBtn)
+        binSelect.add(greenBtn)
+        binSelect.add(blackBtn)
     }
 
 
@@ -228,6 +266,19 @@ class SetupBinsActivity : AppCompatActivity() {
             if (bin.selected) somethingSelected = true
         }
         return somethingSelected
+    }
+
+
+    private fun setBinInfo(){
+        for (bin in binsInfo){
+            bins.forEachIndexed { i, binboi ->
+                if (binboi.colour == bin.key){
+                    //binboi.frequency.selectedItem = bin.value.frequency
+                    binboi.date.setText(bin.value.startDate)
+                    changeBorder(binboi, binSelect.get(i))
+                }
+            }
+        }
     }
 
 
