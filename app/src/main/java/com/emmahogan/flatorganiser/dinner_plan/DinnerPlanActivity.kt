@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -109,8 +110,21 @@ class DinnerPlanActivity : AppCompatActivity() {
     }
 
     private fun clear(){
-        (DinnerAdapter::clearAll)(customAdapter)
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Clear whole week?")
+        builder.setMessage("This action is not reversable")
 
+
+        builder.setPositiveButton("Yes"){dialog, which ->
+            (DinnerAdapter::clearAll)(customAdapter)
+        }
+
+        builder.setNegativeButton("No"){dialog,which ->
+            //close alert dialog
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
 
