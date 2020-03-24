@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +39,9 @@ class DinnerPlanActivity : AppCompatActivity() {
 
         val saveBtn : Button = findViewById(R.id.save)
         saveBtn.setOnClickListener{save()}
+
+        val  clearBtn : Button = findViewById(R.id.clear)
+        clearBtn.setOnClickListener{clear()}
 
         val day = getDayIndex()
 
@@ -103,6 +107,24 @@ class DinnerPlanActivity : AppCompatActivity() {
         (DinnerAdapter::updateDayItemInfo)(customAdapter)
         (DinnerAdapter::writeToDb)(customAdapter)
         Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun clear(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Clear whole week?")
+        builder.setMessage("This action is not reversable")
+
+
+        builder.setPositiveButton("Yes"){dialog, which ->
+            (DinnerAdapter::clearAll)(customAdapter)
+        }
+
+        builder.setNegativeButton("No"){dialog,which ->
+            //close alert dialog
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
 
