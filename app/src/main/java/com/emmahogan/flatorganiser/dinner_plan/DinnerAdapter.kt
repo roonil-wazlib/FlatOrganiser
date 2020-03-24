@@ -58,7 +58,7 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
 
 
     fun updateDayItemInfo(){
-        //pretty gross but there's only ever going to be 5 things in each list so not a huge issue
+        //pretty gross but there's only ever going to be 7 things in each list so not a huge issue
         for (x in imageModelArrayList){
             for (y in holderList){
                 if (x.day == y.day.text){
@@ -79,6 +79,21 @@ class DinnerAdapter(private val context : Context?, imageModelArrayListMain: Arr
         }
 
         (CloudFirestore::addDinnerInfo)(CloudFirestore(), user.flat.toString(), listData)
+    }
+
+
+    fun clearAll(){
+        for (x in imageModelArrayList){
+            x.chef = ""
+            x.meal = ""
+            x.ingredients = ""
+        }
+
+        for (x in holderList) {
+            x.ingredientsEditText.setText("")
+            x.chefEditText.setText("")
+            x.mealEditText.setText("")
+        }
     }
 
 

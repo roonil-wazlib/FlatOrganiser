@@ -39,6 +39,9 @@ class DinnerPlanActivity : AppCompatActivity() {
         val saveBtn : Button = findViewById(R.id.save)
         saveBtn.setOnClickListener{save()}
 
+        val  clearBtn : Button = findViewById(R.id.clear)
+        clearBtn.setOnClickListener{clear()}
+
         val day = getDayIndex()
 
         mealsList = HashMap()
@@ -103,6 +106,11 @@ class DinnerPlanActivity : AppCompatActivity() {
         (DinnerAdapter::updateDayItemInfo)(customAdapter)
         (DinnerAdapter::writeToDb)(customAdapter)
         Toast.makeText(this, "Saving...", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun clear(){
+        (DinnerAdapter::clearAll)(customAdapter)
+
     }
 
 
