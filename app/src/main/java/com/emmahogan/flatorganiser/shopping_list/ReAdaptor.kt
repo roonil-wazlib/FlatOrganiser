@@ -1,5 +1,6 @@
 package com.emmahogan.flatorganiser.shopping_list
 
+import android.R.attr.data
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
-import java.util.ArrayList
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.mutableListOf
 
 
 //this class takes data from dataset and uses it to communicate with the layoutmanager
@@ -90,6 +93,13 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
             listData.put(x.getItemName(), x.getSelected())
         }
         (CloudFirestore::addShoppingList)(CloudFirestore(), user.flat.toString(), listData)
+    }
+
+    fun clearAll(){
+        val size: Int = imageModelArrayList.size
+        imageModelArrayList.clear()
+        notifyItemRangeRemoved(0, size)
+        writeToDb()
     }
 
 

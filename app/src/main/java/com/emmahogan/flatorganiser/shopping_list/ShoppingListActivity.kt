@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
+import com.emmahogan.flatorganiser.dinner_plan.DinnerAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.ArrayList
 
@@ -19,7 +21,7 @@ class ShoppingListActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
     private var modelArrayList: ArrayList<ListItem>? = null
-    private var customAdapter: ReAdapter? = null
+    private lateinit var customAdapter: ReAdapter
 
     private lateinit var groceriesList : HashMap<String, Any>
     private lateinit var newItemET : EditText
@@ -61,6 +63,9 @@ class ShoppingListActivity : AppCompatActivity() {
         newItemET = findViewById(R.id.new_grocery)
         val addBtn : Button = findViewById(R.id.add)
         addBtn.setOnClickListener{ addItem() }
+
+        val clearBtn : Button = findViewById(R.id.clear)
+        clearBtn.setOnClickListener{ clear() }
     }
 
 
@@ -106,5 +111,24 @@ class ShoppingListActivity : AppCompatActivity() {
             listData.put(x.getItemName(), x.getSelected())
         }
         (CloudFirestore::addShoppingList)(CloudFirestore(), currentUser.flat.toString(), listData)
+    }
+
+    private fun clear(){
+        //wipe database, reset view
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Clear whole week?")
+        builder.setMessage("This action is not reversable")
+
+
+        builder.setPositiveButton("Yes"){_,_ ->
+            (ReAdapter::clearAll)(customAdapter)
+        }
+
+        builder.setNegativeButton("No"){_,_ ->
+            //close alert dialog
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 }
