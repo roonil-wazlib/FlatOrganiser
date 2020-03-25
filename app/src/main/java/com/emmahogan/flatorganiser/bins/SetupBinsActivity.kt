@@ -1,18 +1,27 @@
 package com.emmahogan.flatorganiser.bins
 
+import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.emmahogan.flatorganiser.auth.User
-import android.app.DatePickerDialog
-import android.content.Intent
-import android.util.Log
-import java.util.Calendar
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.RealtimeDatabase
+import com.emmahogan.flatorganiser.auth.User
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.Map
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.forEachIndexed
+import kotlin.collections.iterator
+import kotlin.collections.mapOf
+import kotlin.collections.mutableListOf
+import kotlin.collections.set
 
 
 //TODO fully test bin activty and setup bin activity
@@ -273,7 +282,12 @@ class SetupBinsActivity : AppCompatActivity() {
         for (bin in binsInfo){
             bins.forEachIndexed { i, binboi ->
                 if (binboi.colour == bin.key){
-                    //binboi.frequency.selectedItem = bin.value.frequency
+                    if (bin.value.frequency == "1 Week"){
+                        binboi.frequency.setSelection(1)
+                    }
+                    else {
+                        binboi.frequency.setSelection(2)
+                    }
                     binboi.date.setText(bin.value.startDate)
                     changeBorder(binboi, binSelect.get(i))
                 }
