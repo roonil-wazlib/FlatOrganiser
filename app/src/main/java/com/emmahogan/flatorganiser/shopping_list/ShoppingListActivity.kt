@@ -116,7 +116,7 @@ class ShoppingListActivity : AppCompatActivity() {
     private fun clear(){
         //wipe database, reset view
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Clear whole week?")
+        builder.setTitle("Clear whole list?")
         builder.setMessage("This action is not reversable")
 
 
