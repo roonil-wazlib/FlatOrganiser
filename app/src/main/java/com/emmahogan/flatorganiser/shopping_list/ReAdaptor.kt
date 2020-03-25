@@ -1,7 +1,9 @@
 package com.emmahogan.flatorganiser.shopping_list
 
+import android.R.attr.checked
 import android.R.attr.data
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +32,8 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
     var holderList = mutableListOf<MyViewHolder>()
     var user = User()
 
+    var checkedPosition = 0
+
 
     init {
         inflater = LayoutInflater.from(context)
@@ -43,31 +47,48 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
         val view = inflater.inflate(R.layout.recyclerview_item, parent, false)
         val item =  MyViewHolder(view)
         holderList.add(item)
+        updateCheckedPosition()
         return item
     }
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //set up each item view as it appears on screen while scrolling
 
+        //set up each item view as it appears on screen while scrolling
         holder.groceryCheckBox.isChecked = imageModelArrayList[position].getSelected()
         holder.groceryCheckBox.setText(imageModelArrayList[position].getItemName())
 
         //listen for clicks on checkboxes and respond
         holder.groceryCheckBox.setOnClickListener {
+            //get up to date position
+            val actualPosition = holder.getAdapterPosition()
 
-            if (imageModelArrayList[position].getSelected()) {
-                imageModelArrayList[position].setSelecteds(false)
+            //if item unchecked, move back up to main part of list and deselect checkbox
+            if (imageModelArrayList[actualPosition].getSelected()) {
+                imageModelArrayList[actualPosition].setSelecteds(false)
+                moveUp(imageModelArrayList[actualPosition], actualPosition)
+                checkedPosition += 1 //update index of checked list
+
+            // if item checked off, move down to checked section of list
             } else {
-                imageModelArrayList[position].setSelecteds(true)
+                imageModelArrayList[actualPosition].setSelecteds(true)
+                moveDown(imageModelArrayList[actualPosition], actualPosition)
+                checkedPosition -= 1 //update index of checked list
             }
             writeToDb()
         }
 
         holder.deleteBtn.setOnClickListener {
-            imageModelArrayList.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, itemCount)
+            val actualPosition = holder.getAdapterPosition()
+            if (!imageModelArrayList[actualPosition].isSelected) {
+                Log.d("Not checked", checkedPosition.toString())
+                checkedPosition -= 1
+                Log.d("Not checked", checkedPosition.toString())
+            }
+            Log.d("TAG", checkedPosition.toString())
+            imageModelArrayList.removeAt(actualPosition)
+            notifyItemRemoved(actualPosition)
+            notifyItemRangeChanged(actualPosition, itemCount)
             writeToDb()
         }
     }
@@ -76,6 +97,15 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
     override fun getItemCount(): Int {
         //get number of items in list
         return imageModelArrayList.size
+    }
+
+    private fun updateCheckedPosition() {
+        checkedPosition = 0
+        for (item in imageModelArrayList){
+            if (!item.isSelected) {
+                checkedPosition += 1
+            }
+        }
     }
 
 
@@ -100,6 +130,19 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
         imageModelArrayList.clear()
         notifyItemRangeRemoved(0, size)
         writeToDb()
+        checkedPosition = 0
+    }
+
+    private fun moveDown(item: ListItem, position : Int) {
+        imageModelArrayList.removeAt(position)
+        imageModelArrayList.add(checkedPosition-1, item)
+        notifyItemMoved(position, checkedPosition-1)
+    }
+
+    private fun moveUp(item: ListItem, position : Int) {
+        imageModelArrayList.removeAt(position)
+        imageModelArrayList.add(checkedPosition, item)
+        notifyItemMoved(position, checkedPosition)
     }
 
 

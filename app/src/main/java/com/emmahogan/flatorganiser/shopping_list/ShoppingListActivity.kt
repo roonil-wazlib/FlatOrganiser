@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
-import com.emmahogan.flatorganiser.dinner_plan.DinnerAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.ArrayList
 
@@ -71,6 +70,7 @@ class ShoppingListActivity : AppCompatActivity() {
 
     private fun createModel(): ArrayList<ListItem> {
         val list = ArrayList<ListItem>()
+        val checkedList = ArrayList<ListItem>()
         for ((key, value) in groceriesList) {
 
             //get class instance for each item in list
@@ -80,8 +80,14 @@ class ShoppingListActivity : AppCompatActivity() {
             //set grocery name
             model.setItemName(key)
             //add class instance to list of grocery class instances
-            list.add(model)
+            if (model.isSelected) {
+                checkedList.add(model)
+            }
+            else {
+                list.add(model)
+            }
         }
+        list.addAll(checkedList)
         return list
     }
 
