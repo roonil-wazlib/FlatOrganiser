@@ -111,9 +111,10 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
 
     fun addItem(item : ListItem){
         //add new item to recycler view
-        imageModelArrayList.add(item)
-        notifyItemInserted(itemCount-1)
-        notifyItemRangeChanged(itemCount-1, itemCount)
+        imageModelArrayList.add(checkedPosition, item)
+        notifyItemInserted(checkedPosition)
+        notifyItemRangeChanged(checkedPosition, checkedPosition)
+        checkedPosition += 1
     }
 
 
@@ -125,6 +126,7 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
         (CloudFirestore::addShoppingList)(CloudFirestore(), user.flat.toString(), listData)
     }
 
+
     fun clearAll(){
         val size: Int = imageModelArrayList.size
         imageModelArrayList.clear()
@@ -133,11 +135,13 @@ class ReAdapter(private val context : Context, imageModelArrayListMain: ArrayLis
         checkedPosition = 0
     }
 
+
     private fun moveDown(item: ListItem, position : Int) {
         imageModelArrayList.removeAt(position)
         imageModelArrayList.add(checkedPosition-1, item)
         notifyItemMoved(position, checkedPosition-1)
     }
+
 
     private fun moveUp(item: ListItem, position : Int) {
         imageModelArrayList.removeAt(position)
