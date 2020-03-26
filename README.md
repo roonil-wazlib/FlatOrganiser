@@ -54,6 +54,13 @@ Yet to implement: Link ingredients list with shopping list activity.
 KNOWN BUGS: Nothing, yet.
 
 
+### To Do List
+Current work in progress, only just started laying down skeleton code for layouts and functionality. Long term idea to have two tabs, 1 for personal TODOs and 1 for flat-wide TODOs that all users within a flat have access to. Also want to implement some kind of priority-queue type algorithm to sort tasks based on due date, user-entered priority and estimated time it will take to complete. Will need some trial and error on the weightings to get right but will be cool to attempt.
+
+Yet to implement: Anything usable
+
+KNOWN BUGS: Technically nothing?
+
 ## Planned future dashboard activities:
 
 ### Chores
@@ -61,6 +68,3 @@ Some form of representation for which chores need doing by whom and when. Eg who
 
 ### Timetable
 Activity to show flatmates who is where and at what times - eg at uni, work etc. Long term would like to sync with the UC Timetable, but will need to find time to scrape that data as well as implementing the UI.
-
-### To do list
-Self explanatory. Some kind of algorithm that sorts tasks into priority based on due date and importance would be cool
