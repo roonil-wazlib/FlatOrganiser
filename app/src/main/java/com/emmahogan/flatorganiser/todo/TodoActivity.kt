@@ -29,8 +29,12 @@ class TodoActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.todo)
 
-        //TODO(actually populate with iinfomation)
+        //TODO(actually populate with infomation)
         createList()
+
+        //TODO add new item button - floating action?
+
+        //TODO figure out how to populate cards via a pop up
     }
 
 

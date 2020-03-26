@@ -43,6 +43,9 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //set up each item view as it appears on screen while scrolling
         holder.itemCheckBox.setText(TodoAdapter.itemList[position].title)
+
+
+        //TODO set up recycler view for sublist here
     }
 
     override fun getItemCount(): Int {
@@ -53,6 +56,7 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
 
     fun addItem(item : TodoItem){
         //add new item to recycler view
+        //TODO
         itemList.add(item)
         notifyItemInserted(-1)
     }
@@ -60,6 +64,7 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
     //the 'thing' that the data is stored in and gets recycled during scroll
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //inner class represents individual items within recylcerview
+        //TODO add remaining attributes
         var itemCheckBox: CheckBox
         init {
             itemCheckBox = itemView.findViewById(R.id.item_checkbox)
