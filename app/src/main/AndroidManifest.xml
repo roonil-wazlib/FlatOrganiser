@@ -32,6 +32,7 @@
         <activity android:name=".bins.SetupBinsActivity"/>
         <activity android:name=".bins.BinsActivity"/>
         <activity android:name=".dinner_plan.DinnerPlanActivity"/>
+        <activity android:name=".todo.TodoActivity"/>
 
 
         <service android:name=".MyFirebaseMessagingService">
