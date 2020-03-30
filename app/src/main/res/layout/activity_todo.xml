@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="fill_parent">
@@ -11,14 +12,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/myBtn"
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:text="My Items" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/flatBtn"
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
@@ -30,8 +31,18 @@
         android:id="@+id/todo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1" >
 
-    <!-- TODO add floating action button to add new todo items -->
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!-- TODO add floating action button properly -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/newItemBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_gravity="right"
+        android:layout_margin="12dp"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </LinearLayout>

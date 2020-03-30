@@ -1,11 +1,13 @@
 package com.emmahogan.flatorganiser.todo
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.ArrayList
 
@@ -32,27 +34,35 @@ class TodoActivity : AppCompatActivity() {
         //TODO(actually populate with infomation)
         createList()
 
-        //TODO add new item button - floating action?
+        val newItemBtn : FloatingActionButton = findViewById(R.id.newItemBtn)
+        newItemBtn.setOnClickListener{ addItem() }
 
-        //TODO figure out how to populate cards via a pop up
+        val myBtn : Button = findViewById(R.id.myBtn)
+        val flatBtn : Button = findViewById(R.id.flatBtn)
     }
 
 
     private fun createModel(): ArrayList<TodoItem> {
         val list = ArrayList<TodoItem>()
 
-        val model = TodoItem()
-        model.title = ""
-        list.add(model) //testing code
-
+        for (i in 0..8){
+            val model = TodoItem()
+            model.title = ""
+            list.add(model) //testing code
+        }
         return list
     }
 
 
-    fun createList(){
+    private fun createList(){
         modelArrayList = createModel()
         customAdapter = TodoAdapter(this, modelArrayList!!, currentUser)
         recyclerView!!.adapter = customAdapter
         recyclerView!!.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+    }
+
+    private fun addItem(){
+        //TODO figure out how to populate cards via a pop up
+        return
     }
 }
