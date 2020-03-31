@@ -31,24 +31,28 @@
         <TextView
             android:id="@+id/red_bin_this"
             android:layout_width="match_parent"
+            android:textColor="@color/red_bin_colour"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/yellow_bin_this"
             android:layout_width="match_parent"
+            android:textColor="@color/yellow_bin_colour"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/green_bin_this"
             android:layout_width="match_parent"
+            android:textColor="@color/green_bin_colour"
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/black_bin_this"
             android:layout_width="match_parent"
+            android:textColor="#ffffff"
             android:layout_height="0dp"
             android:layout_weight="1" />
     </LinearLayout>
@@ -72,24 +76,28 @@
         <TextView
             android:id="@+id/red_bin"
             android:layout_width="match_parent"
+            android:textColor="@color/red_bin_colour"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/yellow_bin"
             android:layout_width="match_parent"
+            android:textColor="@color/yellow_bin_colour"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/green_bin"
             android:layout_width="match_parent"
+            android:textColor="@color/green_bin_colour"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/black_bin"
             android:layout_width="match_parent"
+            android:textColor="#ffffff"
             android:layout_height="0dp"
             android:layout_weight="1" />
     </LinearLayout>
