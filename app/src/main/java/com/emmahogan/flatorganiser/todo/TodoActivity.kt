@@ -65,8 +65,7 @@ class TodoActivity : AppCompatActivity() {
     }
 
     private fun addItem(){
-        //TODO figure out how to populate cards via a pop up
-        //open custom todo dialog box
+        //open custom to-do dialog box
         val dialogView = LayoutInflater.from(this).inflate(R.layout.todo_dialog, null)
         //AlertDialogBuilder
         val builder = AlertDialog.Builder(this)
@@ -74,10 +73,10 @@ class TodoActivity : AppCompatActivity() {
             .setTitle("Enter Details")
         //show dialog
         val alertDialog = builder.show()
-
         val saveBtn = alertDialog.save
         val cancelBtn = alertDialog.cancel
-        saveBtn.setOnClickListener{ addToDb() }
+        //todo set up calendar and spinner
+        saveBtn.setOnClickListener{ addToDb(alertDialog.item_name.text.toString()) }
         cancelBtn.setOnClickListener{
             alertDialog.dismiss()
         }
@@ -85,7 +84,7 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
-    private fun addToDb(){
-
+    private fun addToDb(name : String){
+        return
     }
 }
