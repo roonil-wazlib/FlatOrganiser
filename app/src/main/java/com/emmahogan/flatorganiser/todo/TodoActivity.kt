@@ -11,6 +11,7 @@ import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.todo_dialog.*
 import java.util.ArrayList
 
 class TodoActivity : AppCompatActivity() {
@@ -73,6 +74,18 @@ class TodoActivity : AppCompatActivity() {
             .setTitle("Enter Details")
         //show dialog
         val alertDialog = builder.show()
+
+        val saveBtn = alertDialog.save
+        val cancelBtn = alertDialog.cancel
+        saveBtn.setOnClickListener{ addToDb() }
+        cancelBtn.setOnClickListener{
+            alertDialog.dismiss()
+        }
         alertDialog.show()
+    }
+
+
+    private fun addToDb(){
+
     }
 }
