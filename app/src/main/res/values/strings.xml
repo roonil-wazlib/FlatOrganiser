@@ -22,6 +22,15 @@
 
     </string-array>
 
+    <string-array name="priority_array">
+        <item>Enter priority:</item>
+        <item>Optional</item>
+        <item>Low priority</item>
+        <item>High priority</item>
+        <item>Urgent</item>
+
+    </string-array>
+
 </resources>
 
 

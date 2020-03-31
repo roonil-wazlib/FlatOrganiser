@@ -17,6 +17,7 @@ import com.emmahogan.flatorganiser.bins.SetupBinsActivity
 import com.emmahogan.flatorganiser.dinner_plan.DinnerPlanActivity
 import com.emmahogan.flatorganiser.flat.CreateFlatActivity
 import com.emmahogan.flatorganiser.flat.JoinFlatActivity
+import com.emmahogan.flatorganiser.todo.TodoActivity
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -81,6 +82,9 @@ class HomeActivity : AppCompatActivity() {
 
         val dinnerBtn : Button = findViewById(R.id.dinner)
         dinnerBtn.setOnClickListener{openDinnerPlanner()}
+
+        val todoBtn : Button = findViewById(R.id.todo)
+        todoBtn.setOnClickListener{openTodoActivity()}
     }
 
 
@@ -164,5 +168,12 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra("user", currentUser)
         startActivity(intent)
         Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+    }
+
+
+    private fun openTodoActivity(){
+        val intent = Intent(this, TodoActivity::class.java)
+        intent.putExtra("user", currentUser)
+        startActivity(intent)
     }
 }
