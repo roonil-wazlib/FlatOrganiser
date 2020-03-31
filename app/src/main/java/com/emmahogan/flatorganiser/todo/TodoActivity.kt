@@ -1,7 +1,9 @@
 package com.emmahogan.flatorganiser.todo
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -63,6 +65,14 @@ class TodoActivity : AppCompatActivity() {
 
     private fun addItem(){
         //TODO figure out how to populate cards via a pop up
-        return
+        //open custom todo dialog box
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.todo_dialog, null)
+        //AlertDialogBuilder
+        val builder = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setTitle("Enter Details")
+        //show dialog
+        val alertDialog = builder.show()
+        alertDialog.show()
     }
 }
