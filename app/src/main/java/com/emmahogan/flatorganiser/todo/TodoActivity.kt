@@ -118,7 +118,7 @@ class TodoActivity : AppCompatActivity() {
             (CloudFirestore::addPersonalTodo)(CloudFirestore(), currentUser, flat.toString(), listData)
         }
         else {
-            //todo add flat todo
+            (CloudFirestore::addFlatTodo)(CloudFirestore(), currentUser, flat.toString(), listData)
         }
         Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
     }
