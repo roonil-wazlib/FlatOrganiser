@@ -1,5 +1,6 @@
 package com.emmahogan.flatorganiser.todo
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
@@ -12,7 +13,8 @@ import com.emmahogan.flatorganiser.auth.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.todo_dialog.*
-import java.util.ArrayList
+import java.util.*
+import kotlin.collections.HashMap
 
 class TodoActivity : AppCompatActivity() {
 
@@ -76,6 +78,9 @@ class TodoActivity : AppCompatActivity() {
         val saveBtn = alertDialog.save
         val cancelBtn = alertDialog.cancel
         //todo set up calendar and spinner
+
+        val calendarBtn = alertDialog.calendar
+        calendarBtn.setOnClickListener{ openCalendar(calendarBtn) }
         saveBtn.setOnClickListener{ addToDb(alertDialog.item_name.text.toString()) }
         cancelBtn.setOnClickListener{
             alertDialog.dismiss()
@@ -86,5 +91,20 @@ class TodoActivity : AppCompatActivity() {
 
     private fun addToDb(name : String){
         return
+    }
+
+    private fun openCalendar(calendarBtn : Button){
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        // date picker dialog
+        val picker = DatePickerDialog(this,
+            DatePickerDialog.OnDateSetListener { _, selectedYear, monthOfYear, dayOfMonth ->
+                val date = "${dayOfMonth}/${monthOfYear + 1}/${selectedYear}"
+                calendarBtn.text = date
+            }, year, month, day
+        )
+        picker.show()
     }
 }
