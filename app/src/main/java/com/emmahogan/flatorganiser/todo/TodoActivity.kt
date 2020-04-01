@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,6 +28,8 @@ class TodoActivity : AppCompatActivity() {
     lateinit var currentUser : User
     private var db = FirebaseFirestore.getInstance()
     lateinit var todoList : HashMap<String, String>
+    private var myTodo = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -45,7 +48,15 @@ class TodoActivity : AppCompatActivity() {
         newItemBtn.setOnClickListener{ addItem() }
 
         val myBtn : Button = findViewById(R.id.myBtn)
+        myBtn.setOnClickListener{
+            myTodo = true
+            //todo change view
+        }
         val flatBtn : Button = findViewById(R.id.flatBtn)
+        flatBtn.setOnClickListener{
+            myTodo = false
+            //todo change view
+        }
     }
 
 
@@ -67,6 +78,7 @@ class TodoActivity : AppCompatActivity() {
         recyclerView!!.adapter = customAdapter
         recyclerView!!.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
     }
+
 
     private fun addItem(){
         //open custom to-do dialog box
@@ -96,10 +108,21 @@ class TodoActivity : AppCompatActivity() {
 
 
     private fun addToDb(name : String, date : String, priority : String){
-        Log.d("test", name)
-        Log.d("test", date)
-        Log.d("test", priority)
+        //if info correctly filled out:
+        val flat = currentUser.flat
+        val listData = HashMap<String, Any>()
+
+        listData[name] = mapOf("date" to date, "priority" to priority)
+
+        if (myTodo) {
+            (CloudFirestore::addPersonalTodo)(CloudFirestore(), currentUser, flat.toString(), listData)
+        }
+        else {
+            //todo add flat todo
+        }
+        Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
     }
+
 
     private fun openCalendar(calendarBtn : Button){
         val calendar = Calendar.getInstance()

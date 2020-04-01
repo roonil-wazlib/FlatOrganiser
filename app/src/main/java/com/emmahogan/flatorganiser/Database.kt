@@ -159,4 +159,11 @@ class CloudFirestore {
         currentUser.setBinsAdded()
         (RealtimeDatabase::updateUser)(RealtimeDatabase(), currentUser)
     }
+
+    fun addPersonalTodo(currentUser: User, flatID : String, listData : HashMap<String, Any>) {
+        val flatReference = db.collection("flats").document(flatID)
+        flatReference.collection("members").document(mAuth.currentUser!!.uid).set(listData)
+            .addOnSuccessListener {Log.d("TAG", "Todo info added")}
+            .addOnFailureListener {Log.d("TAG", "Something went wrong adding personal todo info")}
+    }
 }
