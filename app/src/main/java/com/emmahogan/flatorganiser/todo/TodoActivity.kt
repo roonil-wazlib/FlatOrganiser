@@ -2,8 +2,10 @@ package com.emmahogan.flatorganiser.todo
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -77,11 +79,15 @@ class TodoActivity : AppCompatActivity() {
         val alertDialog = builder.show()
         val saveBtn = alertDialog.save
         val cancelBtn = alertDialog.cancel
-        //todo set up calendar and spinner
 
         val calendarBtn = alertDialog.calendar
         calendarBtn.setOnClickListener{ openCalendar(calendarBtn) }
-        saveBtn.setOnClickListener{ addToDb(alertDialog.item_name.text.toString()) }
+
+        saveBtn.setOnClickListener{
+            addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString())
+            alertDialog.dismiss()
+            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
+        }
         cancelBtn.setOnClickListener{
             alertDialog.dismiss()
         }
@@ -89,8 +95,10 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
-    private fun addToDb(name : String){
-        return
+    private fun addToDb(name : String, date : String, priority : String){
+        Log.d("test", name)
+        Log.d("test", date)
+        Log.d("test", priority)
     }
 
     private fun openCalendar(calendarBtn : Button){
