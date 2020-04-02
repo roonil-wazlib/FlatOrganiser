@@ -1,5 +1,6 @@
 package com.emmahogan.flatorganiser.todo
 
+
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
-import com.emmahogan.flatorganiser.shopping_list.ListItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,19 +21,20 @@ import kotlinx.android.synthetic.main.todo_dialog.*
 import java.util.*
 import kotlin.collections.HashMap
 
+
 class TodoActivity : AppCompatActivity() {
+
 
     private var recyclerView: RecyclerView? = null
     private var modelArrayList: ArrayList<TodoItem>? = null
     private lateinit var customAdapter: TodoAdapter
-
     lateinit var currentUser : User
     private var db = FirebaseFirestore.getInstance()
     lateinit var myTodoList : HashMap<String, Any>
     lateinit var flatTodoList : HashMap<String, Any>
     private var myTodo = true
-
     private var mAuth = FirebaseAuth.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -58,7 +59,6 @@ class TodoActivity : AppCompatActivity() {
                     catch(e: TypeCastException){
                         flatTodoList = hashMapOf()
                     }
-                    createList(flatTodoList)
                 } else {
                     Log.d("TAG", "No such document")
                 }
@@ -78,6 +78,7 @@ class TodoActivity : AppCompatActivity() {
                     catch(e: TypeCastException){
                         myTodoList = hashMapOf()
                     }
+                    createList(myTodoList)
                 } else {
                     Log.d("TAG", "No such document")
                 }
@@ -97,8 +98,8 @@ class TodoActivity : AppCompatActivity() {
             myTodo = false
             createList(flatTodoList)
         }
-
     }
+
 
     private fun createModel(data : HashMap<String, Any>): ArrayList<TodoItem> {
         val list = ArrayList<TodoItem>()
@@ -125,10 +126,12 @@ class TodoActivity : AppCompatActivity() {
     private fun addItem(){
         //open custom to-do dialog box
         val dialogView = LayoutInflater.from(this).inflate(R.layout.todo_dialog, null)
+        
         //AlertDialogBuilder
         val builder = AlertDialog.Builder(this)
             .setView(dialogView)
             .setTitle("Enter Details")
+
         //show dialog
         val alertDialog = builder.show()
         val saveBtn = alertDialog.save
@@ -153,6 +156,7 @@ class TodoActivity : AppCompatActivity() {
         }
         alertDialog.show()
     }
+
 
     private fun addItemToView(name : String, date : String, priority : String) {
         val model = TodoItem()
