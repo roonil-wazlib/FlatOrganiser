@@ -47,7 +47,7 @@ class TodoActivity : AppCompatActivity() {
         val newItemBtn : FloatingActionButton = findViewById(R.id.newItemBtn)
         newItemBtn.setOnClickListener{ addItem() }
 
-        //listen for user personal todo list
+        //listen for user personal to do list
         val docRef = db.collection("flats/${currentUser.flat.toString()}/members/${mAuth.currentUser!!.uid}/data").document("todo")
         docRef.get()
             .addOnSuccessListener { document ->
@@ -66,7 +66,7 @@ class TodoActivity : AppCompatActivity() {
                 Log.d("TAG", "get failed with ", exception)
             }
 
-        //listen for flat todo list
+        //listen for flat to do list
         val flatDocRef = db.collection("flats/${currentUser.flat.toString()}/data").document("todo")
         flatDocRef.get()
             .addOnSuccessListener { document ->
@@ -88,12 +88,13 @@ class TodoActivity : AppCompatActivity() {
         val myBtn : Button = findViewById(R.id.myBtn)
         myBtn.setOnClickListener{
             myTodo = true
-            //todo change view
+            createList(myTodoList)
         }
+
         val flatBtn : Button = findViewById(R.id.flatBtn)
         flatBtn.setOnClickListener{
             myTodo = false
-            //todo change view
+            createList(flatTodoList)
         }
 
     }
