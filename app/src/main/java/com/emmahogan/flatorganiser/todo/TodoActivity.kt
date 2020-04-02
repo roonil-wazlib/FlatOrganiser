@@ -78,7 +78,6 @@ class TodoActivity : AppCompatActivity() {
                     catch(e: TypeCastException){
                         myTodoList = hashMapOf()
                     }
-                    createList(myTodoList)
                 } else {
                     Log.d("TAG", "No such document")
                 }
