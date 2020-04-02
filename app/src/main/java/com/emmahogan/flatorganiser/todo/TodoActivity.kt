@@ -153,8 +153,6 @@ class TodoActivity : AppCompatActivity() {
             alertDialog.dismiss()
         }
         alertDialog.show()
-
-
     }
 
     private fun addItemToView(name : String, date : String, priority : String) {
