@@ -47,25 +47,6 @@ class TodoActivity : AppCompatActivity() {
         val newItemBtn : FloatingActionButton = findViewById(R.id.newItemBtn)
         newItemBtn.setOnClickListener{ addItem() }
 
-        //listen for user personal to do list
-        val docRef = db.collection("flats/${currentUser.flat.toString()}/members/${mAuth.currentUser!!.uid}/data").document("todo")
-        docRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    try{myTodoList = document.data as HashMap<String, Map<String, String>>}
-                    catch(e: TypeCastException){
-                        myTodoList = hashMapOf()
-                    }
-                    createList(myTodoList)
-                } else {
-                    Log.d("TAG", "No such document")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("TAG", "get failed with ", exception)
-            }
-
         //listen for flat to do list
         val flatDocRef = db.collection("flats/${currentUser.flat.toString()}/data").document("todo")
         flatDocRef.get()
@@ -77,6 +58,25 @@ class TodoActivity : AppCompatActivity() {
                         flatTodoList = hashMapOf()
                     }
                     createList(flatTodoList)
+                } else {
+                    Log.d("TAG", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+
+        //listen for user personal to do list
+        val docRef = db.collection("flats/${currentUser.flat.toString()}/members/${mAuth.currentUser!!.uid}/data").document("todo")
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                    try{myTodoList = document.data as HashMap<String, Map<String, String>>}
+                    catch(e: TypeCastException){
+                        myTodoList = hashMapOf()
+                    }
+                    createList(myTodoList)
                 } else {
                     Log.d("TAG", "No such document")
                 }
