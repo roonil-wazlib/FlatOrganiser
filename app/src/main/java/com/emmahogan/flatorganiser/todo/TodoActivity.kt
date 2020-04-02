@@ -14,6 +14,7 @@ import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.todo_dialog.*
 import java.util.*
@@ -31,6 +32,7 @@ class TodoActivity : AppCompatActivity() {
     lateinit var flatTodoList : HashMap<String, Map<String, String>>
     private var myTodo = true
 
+    private var mAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -42,11 +44,46 @@ class TodoActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.todo)
 
-        //TODO(actually populate with infomation)
-        createList(myTodoList)
-
         val newItemBtn : FloatingActionButton = findViewById(R.id.newItemBtn)
         newItemBtn.setOnClickListener{ addItem() }
+
+        //listen for user personal todo list
+        val docRef = db.collection("flats/${currentUser.flat.toString()}/members/${mAuth.currentUser!!.uid}/data").document("todo")
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                    try{myTodoList = document.data as HashMap<String, Map<String, String>>}
+                    catch(e: TypeCastException){
+                        myTodoList = hashMapOf()
+                    }
+                    createList(myTodoList)
+                } else {
+                    Log.d("TAG", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+
+        //listen for flat todo list
+        val flatDocRef = db.collection("flats/${currentUser.flat.toString()}/data").document("todo")
+        flatDocRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                    try{flatTodoList = document.data as HashMap<String, Map<String, String>>}
+                    catch(e: TypeCastException){
+                        flatTodoList = hashMapOf()
+                    }
+                    createList(flatTodoList)
+                } else {
+                    Log.d("TAG", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
 
         val myBtn : Button = findViewById(R.id.myBtn)
         myBtn.setOnClickListener{
@@ -59,10 +96,7 @@ class TodoActivity : AppCompatActivity() {
             //todo change view
         }
 
-
-
     }
-
 
     private fun createModel(data : HashMap<String, Map<String, String>>): ArrayList<TodoItem> {
         val list = ArrayList<TodoItem>()
