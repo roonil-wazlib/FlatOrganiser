@@ -27,7 +27,8 @@ class TodoActivity : AppCompatActivity() {
 
     lateinit var currentUser : User
     private var db = FirebaseFirestore.getInstance()
-    lateinit var todoList : HashMap<String, String>
+    lateinit var myTodoList : HashMap<String, Map<String, String>>
+    lateinit var flatTodoList : HashMap<String, Map<String, String>>
     private var myTodo = true
 
 
@@ -42,7 +43,7 @@ class TodoActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.todo)
 
         //TODO(actually populate with infomation)
-        createList()
+        createList(myTodoList)
 
         val newItemBtn : FloatingActionButton = findViewById(R.id.newItemBtn)
         newItemBtn.setOnClickListener{ addItem() }
@@ -57,23 +58,27 @@ class TodoActivity : AppCompatActivity() {
             myTodo = false
             //todo change view
         }
+
+
+
     }
 
 
-    private fun createModel(): ArrayList<TodoItem> {
+    private fun createModel(data : HashMap<String, Map<String, String>>): ArrayList<TodoItem> {
         val list = ArrayList<TodoItem>()
-
-        for (i in 0..8){
+        for ((key, value) in data){
             val model = TodoItem()
-            model.title = ""
-            list.add(model) //testing code
+            model.setItemTitle(key)
+            value["priority"]?.let { model.setItemPriority(it) }
+            value["date"]?.let { model.setItemDueDate(it) }
+            list.add(model)
         }
         return list
     }
 
 
-    private fun createList(){
-        modelArrayList = createModel()
+    private fun createList(data : HashMap<String, Map<String, String>>){
+        modelArrayList = createModel(data)
         customAdapter = TodoAdapter(this, modelArrayList!!, currentUser)
         recyclerView!!.adapter = customAdapter
         recyclerView!!.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
