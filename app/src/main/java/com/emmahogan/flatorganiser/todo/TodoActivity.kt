@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
+import com.emmahogan.flatorganiser.shopping_list.ListItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,8 +29,8 @@ class TodoActivity : AppCompatActivity() {
 
     lateinit var currentUser : User
     private var db = FirebaseFirestore.getInstance()
-    lateinit var myTodoList : HashMap<String, Map<String, String>>
-    lateinit var flatTodoList : HashMap<String, Map<String, String>>
+    lateinit var myTodoList : HashMap<String, Any>
+    lateinit var flatTodoList : HashMap<String, Any>
     private var myTodo = true
 
     private var mAuth = FirebaseAuth.getInstance()
@@ -53,7 +54,7 @@ class TodoActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    try{flatTodoList = document.data as HashMap<String, Map<String, String>>}
+                    try{flatTodoList = document.data as HashMap<String, Any>}
                     catch(e: TypeCastException){
                         flatTodoList = hashMapOf()
                     }
@@ -66,13 +67,14 @@ class TodoActivity : AppCompatActivity() {
                 Log.d("TAG", "get failed with ", exception)
             }
 
+
         //listen for user personal to do list
         val docRef = db.collection("flats/${currentUser.flat.toString()}/members/${mAuth.currentUser!!.uid}/data").document("todo")
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    try{myTodoList = document.data as HashMap<String, Map<String, String>>}
+                    try{myTodoList = document.data as HashMap<String, Any>}
                     catch(e: TypeCastException){
                         myTodoList = hashMapOf()
                     }
@@ -99,9 +101,10 @@ class TodoActivity : AppCompatActivity() {
 
     }
 
-    private fun createModel(data : HashMap<String, Map<String, String>>): ArrayList<TodoItem> {
+    private fun createModel(data : HashMap<String, Any>): ArrayList<TodoItem> {
         val list = ArrayList<TodoItem>()
-        for ((key, value) in data){
+        for ((key, value) in data){ value as HashMap<String, String>
+
             val model = TodoItem()
             model.setItemTitle(key)
             value["priority"]?.let { model.setItemPriority(it) }
@@ -112,7 +115,7 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
-    private fun createList(data : HashMap<String, Map<String, String>>){
+    private fun createList(data : HashMap<String, Any>){
         modelArrayList = createModel(data)
         customAdapter = TodoAdapter(this, modelArrayList!!, currentUser)
         recyclerView!!.adapter = customAdapter
@@ -136,7 +139,13 @@ class TodoActivity : AppCompatActivity() {
         calendarBtn.setOnClickListener{ openCalendar(calendarBtn) }
 
         saveBtn.setOnClickListener{
-            addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString())
+            if (myTodo){
+                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), myTodoList)
+            }
+            else {
+                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), flatTodoList)
+            }
+
             alertDialog.dismiss()
             Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
         }
@@ -144,23 +153,34 @@ class TodoActivity : AppCompatActivity() {
             alertDialog.dismiss()
         }
         alertDialog.show()
+
+
+    }
+
+    private fun addItemToView(name : String, date : String, priority : String) {
+        val model = TodoItem()
+        model.setItemTitle(name)
+        model.setItemPriority(priority)
+        model.setItemDueDate(date)
+        customAdapter!!.addItem(model)
     }
 
 
-    private fun addToDb(name : String, date : String, priority : String){
+    private fun addToDb(name : String, date : String, priority : String, data : HashMap<String, Any>){
         //if info correctly filled out:
         val flat = currentUser.flat
-        val listData = HashMap<String, Any>()
-
-        listData[name] = mapOf("date" to date, "priority" to priority)
+        data[name] = mapOf("date" to date, "priority" to priority)
 
         if (myTodo) {
-            (CloudFirestore::addPersonalTodo)(CloudFirestore(), currentUser, flat.toString(), listData)
+            (CloudFirestore::addPersonalTodo)(CloudFirestore(), currentUser, flat.toString(), data)
         }
         else {
-            (CloudFirestore::addFlatTodo)(CloudFirestore(), currentUser, flat.toString(), listData)
+            (CloudFirestore::addFlatTodo)(CloudFirestore(), currentUser, flat.toString(), data)
         }
         Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
+
+        //update view
+        addItemToView(name, date, priority)
     }
 
 
