@@ -32,9 +32,10 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Due date"
+            android:text="Due date:"
             android:textSize="16dp"
-            android:gravity="center"
+            android:gravity="left"
+            android:paddingStart="40dp"
             android:textColor="#ffffff"/>
 
         <Button
@@ -51,11 +52,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/priority_array"
-        android:gravity="center"
-        android:layout_gravity="center"
+        android:textSize="16sp"
         android:layout_margin="15dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"/>
+        android:paddingStart="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:text="Estimated time left:"
+            android:textSize="16dp"
+            android:gravity="left"
+            android:paddingStart="40dp"
+            android:textColor="#ffffff"/>
+
+        <EditText
+            android:id="@+id/time_remaining"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="hours"
+            android:textSize="16dp"
+            android:textColor="#ffffff"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
