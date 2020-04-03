@@ -30,8 +30,8 @@ class TodoActivity : AppCompatActivity() {
     private lateinit var customAdapter: TodoAdapter
     lateinit var currentUser : User
     private var db = FirebaseFirestore.getInstance()
-    lateinit var myTodoList : HashMap<String, Any>
-    lateinit var flatTodoList : HashMap<String, Any>
+    private lateinit var myTodoList : HashMap<String, Any>
+    private lateinit var flatTodoList : HashMap<String, Any>
     private var myTodo = true
     private var mAuth = FirebaseAuth.getInstance()
 
@@ -54,10 +54,10 @@ class TodoActivity : AppCompatActivity() {
         flatDocRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    try{flatTodoList = document.data as HashMap<String, Any>}
-                    catch(e: TypeCastException){
-                        flatTodoList = hashMapOf()
+                    flatTodoList = try{
+                        document.data as HashMap<String, Any>
+                    } catch(e: TypeCastException){
+                        hashMapOf()
                     }
                 } else {
                     Log.d("TAG", "No such document")
@@ -73,10 +73,10 @@ class TodoActivity : AppCompatActivity() {
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    try{myTodoList = document.data as HashMap<String, Any>}
-                    catch(e: TypeCastException){
-                        myTodoList = hashMapOf()
+                    myTodoList = try{
+                        document.data as HashMap<String, Any>
+                    } catch(e: TypeCastException){
+                        hashMapOf()
                     }
                     createList(myTodoList)
                 } else {
@@ -126,7 +126,7 @@ class TodoActivity : AppCompatActivity() {
     private fun addItem(){
         //open custom to-do dialog box
         val dialogView = LayoutInflater.from(this).inflate(R.layout.todo_dialog, null)
-        
+
         //AlertDialogBuilder
         val builder = AlertDialog.Builder(this)
             .setView(dialogView)
@@ -163,7 +163,7 @@ class TodoActivity : AppCompatActivity() {
         model.setItemTitle(name)
         model.setItemPriority(priority)
         model.setItemDueDate(date)
-        customAdapter!!.addItem(model)
+        customAdapter.addItem(model)
     }
 
 

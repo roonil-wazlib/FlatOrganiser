@@ -1,7 +1,6 @@
 package com.emmahogan.flatorganiser.dinner_plan
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.emmahogan.flatorganiser.CloudFirestore
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
 import java.util.ArrayList
+
 
 class DinnerAdapter(private val context : Context?, imageModelArrayListMain: ArrayList<DayItem>, currentUser: User) :
     RecyclerView.Adapter<DinnerAdapter.MyViewHolder>() {
