@@ -142,10 +142,10 @@ class TodoActivity : AppCompatActivity() {
 
         saveBtn.setOnClickListener{
             if (myTodo){
-                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), myTodoList)
+                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), alertDialog.time_remaining.text.toString(), myTodoList)
             }
             else {
-                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), flatTodoList)
+                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), alertDialog.time_remaining.text.toString(), flatTodoList)
             }
 
             alertDialog.dismiss()
@@ -158,19 +158,20 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
-    private fun addItemToView(name : String, date : String, priority : String) {
+    private fun addItemToView(name : String, date : String, priority : String, timeRemaining : String) {
         val model = TodoItem()
         model.setItemTitle(name)
         model.setItemPriority(priority)
         model.setItemDueDate(date)
+        model.setItemTimeRemaining(timeRemaining)
         customAdapter.addItem(model)
     }
 
 
-    private fun addToDb(name : String, date : String, priority : String, data : HashMap<String, Any>){
+    private fun addToDb(name : String, date : String, priority : String, timeRemaining : String, data : HashMap<String, Any>){
         //if info correctly filled out:
         val flat = currentUser.flat
-        data[name] = mapOf("date" to date, "priority" to priority)
+        data[name] = mapOf("date" to date, "priority" to priority, "timeRemaining" to timeRemaining)
 
         if (myTodo) {
             (CloudFirestore::addPersonalTodo)(CloudFirestore(), currentUser, flat.toString(), data)
@@ -181,7 +182,7 @@ class TodoActivity : AppCompatActivity() {
         Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
 
         //update view
-        addItemToView(name, date, priority)
+        addItemToView(name, date, priority, timeRemaining)
     }
 
 

@@ -48,6 +48,9 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
         holder.itemCheckBox.text = TodoAdapter.itemList[position].title
         holder.itemDate.text = itemList[position].date
         holder.itemPriority.text = itemList[position].priority
+        holder.itemTimeRemaining.text = itemList[position].timeRemaining
+        Log.d("TAG", itemList[position].timeRemaining)
+        Log.d("TAG", itemList[position].priority)
 
         //TODO set up recycler view for sublist here
     }
@@ -74,10 +77,12 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
         var itemCheckBox : CheckBox
         var itemDate : TextView
         var itemPriority : TextView
+        var itemTimeRemaining : TextView
         init {
             itemCheckBox = itemView.findViewById(R.id.item_checkbox)
             itemDate = itemView.findViewById(R.id.item_date)
             itemPriority = itemView.findViewById(R.id.item_priority)
+            itemTimeRemaining = itemView.findViewById(R.id.time_remainingTV)
         }
     }
 }
