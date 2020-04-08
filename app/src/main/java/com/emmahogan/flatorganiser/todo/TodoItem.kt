@@ -7,6 +7,8 @@ class TodoItem {
     var date : String = ""
     var timeRemaining : String = ""
 
+    //TODO add item checked var
+
     fun setItemTitle(title : String){
         this.title = title
     }

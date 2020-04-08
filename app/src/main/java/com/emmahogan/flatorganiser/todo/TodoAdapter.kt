@@ -52,7 +52,13 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
         Log.d("TAG", itemList[position].timeRemaining)
         Log.d("TAG", itemList[position].priority)
 
+        //TODO check item here
+
         //TODO set up recycler view for sublist here
+
+
+
+        //TODO add on click listener to open dialog box
     }
 
     override fun getItemCount(): Int {
