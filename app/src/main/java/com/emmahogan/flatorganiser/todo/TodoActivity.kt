@@ -184,7 +184,14 @@ class TodoActivity : AppCompatActivity() {
         //alertDialog.priority.text = item.priority you can't do this you dumb fuck
         alertDialog.time_remaining.setText(item.timeRemaining)
 
-
+        var priorityPosition = 0
+        //loop through priority list and find index of priority
+        for ( (index, string) in resources.getStringArray(R.array.priority_array).withIndex() ) {
+            if (string == item.priority) {
+                priorityPosition = index
+            }
+        }
+        alertDialog.priority.setSelection(priorityPosition)
 
         saveBtn.setOnClickListener{
             if (myTodo){
