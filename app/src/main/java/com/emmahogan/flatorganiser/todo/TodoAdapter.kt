@@ -62,8 +62,9 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
 
         //TODO add on click listener to open dialog box
         holder.itemCardView.setOnClickListener {
+            val actualPosition = holder.getAdapterPosition()
             var activity : TodoActivity = context as TodoActivity
-            (TodoActivity::openEditDialog)(activity, itemList[position])
+            (TodoActivity::openEditDialog)(activity, itemList[actualPosition], actualPosition)
         }
     }
 
@@ -73,13 +74,18 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
     }
 
 
-    fun addItem(item : TodoItem){
+    fun addItem(item : TodoItem, originalPosition : Int){
         //add new item to recycler view
-        //TODO
-        Log.d("TAG", item.title)
-        itemList.add(item)
-       // notifyItemInserted(-1)
-        notifyItemRangeChanged(0, -1)
+        if (originalPosition != -1){
+            itemList[originalPosition] = item
+            //TODO when priority algo written, will need to move to new position
+            //notifyItemInserted(originalPosition)
+            notifyItemChanged(originalPosition)
+        }
+        else {
+            itemList.add(item)
+            notifyItemRangeChanged(0, -1)
+        }
     }
 
     //the 'thing' that the data is stored in and gets recycled during scroll

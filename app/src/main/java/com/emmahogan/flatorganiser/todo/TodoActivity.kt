@@ -159,7 +159,7 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
-    fun openEditDialog(item : TodoItem){
+    fun openEditDialog(item : TodoItem, position : Int){
         //where position is index in list
 
         //open custom to-do dialog box
@@ -196,9 +196,13 @@ class TodoActivity : AppCompatActivity() {
         saveBtn.setOnClickListener{
             if (myTodo){
                 //update database
+                myTodoList.remove(item.title)
+                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), alertDialog.time_remaining.text.toString(), myTodoList, position)
             }
             else {
                 //update database
+                flatTodoList.remove(item.title)
+                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), alertDialog.time_remaining.text.toString(), flatTodoList, position)
             }
 
             alertDialog.dismiss()
@@ -211,17 +215,17 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
-    private fun addItemToView(name : String, date : String, priority : String, timeRemaining : String) {
+    private fun addItemToView(name : String, date : String, priority : String, timeRemaining : String, originalPosition : Int) {
         val model = TodoItem()
         model.setItemTitle(name)
         model.setItemPriority(priority)
         model.setItemDueDate(date)
         model.setItemTimeRemaining(timeRemaining)
-        customAdapter.addItem(model)
+        customAdapter.addItem(model, originalPosition)
     }
 
 
-    private fun addToDb(name : String, date : String, priority : String, timeRemaining : String, data : HashMap<String, Any>){
+    private fun addToDb(name : String, date : String, priority : String, timeRemaining : String, data : HashMap<String, Any>, originalPosition : Int = -1){
         //if info correctly filled out:
         val flat = currentUser.flat
         data[name] = mapOf("date" to date, "priority" to priority, "timeRemaining" to timeRemaining)
@@ -235,7 +239,7 @@ class TodoActivity : AppCompatActivity() {
         Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
 
         //update view
-        addItemToView(name, date, priority, timeRemaining)
+        addItemToView(name, date, priority, timeRemaining, originalPosition)
     }
 
 
