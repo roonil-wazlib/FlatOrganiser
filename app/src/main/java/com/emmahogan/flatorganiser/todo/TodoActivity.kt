@@ -109,6 +109,7 @@ class TodoActivity : AppCompatActivity() {
             model.setItemTitle(key)
             value["priority"]?.let { model.setItemPriority(it) }
             value["date"]?.let { model.setItemDueDate(it) }
+            value["timeRemaining"]?.let { model.setItemTimeRemaining(it) }
             list.add(model)
         }
         return list
@@ -124,7 +125,7 @@ class TodoActivity : AppCompatActivity() {
 
 
     private fun addItem(){
-        //open custom to-do dialog box
+        //open custom to-do TodoActivity()dialog box
         val dialogView = LayoutInflater.from(this).inflate(R.layout.todo_dialog, null)
 
         //AlertDialogBuilder
