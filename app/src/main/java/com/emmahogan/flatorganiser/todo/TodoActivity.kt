@@ -158,6 +158,51 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
+    fun openEditDialog(item : TodoItem){
+        //where position is index in list
+
+        //open custom to-do dialog box
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.todo_dialog, null)
+
+        //AlertDialogBuilder
+        val builder = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setTitle("Enter Details")
+
+        //show dialog
+        val alertDialog = builder.show()
+        val saveBtn = alertDialog.save
+        val cancelBtn = alertDialog.cancel
+
+        //prefill current details
+        val calendarBtn = alertDialog.calendar
+        calendarBtn.setOnClickListener{ openCalendar(calendarBtn) }
+        calendarBtn.text = item.date
+
+        alertDialog.item_name.setText(item.title)
+        //alertDialog.priority.text = item.priority you can't do this you dumb fuck
+        alertDialog.time_remaining.setText(item.timeRemaining)
+
+
+
+        saveBtn.setOnClickListener{
+            if (myTodo){
+                //update database
+            }
+            else {
+                //update database
+            }
+
+            alertDialog.dismiss()
+            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
+        }
+        cancelBtn.setOnClickListener{
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+
     private fun addItemToView(name : String, date : String, priority : String, timeRemaining : String) {
         val model = TodoItem()
         model.setItemTitle(name)

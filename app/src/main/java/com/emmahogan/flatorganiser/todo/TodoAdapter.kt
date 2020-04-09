@@ -1,5 +1,6 @@
 package com.emmahogan.flatorganiser.todo
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.emmahogan.flatorganiser.R
 import com.emmahogan.flatorganiser.auth.User
@@ -59,6 +61,10 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
 
 
         //TODO add on click listener to open dialog box
+        holder.itemCardView.setOnClickListener {
+            var activity : TodoActivity = context as TodoActivity
+            (TodoActivity::openEditDialog)(activity, itemList[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -84,11 +90,13 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
         var itemDate : TextView
         var itemPriority : TextView
         var itemTimeRemaining : TextView
+        var itemCardView : CardView
         init {
             itemCheckBox = itemView.findViewById(R.id.item_checkbox)
             itemDate = itemView.findViewById(R.id.item_date)
             itemPriority = itemView.findViewById(R.id.item_priority)
             itemTimeRemaining = itemView.findViewById(R.id.time_remainingTV)
+            itemCardView = itemView.findViewById(R.id.card_view)
         }
     }
 }
