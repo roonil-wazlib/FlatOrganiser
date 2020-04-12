@@ -26,8 +26,8 @@ class TodoItem {
         this.timeRemaining = time
     }
 
-    fun checkItem(checked : Boolean){
-        this.checked = checked
+    fun checkItem(){
+        this.checked = !this.checked
     }
 
 }

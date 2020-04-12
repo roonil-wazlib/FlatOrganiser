@@ -51,16 +51,20 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
         holder.itemDate.text = itemList[position].date
         holder.itemPriority.text = itemList[position].priority
         holder.itemTimeRemaining.text = itemList[position].timeRemaining
-        Log.d("TAG", itemList[position].timeRemaining)
-        Log.d("TAG", itemList[position].priority)
+        holder.itemCheckBox.isChecked = itemList[position].checked
 
         //TODO check item here
 
         //TODO set up recycler view for sublist here
 
 
-
         //TODO add on click listener to open dialog box
+        holder.itemCheckBox.setOnClickListener{
+            val actualPosition = holder.adapterPosition
+            var activity : TodoActivity = context as TodoActivity
+            itemList[actualPosition].checkItem()
+            (TodoActivity::clickCheckbox)(activity, itemList[actualPosition], actualPosition)
+        }
         holder.itemCardView.setOnClickListener {
             val actualPosition = holder.getAdapterPosition()
             var activity : TodoActivity = context as TodoActivity

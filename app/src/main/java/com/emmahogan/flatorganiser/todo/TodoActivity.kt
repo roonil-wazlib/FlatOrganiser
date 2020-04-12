@@ -110,7 +110,7 @@ class TodoActivity : AppCompatActivity() {
             value["priority"]?.let { model.setItemPriority(it) }
             value["date"]?.let { model.setItemDueDate(it) }
             value["timeRemaining"]?.let { model.setItemTimeRemaining(it) }
-            value["checked"]?.let { model.checkItem(it.toBoolean())}
+            value["checked"]?.let { model.checked = it.toBoolean() }
             list.add(model)
         }
         return list
@@ -226,10 +226,10 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
-    private fun addToDb(name : String, date : String, priority : String, timeRemaining : String, data : HashMap<String, Any>, originalPosition : Int = -1){
+    private fun addToDb(name : String, date : String, priority : String, timeRemaining : String, data : HashMap<String, Any>, originalPosition : Int = -1, checked : String = "false"){
         //if info correctly filled out:
         val flat = currentUser.flat
-        data[name] = mapOf("date" to date, "priority" to priority, "timeRemaining" to timeRemaining, "checked" to "false")
+        data[name] = mapOf("date" to date, "priority" to priority, "timeRemaining" to timeRemaining, "checked" to checked)
 
         if (myTodo) {
             (CloudFirestore::addPersonalTodo)(CloudFirestore(), currentUser, flat.toString(), data)
@@ -241,6 +241,11 @@ class TodoActivity : AppCompatActivity() {
 
         //update view
         addItemToView(name, date, priority, timeRemaining, originalPosition)
+    }
+
+
+    fun clickCheckbox(item : TodoItem, position : Int){
+        addToDb(item.title, item.date, item.priority, item.timeRemaining, myTodoList, position, item.checked.toString())
     }
 
 
