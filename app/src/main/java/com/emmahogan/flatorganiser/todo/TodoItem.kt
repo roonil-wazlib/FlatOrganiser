@@ -6,6 +6,7 @@ class TodoItem {
     var priority : String = ""
     var date : String = ""
     var timeRemaining : String = ""
+    var checked : Boolean = false
 
     //TODO add item checked var
 
@@ -23,6 +24,10 @@ class TodoItem {
 
     fun setItemTimeRemaining(time : String){
         this.timeRemaining = time
+    }
+
+    fun checkItem(checked : Boolean){
+        this.checked = checked
     }
 
 }
