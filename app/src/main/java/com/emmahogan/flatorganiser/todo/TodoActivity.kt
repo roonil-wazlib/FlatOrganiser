@@ -22,6 +22,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
+
 class TodoActivity : AppCompatActivity() {
 
 
@@ -66,7 +67,6 @@ class TodoActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("TAG", "get failed with ", exception)
             }
-
 
         //listen for user personal to do list
         val docRef = db.collection("flats/${currentUser.flat.toString()}/members/${mAuth.currentUser!!.uid}/data").document("todo")
