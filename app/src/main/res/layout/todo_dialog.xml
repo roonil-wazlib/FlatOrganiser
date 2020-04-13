@@ -55,7 +55,7 @@
         android:entries="@array/priority_array"
         android:textSize="16sp"
         android:layout_margin="15dp"
-        android:paddingStart="20dp" />
+        android:paddingStart="16dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,8 +82,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="hours"
+            android:layout_weight="0.2"
+            android:text="hrs"
             android:textSize="16sp"
             android:textColor="#ffffff"/>
 
