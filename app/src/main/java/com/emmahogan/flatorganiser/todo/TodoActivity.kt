@@ -197,12 +197,12 @@ class TodoActivity : AppCompatActivity() {
             if (myTodo){
                 //update database
                 myTodoList.remove(item.title)
-                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), alertDialog.time_remaining.text.toString(), myTodoList, position)
+                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), alertDialog.time_remaining.text.toString(), myTodoList, position, item.checked.toString())
             }
             else {
                 //update database
                 flatTodoList.remove(item.title)
-                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), alertDialog.time_remaining.text.toString(), flatTodoList, position)
+                addToDb(alertDialog.item_name.text.toString(), alertDialog.calendar.text.toString(), alertDialog.priority.selectedItem.toString(), alertDialog.time_remaining.text.toString(), flatTodoList, position, item.checked.toString())
             }
 
             alertDialog.dismiss()
