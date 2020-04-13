@@ -55,11 +55,11 @@ KNOWN BUGS: Nothing, yet.
 
 
 ### To Do List
-Current work in progress, only just started laying down skeleton code for layouts and functionality. Long term idea to have two tabs, 1 for personal TODOs and 1 for flat-wide TODOs that all users within a flat have access to. Also want to implement some kind of priority-queue type algorithm to sort tasks based on due date, user-entered priority and estimated time it will take to complete. Will need some trial and error on the weightings to get right but will be cool to attempt.
+Activity for storing todo tasks. Consists of two tabs, one for personal tasks that only the user can see, and one for flat tasks that can be seen by anyone in the user's flat. Tasks can be added with due dates, completion priority and an estimation of the amount of time remaining until the task is complete. Long term goal is to have the activity sort the lists into a priority queue based on this infomation.
 
-Yet to implement: Anything usable
+Yet to implement: Priority sorting algorithm, clear all method, subtask list.
 
-KNOWN BUGS: Technically nothing?
+KNOWN BUGS: Check/uncheck items currently fails until activity reloaded.
 
 ## Planned future dashboard activities:
 
