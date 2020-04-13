@@ -59,7 +59,7 @@ Activity for storing todo tasks. Consists of two tabs, one for personal tasks th
 
 Yet to implement: Priority sorting algorithm, clear all method, subtask list.
 
-KNOWN BUGS: Check/uncheck items currently fails until activity reloaded.
+KNOWN BUGS: Nothing..?
 
 ## Planned future dashboard activities:
 
