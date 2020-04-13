@@ -215,12 +215,13 @@ class TodoActivity : AppCompatActivity() {
     }
 
 
-    private fun addItemToView(name : String, date : String, priority : String, timeRemaining : String, originalPosition : Int) {
+    private fun addItemToView(name : String, date : String, priority : String, timeRemaining : String, originalPosition : Int, checked : Boolean = false) {
         val model = TodoItem()
         model.setItemTitle(name)
         model.setItemPriority(priority)
         model.setItemDueDate(date)
         model.setItemTimeRemaining(timeRemaining)
+        model.checkItem(checked)
         customAdapter.addItem(model, originalPosition)
     }
 
@@ -239,12 +240,12 @@ class TodoActivity : AppCompatActivity() {
         Toast.makeText(this, "Added to database", Toast.LENGTH_SHORT).show()
 
         //update view
-        addItemToView(name, date, priority, timeRemaining, originalPosition)
+        addItemToView(name, date, priority, timeRemaining, originalPosition, checked.toBoolean())
     }
 
 
     fun clickCheckbox(item : TodoItem, position : Int){
-        addToDb(item.title, item.date, item.priority, item.timeRemaining, myTodoList, position, item.checked.toString())
+        addToDb(item.title, item.date, item.priority, item.timeRemaining, myTodoList, position, (!item.checked).toString())
     }
 
 

@@ -60,9 +60,10 @@ class TodoAdapter(private val context : Context, imageModelArrayListMain: ArrayL
 
         //TODO add on click listener to open dialog box
         holder.itemCheckBox.setOnClickListener{
+
             val actualPosition = holder.adapterPosition
             var activity : TodoActivity = context as TodoActivity
-            itemList[actualPosition].checkItem()
+            Log.d("TAG", (!itemList[actualPosition].checked).toString())
             (TodoActivity::clickCheckbox)(activity, itemList[actualPosition], actualPosition)
         }
         holder.itemCardView.setOnClickListener {
